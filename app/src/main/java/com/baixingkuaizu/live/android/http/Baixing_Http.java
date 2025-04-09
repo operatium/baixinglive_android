@@ -1,4 +1,4 @@
 package com.baixingkuaizu.live.android.http;
 
-public class Http {
+public class Baixing_Http {
 }
