@@ -13,6 +13,7 @@ class Baixing_WebViewWrapper(private val context: Context) {
     private var mBaixing_onPageFinishedListener: ((String?) -> Unit)? = null
     private var mBaixing_onPageStartedListener: ((String?) -> Unit)? = null
     private var mBaixing_onProgressChangedListener: ((Int) -> Unit)? = null
+    private val mBaixing_loadingState = Baixing_WebLoadingState()
 
     private fun baixing_setupWebView(
         isJavaScriptEnabled: Boolean = false,
@@ -39,25 +40,46 @@ class Baixing_WebViewWrapper(private val context: Context) {
             webViewClient = object : WebViewClient() {
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                     super.onPageStarted(view, url, favicon)
+                    mBaixing_loadingState.apply {
+                        mBaixing_url = url ?: ""
+                        mBaixing_isLoading = true
+                        mBaixing_isError = false
+                        mBaixing_timestamp = System.currentTimeMillis()
+                    }
                     mBaixing_onPageStartedListener?.invoke(url)
                 }
 
                 override fun onPageFinished(view: WebView?, url: String?) {
                     super.onPageFinished(view, url)
+                    mBaixing_loadingState.mBaixing_isLoading = false
                     mBaixing_onPageFinishedListener?.invoke(url)
+                }
+
+                override fun onReceivedError(
+                    view: WebView?,
+                    errorCode: Int,
+                    description: String?,
+                    failingUrl: String?
+                ) {
+                    super.onReceivedError(view, errorCode, description, failingUrl)
+                    mBaixing_loadingState.apply {
+                        mBaixing_isError = true
+                        mBaixing_errorMessage = description
+                    }
                 }
             }
 
             webChromeClient = object : WebChromeClient() {
                 override fun onProgressChanged(view: WebView?, newProgress: Int) {
                     super.onProgressChanged(view, newProgress)
+                    mBaixing_loadingState.mBaixing_progress = newProgress
                     mBaixing_onProgressChangedListener?.invoke(newProgress)
                 }
             }
         }
     }
 
-    fun baixing_loadUrl(url: String, webView: WebView=WebView(context.applicationContext)) {
+    fun baixing_loadUrl(url: String, webView: WebView = WebView(context.applicationContext)) {
         if (mBaixing_webView != webView) {
             mBaixing_webView?.destroy()
         }
@@ -76,13 +98,13 @@ class Baixing_WebViewWrapper(private val context: Context) {
         }
     }
 
-    fun baixing_show(framelayout:FrameLayout) {
+    fun baixing_show(framelayout: FrameLayout) {
         framelayout.addView(mBaixing_webView)
     }
 
     fun baixing_dismiss() {
         mBaixing_webView?.parent?.let {
-            val viewgroup:ViewGroup = it as ViewGroup
+            val viewgroup: ViewGroup = it as ViewGroup
             viewgroup.removeView(mBaixing_webView)
         }
     }
@@ -106,4 +128,14 @@ class Baixing_WebViewWrapper(private val context: Context) {
         mBaixing_onPageStartedListener = null
         mBaixing_onProgressChangedListener = null
     }
+
+    fun baixing_getLoadingState(): Baixing_WebLoadingState = mBaixing_loadingState.copy()
+
+    fun baixing_isLoading(): Boolean = mBaixing_loadingState.mBaixing_isLoading
+
+    fun baixing_hasError(): Boolean = mBaixing_loadingState.mBaixing_isError
+
+    fun baixing_getProgress(): Int = mBaixing_loadingState.mBaixing_progress
+
+    fun baixing_getCurrentUrl(): String = mBaixing_loadingState.mBaixing_url
 }
