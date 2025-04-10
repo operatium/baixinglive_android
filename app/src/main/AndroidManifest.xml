@@ -31,7 +31,11 @@
         android:theme="@style/Theme.BaiXingLiveAndroid"
         tools:targetApi="31">
         <activity
-            android:name=".Baixing_MainActivity"
+            android:name="com.baixingkuaizu.live.android.activity.Baixing_MainActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name="com.baixingkuaizu.live.android.activity.Baixing_SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

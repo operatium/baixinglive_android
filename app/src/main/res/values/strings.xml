@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">BaiXingLiveAndroid</string>
+    <string name="app_name">99直播</string>
+    
+    <!-- 隐私政策相关 -->
+    <string name="baixing_privacy_title">个人信息保护指引</string>
+    <string name="baixing_privacy_content">感谢您使用此APP，欢迎您点击查看《用户协议》和《隐私政策》，如您同意，请点击"同意"并接受我们的服务，感谢您的信任！我们非常重视隐私和个人信息保护。在您使用的过程中，我们可能会对您部分个人信息进行收集、使用和共享。\n1.我们可能会申请系统设备权限收集设备信息、日志信息、用户信息推送和安全风控，并申请存储权限用于下载及缓存相关文件。\n2.我们可能申请位置权限、用于帮助你在发布的信息中展示位置。\n3.上述权限以及摄像头、麦克风、相册。</string>
+    <string name="baixing_agree">同意</string>
+    <string name="baixing_disagree">拒绝</string>
 </resources>
