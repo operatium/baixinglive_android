@@ -1,0 +1,14 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!-- 填充颜色，这里设置为透明 -->
+    <!-- 渐变背景 -->
+    <gradient
+        android:startColor="#BB68FA"
+        android:endColor="#7654F2"
+        android:angle="0" />
+    <!-- 描边属性，设置宽度和颜色 -->
+    <corners
+        android:radius="@dimen/dp.50"
+        />
+
+</shape>

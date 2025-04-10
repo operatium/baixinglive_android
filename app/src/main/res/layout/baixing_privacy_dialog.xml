@@ -35,28 +35,31 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp.16"
+        android:layout_margin="@dimen/dp.8"
         android:orientation="horizontal">
 
-        <Button
+        <TextView
             android:id="@+id/baixing_btn_disagree"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/dp.8"
+            android:layout_height="@dimen/dp.40"
+            android:layout_margin="@dimen/dp.8"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="@string/baixing_disagree"
-            android:backgroundTint="#E6E6E6"
-            android:textColor="#000000"
+            android:background ="@drawable/baixing_button_background"
+            android:textColor="@color/baixing_button_text_color"
             />
 
-        <Button
+        <TextView
             android:id="@+id/baixing_btn_agree"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dp.8"
+            android:layout_height="@dimen/dp.40"
+            android:gravity="center"
+            android:layout_margin="@dimen/dp.8"
             android:layout_weight="1"
-            android:backgroundTint="#9966FF"
+            android:background="@drawable/baixing_button_background2"
             android:text="@string/baixing_agree"
+            android:textSize="@dimen/sp.16"
             android:textColor="@android:color/white" />
     </LinearLayout>
 </LinearLayout>

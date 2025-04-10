@@ -1,7 +1,6 @@
 package com.baixingkuaizu.live.android.busiess.task.privacyagreement
 
 import android.content.Context
-import android.webkit.WebView
 import android.widget.FrameLayout
 import com.baixingkuaizu.live.android.busiess.task.Baixing_TaskManager
 import com.baixingkuaizu.live.android.widget.web.Baixing_WebViewWrapper

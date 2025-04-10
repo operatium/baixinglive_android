@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="baixing_button_normal">#FFFFFF</color> <!-- 白色 -->
+    <color name="baixing_button_disabled">#CCCCCC</color> <!-- 灰色 -->
+    <color name="baixing_button_text_color">#000000</color> <!-- 黑色 -->
+    <color name="baixing_button_background_color">#BB68FA</color> <!-- 紫色 -->
 </resources>
