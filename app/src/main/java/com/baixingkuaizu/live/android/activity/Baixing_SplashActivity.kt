@@ -3,6 +3,8 @@ package com.baixingkuaizu.live.android.activity
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Toast
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
 import com.baixingkuaizu.live.android.R
@@ -32,6 +34,11 @@ class Baixing_SplashActivity : Baixing_BaseActivity() {
         super.onCreate(savedInstanceState)
         mBaixing_ActivityProxy.baixing_bind(this)
         setContentView(R.layout.baixing_splash_activity)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.baixing_main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
         lifecycleScope.launch {
             delay(100)
             // 检查用户是否已同意隐私政策

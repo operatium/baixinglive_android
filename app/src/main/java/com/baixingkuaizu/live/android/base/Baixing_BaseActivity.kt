@@ -1,6 +1,7 @@
 package com.baixingkuaizu.live.android.base
 
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.baixingkuaizu.live.android.busiess.router.Baixing_GoRouter
 
@@ -8,6 +9,7 @@ open class Baixing_BaseActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Baixing_GoRouter.baixing_callOnCreate(this)
+        enableEdgeToEdge()
     }
 
     override fun onDestroy() {

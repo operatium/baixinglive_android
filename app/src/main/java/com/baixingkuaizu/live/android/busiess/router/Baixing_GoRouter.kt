@@ -23,6 +23,12 @@ object Baixing_GoRouter {
         currentActivity.startActivity(intent)
     }
 
+    fun baixing_jumpLoginActivity() {
+        val currentActivity = mBaixing_activityList.peek()
+        val intent = Intent(currentActivity, Baixing_LoginActivity::class.java)
+        currentActivity.startActivity(intent)
+    }
+
     fun baixing_callOnCreate(activity: Baixing_BaseActivity) {
         mBaixing_activityList.push(activity)
     }

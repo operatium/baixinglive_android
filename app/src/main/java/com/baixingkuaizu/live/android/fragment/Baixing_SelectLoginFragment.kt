@@ -1,12 +1,11 @@
 package com.baixingkuaizu.live.android.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.baixingkuaizu.live.android.activity.Baixing_MainActivity
 import com.baixingkuaizu.live.android.base.Baixing_BaseFragment
+import com.baixingkuaizu.live.android.busiess.router.Baixing_GoRouter
 import com.baixingkuaizu.live.android.databinding.BaixingSelectLoginFragmentBinding
 
 class Baixing_SelectLoginFragment : Baixing_BaseFragment() {
@@ -32,8 +31,7 @@ class Baixing_SelectLoginFragment : Baixing_BaseFragment() {
     }
 
     private fun goLogin() {
-        val intent = Intent(requireActivity(), Baixing_MainActivity::class.java)
-        startActivity(intent)
+        Baixing_GoRouter.baixing_jumpLoginActivity()
         requireActivity().finish()
     }
 }

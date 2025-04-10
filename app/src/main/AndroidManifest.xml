@@ -45,6 +45,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.baixingkuaizu.live.android.activity.Baixing_WebActivity" />
+        <activity android:name="com.baixingkuaizu.live.android.activity.Baixing_LoginActivity" />
     </application>
 
 </manifest>

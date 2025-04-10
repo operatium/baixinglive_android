@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/baixing_main"
     android:orientation="vertical"
     android:background="@drawable/baixing_bg_jianbian"
     android:layout_width="match_parent"
