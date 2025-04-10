@@ -1,9 +1,9 @@
 package com.baixingkuaizu.live.android.activity
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
 import com.baixingkuaizu.live.android.R
 import com.baixingkuaizu.live.android.base.Baixing_BaseActivity
@@ -12,6 +12,7 @@ import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
 import com.baixingkuaizu.live.android.busiess.task.permission.Baixing_PermissionCheck
 import com.baixingkuaizu.live.android.busiess.proxy.Baixing_ActivityProxy
 import com.baixingkuaizu.live.android.busiess.task.privacyagreement.Baixing_PrivacyAgreementTaskManager
+import com.baixingkuaizu.live.android.fragment.Baixing_SelectLoginFragment
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -31,10 +32,6 @@ class Baixing_SplashActivity : Baixing_BaseActivity() {
         super.onCreate(savedInstanceState)
         mBaixing_ActivityProxy.baixing_bind(this)
         setContentView(R.layout.baixing_splash_activity)
-    }
-
-    override fun onResume() {
-        super.onResume()
         lifecycleScope.launch {
             delay(100)
             // 检查用户是否已同意隐私政策
@@ -73,9 +70,11 @@ class Baixing_SplashActivity : Baixing_BaseActivity() {
     private fun baixing_startMainActivity(delay: Long = 500) {
         lifecycleScope.launch {
             delay(delay)
-            val intent = Intent(this@Baixing_SplashActivity, Baixing_MainActivity::class.java)
-            startActivity(intent)
-            finish()
+            supportFragmentManager.beginTransaction().run {
+                add(R.id.baixing_framelayout, Baixing_SelectLoginFragment())
+                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                commit()
+            }
         }
     }
 }

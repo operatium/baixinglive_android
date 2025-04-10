@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/baixing_gril2"
+    android:orientation="vertical">
+
+  <ImageView
+      android:id="@+id/baixing_image"
+      android:layout_width="@dimen/dp.150"
+      android:layout_height="0dp"
+      app:layout_constraintDimensionRatio="159:51"
+      android:src="@drawable/baixing_99zhibo"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      android:layout_marginTop="@dimen/dp.200"
+      />
+
+    <TextView
+        android:id="@+id/baixing_phone"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp.50"
+        android:text="手机登录"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/baixing_button_background2"
+        android:textSize="@dimen/sp.20"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:layout_marginBottom="@dimen/dp.200"
+        android:layout_marginHorizontal="@dimen/dp.50"
+        />
+
+    <TextView
+        android:id="@+id/baixing_more"
+        android:layout_width="@dimen/dp.200"
+        android:layout_height="@dimen/dp.60"
+        android:text="更多登陆方式 >"
+        app:layout_constraintStart_toStartOf="@+id/baixing_phone"
+        app:layout_constraintEnd_toEndOf="@+id/baixing_phone"
+        app:layout_constraintTop_toBottomOf="@id/baixing_phone"
+        android:textSize="@dimen/sp.16"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
