@@ -2,7 +2,6 @@ package com.baixingkuaizu.live.android.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
@@ -10,7 +9,7 @@ import com.baixingkuaizu.live.android.R
 import com.baixingkuaizu.live.android.base.Baixing_BaseActivity
 import com.baixingkuaizu.live.android.dialog.Baixing_PrivacyDialog
 import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
-import com.baixingkuaizu.live.android.busiess.permission.Baixing_PermissionManager
+import com.baixingkuaizu.live.android.busiess.task.permission.Baixing_PermissionCheck
 import com.baixingkuaizu.live.android.busiess.proxy.Baixing_ActivityProxy
 import com.baixingkuaizu.live.android.busiess.task.privacyagreement.Baixing_PrivacyAgreementTaskManager
 import kotlinx.coroutines.delay
@@ -26,7 +25,7 @@ class Baixing_SplashActivity : Baixing_BaseActivity() {
 
     var mBaixing_privacyDialog: Baixing_PrivacyDialog? = null
 
-    private val mBaixing_PermissionManager = Baixing_PermissionManager(this)
+    private val mBaixing_PermissionCheck = Baixing_PermissionCheck(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +58,7 @@ class Baixing_SplashActivity : Baixing_BaseActivity() {
         mBaixing_privacyDialog = Baixing_PrivacyDialog(this)
         mBaixing_privacyDialog?.baixing_setOnAgreeListener {
             mBaixing_localDataManager.baixing_setPrivacyAgreed(true)
-            mBaixing_PermissionManager.baixing_checkAndRequestPermissions()
+            mBaixing_PermissionCheck.baixing_checkAndRequestPermissions(this)
         }
 
         mBaixing_privacyDialog?.baixing_setOnDisagreeListener {

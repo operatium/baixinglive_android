@@ -1,4 +1,4 @@
-package com.baixingkuaizu.live.android.busiess.permission
+package com.baixingkuaizu.live.android.busiess.task.permission
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -7,7 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 
-class Baixing_PermissionManager(private val mBaixing_activity: AppCompatActivity) {
+class Baixing_PermissionCheck(mBaixing_activity: AppCompatActivity) {
     private var mBaixing_permissionCallback: ((Boolean) -> Unit)? = null
     
     private val mBaixing_permissionLauncher: ActivityResultLauncher<Array<String>> =
@@ -24,11 +24,11 @@ class Baixing_PermissionManager(private val mBaixing_activity: AppCompatActivity
         Manifest.permission.INTERNET
     )
 
-    fun baixing_checkAndRequestPermissions(callback: ((Boolean) -> Unit)? = null) {
+    fun baixing_checkAndRequestPermissions(activity: AppCompatActivity, callback: ((Boolean) -> Unit)? = null) {
         mBaixing_permissionCallback = callback
         
         val permissionsToRequest = mBaixing_requiredPermissions.filter {
-            ContextCompat.checkSelfPermission(mBaixing_activity, it) != PackageManager.PERMISSION_GRANTED
+            ContextCompat.checkSelfPermission(activity, it) != PackageManager.PERMISSION_GRANTED
         }.toTypedArray()
 
         if (permissionsToRequest.isEmpty()) {
