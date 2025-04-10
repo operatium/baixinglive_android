@@ -150,6 +150,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:paddingVertical="@dimen/dp.15"
-        android:text="我已阅读并同意《用户协议》《隐私政策》" />
+        android:text="我已阅读并同意《用户协议》和《隐私政策》" />
 
 </LinearLayout>
