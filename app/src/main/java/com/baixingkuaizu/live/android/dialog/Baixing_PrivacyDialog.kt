@@ -48,7 +48,7 @@ class Baixing_PrivacyDialog(context: Context) : Dialog(context) {
                 object : ClickableSpan() {
                     override fun onClick(view: View) {
                         Toast.makeText(context, "《用户协议》", Toast.LENGTH_SHORT).show()
-                        Baixing_GoRouter.baixing_jumpWebActivity("用户协议", "")
+                        Baixing_GoRouter.baixing_jumpWebActivity(taskName = "用户协议", taskType = "Baixing_PrivacyAgreementTaskManager")
                     }
                 },
                 userAgreementStart,
@@ -73,7 +73,7 @@ class Baixing_PrivacyDialog(context: Context) : Dialog(context) {
                 object : ClickableSpan() {
                     override fun onClick(view: View) {
                         Toast.makeText(context, "《隐私政策》", Toast.LENGTH_SHORT).show()
-                        Baixing_GoRouter.baixing_jumpWebActivity("隐私政策", "")
+                        Baixing_GoRouter.baixing_jumpWebActivity(taskName = "隐私政策", taskType = "Baixing_PrivacyAgreementTaskManager")
                     }
                 },
                 privacyPolicyStart,

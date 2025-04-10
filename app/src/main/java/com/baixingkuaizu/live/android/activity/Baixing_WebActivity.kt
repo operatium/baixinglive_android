@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import com.baixingkuaizu.live.android.base.Baixing_BaseActivity
 import com.baixingkuaizu.live.android.busiess.proxy.Baixing_ActivityProxy
+import com.baixingkuaizu.live.android.busiess.task.privacyagreement.Baixing_PrivacyAgreementTaskManager
 import com.baixingkuaizu.live.android.databinding.BaixingWebActivityBinding
-import com.baixingkuaizu.live.android.widget.web.Baixing_WebViewManager
 import com.baixingkuaizu.live.android.widget.web.Baixing_WebViewWrapper
 
 class Baixing_WebActivity : Baixing_BaseActivity() {
@@ -18,13 +18,6 @@ class Baixing_WebActivity : Baixing_BaseActivity() {
         mBaixing_activityProxy.baixing_bind(this)
         mBaixing_binding = BaixingWebActivityBinding.inflate(layoutInflater)
         setContentView(mBaixing_binding.root)
-        val urlname = intent.getStringExtra("name")?:return
-        val url = intent.getStringExtra("url")?:"https://www.2339.com"
-        Baixing_WebViewManager.baixing_getOrCreateWebView(urlname, applicationContext, url).run {
-            baixing_show(mBaixing_binding.baixingWebView)
-
-            mBaixing_webViewWrapper = this
-        }
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -36,11 +29,26 @@ class Baixing_WebActivity : Baixing_BaseActivity() {
                 onBackPressedDispatcher.onBackPressed()
             }
         })
+        baixing_loadurl()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mBaixing_webViewWrapper = null
+        mBaixing_webViewWrapper?.baixing_dismiss()
         mBaixing_activityProxy.baixing_unbind()
+        mBaixing_binding.baixingWebView.removeAllViews()
+    }
+
+    private fun baixing_loadurl() {
+        val urlname = intent.getStringExtra("name") ?: ""
+        val url = intent.getStringExtra("url") ?: ""
+        val taskName = intent.getStringExtra("task name") ?: ""
+        val taskType = intent.getStringExtra("task type") ?: ""
+
+        when (taskType) {
+            "Baixing_PrivacyAgreementTaskManager" -> {
+                mBaixing_webViewWrapper = Baixing_PrivacyAgreementTaskManager.show(taskName, mBaixing_binding.baixingWebView)
+            }
+        }
     }
 }

@@ -2,13 +2,14 @@ package com.baixingkuaizu.live.android.widget.web
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
 
 class Baixing_WebViewWrapper(private val context: Context) {
-    private var mBaixing_webView: WebView? = null
+    var mBaixing_webView: WebView? = null
     private var mBaixing_onPageFinishedListener: ((String?) -> Unit)? = null
     private var mBaixing_onPageStartedListener: ((String?) -> Unit)? = null
     private var mBaixing_onProgressChangedListener: ((Int) -> Unit)? = null
@@ -57,6 +58,9 @@ class Baixing_WebViewWrapper(private val context: Context) {
     }
 
     fun baixing_loadUrl(url: String, webView: WebView=WebView(context.applicationContext)) {
+        if (mBaixing_webView != webView) {
+            mBaixing_webView?.destroy()
+        }
         mBaixing_webView = webView
         baixing_setupWebView()
         mBaixing_webView?.loadUrl(url)
@@ -74,6 +78,13 @@ class Baixing_WebViewWrapper(private val context: Context) {
 
     fun baixing_show(framelayout:FrameLayout) {
         framelayout.addView(mBaixing_webView)
+    }
+
+    fun baixing_dismiss() {
+        mBaixing_webView?.parent?.let {
+            val viewgroup:ViewGroup = it as ViewGroup
+            viewgroup.removeView(mBaixing_webView)
+        }
     }
 
     fun baixing_setOnPageFinishedListener(listener: (String?) -> Unit) {

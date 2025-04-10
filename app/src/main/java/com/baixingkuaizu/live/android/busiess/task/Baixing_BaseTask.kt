@@ -1,4 +1,4 @@
-package com.baixingkuaizu.live.android.base
+package com.baixingkuaizu.live.android.busiess.task
 
 open class Baixing_BaseTask(val taskName:String) {
     override fun toString(): String {

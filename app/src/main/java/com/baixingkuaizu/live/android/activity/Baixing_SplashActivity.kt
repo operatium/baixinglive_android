@@ -9,6 +9,7 @@ import com.baixingkuaizu.live.android.base.Baixing_BaseActivity
 import com.baixingkuaizu.live.android.dialog.Baixing_PrivacyDialog
 import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
 import com.baixingkuaizu.live.android.busiess.proxy.Baixing_ActivityProxy
+import com.baixingkuaizu.live.android.busiess.task.privacyagreement.Baixing_PrivacyAgreementTaskManager
 import com.baixingkuaizu.live.android.widget.web.Baixing_WebViewManager
 
 
@@ -33,6 +34,7 @@ class Baixing_SplashActivity : Baixing_BaseActivity() {
             baixing_showPrivacyDialog()
         }
 
+        Baixing_PrivacyAgreementTaskManager.createTask(this)
     }
 
     override fun onDestroy() {
@@ -52,6 +54,7 @@ class Baixing_SplashActivity : Baixing_BaseActivity() {
         mBaixing_privacyDialog?.baixing_setOnDisagreeListener {
             // 用户拒绝隐私政策
             Toast.makeText(this, "您需要同意隐私政策才能使用本应用", Toast.LENGTH_LONG).show()
+            System.exit(0)
         }
 
         mBaixing_privacyDialog?.show()
