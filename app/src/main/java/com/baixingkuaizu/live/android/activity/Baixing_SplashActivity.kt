@@ -2,6 +2,7 @@ package com.baixingkuaizu.live.android.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
@@ -9,9 +10,9 @@ import com.baixingkuaizu.live.android.R
 import com.baixingkuaizu.live.android.base.Baixing_BaseActivity
 import com.baixingkuaizu.live.android.dialog.Baixing_PrivacyDialog
 import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
+import com.baixingkuaizu.live.android.busiess.permission.Baixing_PermissionManager
 import com.baixingkuaizu.live.android.busiess.proxy.Baixing_ActivityProxy
 import com.baixingkuaizu.live.android.busiess.task.privacyagreement.Baixing_PrivacyAgreementTaskManager
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -24,6 +25,8 @@ class Baixing_SplashActivity : Baixing_BaseActivity() {
         get() = Baixing_LocalDataManager.baixing_getInstance(this)
 
     var mBaixing_privacyDialog: Baixing_PrivacyDialog? = null
+
+    private val mBaixing_PermissionManager = Baixing_PermissionManager(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,11 +56,10 @@ class Baixing_SplashActivity : Baixing_BaseActivity() {
 
     private fun baixing_showPrivacyDialog() {
         mBaixing_privacyDialog?.dismiss()
-        mBaixing_privacyDialog= Baixing_PrivacyDialog(this)
+        mBaixing_privacyDialog = Baixing_PrivacyDialog(this)
         mBaixing_privacyDialog?.baixing_setOnAgreeListener {
-            // 用户同意隐私政策
             mBaixing_localDataManager.baixing_setPrivacyAgreed(true)
-            baixing_startMainActivity(0)
+            mBaixing_PermissionManager.baixing_checkAndRequestPermissions()
         }
 
         mBaixing_privacyDialog?.baixing_setOnDisagreeListener {
