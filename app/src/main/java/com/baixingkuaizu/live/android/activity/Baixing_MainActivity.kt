@@ -6,8 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.baixingkuaizu.live.android.R
+import com.baixingkuaizu.live.android.base.Baixing_BaseActivity
 
-class Baixing_MainActivity : AppCompatActivity() {
+class Baixing_MainActivity : Baixing_BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
