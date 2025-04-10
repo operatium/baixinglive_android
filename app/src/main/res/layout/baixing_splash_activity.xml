@@ -2,19 +2,46 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/baixing_bg_jianbian"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- 启动页背景 -->
+    <ImageView
+        android:id="@+id/baixing_logo"
+        android:layout_width="@dimen/dp.80"
+        android:layout_height="@dimen/dp.80"
+        android:scaleType="fitCenter"
+        android:src="@drawable/baixing_logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
     <ImageView
         android:id="@+id/baixing_splash_background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="@dimen/dp.70"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="159:51"
         android:scaleType="centerCrop"
-        android:src="@drawable/baixing_splash"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/baixing_99zhibo"
+        android:layout_marginBottom="@dimen/dp.10"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/baixing_eryu"
+        />
 
+    <TextView
+        android:id="@+id/baixing_eryu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="与喜欢的你不期而遇"
+        android:textColor="#999999"
+        android:textSize="@dimen/sp.10"
+        android:layout_marginBottom="@dimen/dp.50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

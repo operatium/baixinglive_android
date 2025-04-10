@@ -4,13 +4,16 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import com.baixingkuaizu.live.android.R
 import com.baixingkuaizu.live.android.base.Baixing_BaseActivity
 import com.baixingkuaizu.live.android.dialog.Baixing_PrivacyDialog
 import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
 import com.baixingkuaizu.live.android.busiess.proxy.Baixing_ActivityProxy
 import com.baixingkuaizu.live.android.busiess.task.privacyagreement.Baixing_PrivacyAgreementTaskManager
-import com.baixingkuaizu.live.android.widget.web.Baixing_WebViewManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 @SuppressLint("CustomSplashScreen")
@@ -26,15 +29,20 @@ class Baixing_SplashActivity : Baixing_BaseActivity() {
         super.onCreate(savedInstanceState)
         mBaixing_ActivityProxy.baixing_bind(this)
         setContentView(R.layout.baixing_splash_activity)
+    }
 
-        // 检查用户是否已同意隐私政策
-        if (mBaixing_localDataManager.baixing_isPrivacyAgreed()) {
-            baixing_startMainActivity()
-        } else {
-            baixing_showPrivacyDialog()
+    override fun onResume() {
+        super.onResume()
+        lifecycleScope.launch {
+            delay(100)
+            // 检查用户是否已同意隐私政策
+            if (mBaixing_localDataManager.baixing_isPrivacyAgreed()) {
+                baixing_startMainActivity()
+            } else {
+                baixing_showPrivacyDialog()
+            }
+            Baixing_PrivacyAgreementTaskManager.createTask(this@Baixing_SplashActivity.applicationContext)
         }
-
-        Baixing_PrivacyAgreementTaskManager.createTask(this)
     }
 
     override fun onDestroy() {
@@ -44,11 +52,12 @@ class Baixing_SplashActivity : Baixing_BaseActivity() {
     }
 
     private fun baixing_showPrivacyDialog() {
+        mBaixing_privacyDialog?.dismiss()
         mBaixing_privacyDialog= Baixing_PrivacyDialog(this)
         mBaixing_privacyDialog?.baixing_setOnAgreeListener {
             // 用户同意隐私政策
             mBaixing_localDataManager.baixing_setPrivacyAgreed(true)
-            baixing_startMainActivity()
+            baixing_startMainActivity(0)
         }
 
         mBaixing_privacyDialog?.baixing_setOnDisagreeListener {
@@ -60,10 +69,12 @@ class Baixing_SplashActivity : Baixing_BaseActivity() {
         mBaixing_privacyDialog?.show()
     }
     
-    private fun baixing_startMainActivity() {
-        // 延迟一段时间后跳转到主页面
-        val intent = Intent(this, Baixing_MainActivity::class.java)
-        startActivity(intent)
-        finish()
+    private fun baixing_startMainActivity(delay: Long = 500) {
+        lifecycleScope.launch {
+            delay(delay)
+            val intent = Intent(this@Baixing_SplashActivity, Baixing_MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 }

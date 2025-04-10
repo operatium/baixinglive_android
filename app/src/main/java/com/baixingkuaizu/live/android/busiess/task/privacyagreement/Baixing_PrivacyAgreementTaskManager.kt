@@ -9,7 +9,7 @@ import com.baixingkuaizu.live.android.widget.web.Baixing_WebViewWrapper
 object Baixing_PrivacyAgreementTaskManager : Baixing_TaskManager<Baixing_PrivacyAgreementTask>() {
 
     fun createTask(context: Context) {
-        baixing_addTask(Baixing_PrivacyAgreementTask("隐私政策", "https://www.2339.com"))
+        baixing_addTask(Baixing_PrivacyAgreementTask("隐私政策", "https://www.tjzmwl.cn"))
         baixing_addTask(Baixing_PrivacyAgreementTask("用户协议", "https://www.163.com"))
         baixing_getAllTasks().forEach {
             it.baixing_preLoad(context.applicationContext)
