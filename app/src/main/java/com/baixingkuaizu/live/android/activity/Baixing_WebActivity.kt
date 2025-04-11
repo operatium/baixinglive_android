@@ -25,11 +25,7 @@ class Baixing_WebActivity : Baixing_BaseActivity() {
         mBaixing_activityProxy.baixing_bind(this)
         mBaixing_binding = BaixingWebActivityBinding.inflate(layoutInflater)
         setContentView(mBaixing_binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(mBaixing_binding.root) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        mBaixing_binding.root.setWindowListener()
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

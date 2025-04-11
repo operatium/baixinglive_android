@@ -5,8 +5,12 @@ import android.os.Build
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.baixingkuaizu.live.android.R
 import com.baixingkuaizu.live.android.busiess.router.Baixing_GoRouter
 
 /**
@@ -42,6 +46,14 @@ open class Baixing_BaseActivity: AppCompatActivity() {
                 @Suppress("DEPRECATION")
                 vibrator.vibrate(time)
             }
+        }
+    }
+
+    fun View.setWindowListener() {
+        ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
         }
     }
 }

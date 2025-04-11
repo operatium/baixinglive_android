@@ -39,11 +39,6 @@ class Baixing_SplashActivity : Baixing_BaseActivity() {
         super.onCreate(savedInstanceState)
         mBaixing_ActivityProxy.baixing_bind(this)
         setContentView(R.layout.baixing_splash_activity)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.baixing_main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
         lifecycleScope.launch {
             delay(100)
             // 检查用户是否已同意隐私政策
