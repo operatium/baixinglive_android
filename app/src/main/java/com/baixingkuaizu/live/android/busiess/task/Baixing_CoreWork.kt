@@ -14,8 +14,14 @@ object Baixing_CoreWork {
     }
 
     //登陆
-    fun baixing_login():String {
+    fun baixing_login(phone:String, code:String):String {
         Thread.sleep(5000)
         return "userToken"
+    }
+
+    //登出
+    fun baixing_logout():Boolean {
+        Thread.sleep(5000)
+        return true
     }
 }

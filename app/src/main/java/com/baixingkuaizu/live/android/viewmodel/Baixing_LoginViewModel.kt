@@ -1,9 +1,13 @@
 package com.baixingkuaizu.live.android.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.baixingkuaizu.live.android.busiess.task.login.Baixing_LoginTask
+import com.baixingkuaizu.live.android.busiess.task.login.Baixing_LoginTaskListener
+import com.baixingkuaizu.live.android.busiess.task.login.Baixing_LoginTaskManager
 import com.baixingkuaizu.live.android.busiess.task.login.Baixing_SendVerficationCodeTask
 import com.baixingkuaizu.live.android.busiess.task.login.Baixing_SendVerficationCodeTaskListener
 import com.baixingkuaizu.live.android.busiess.task.login.Baixing_SendVerficationCodeTaskManager
@@ -19,6 +23,12 @@ class Baixing_LoginViewModel:ViewModel() {
     val mBaixing_toast: LiveData<String> = _mBaixing_toast
 
     private var mBaixing_netCode: String? = null
+
+    private val _mBaixing_loginLoading = MutableLiveData<Boolean>()
+    val mBaixing_loginLoading: LiveData<Boolean> = _mBaixing_loginLoading
+
+    private val _mBaixing_login = MutableLiveData<Boolean>()
+    val mBaixing_login: LiveData<Boolean> = _mBaixing_login
 
     // 发送验证码的函数
     fun baixing_sendVerificationCode(phoneNumber: String) {
@@ -46,7 +56,7 @@ class Baixing_LoginViewModel:ViewModel() {
                             }
                         }
 
-                        override fun baixing_onStopTask(task: Baixing_SendVerficationCodeTask) {
+                        override fun baixing_onEndTask(task: Baixing_SendVerficationCodeTask) {
                             viewModelScope.launch(Dispatchers.Main) {
                                 mBaixing_netCode = task.mbaixing_code
                             }
@@ -70,6 +80,41 @@ class Baixing_LoginViewModel:ViewModel() {
                     }
                 )
             }
+        }
+    }
+
+    fun baixing_login(appContext: Context, phoneNumber: String, code: String) {
+        viewModelScope.launch(Dispatchers.Default) {
+            Baixing_LoginTaskManager.baixing_switchAccount(
+                appContext, phoneNumber, code,
+                object : Baixing_LoginTaskListener {
+                    override fun baixing_onCreateTask(task: Baixing_LoginTask) {
+                    }
+
+                    override fun baixing_onStartTask(task: Baixing_LoginTask) {
+                        viewModelScope.launch {
+                            _mBaixing_loginLoading.value = true
+                        }
+                    }
+
+                    override fun baixing_onEndTask(task: Baixing_LoginTask) {
+                        viewModelScope.launch {
+                            _mBaixing_loginLoading.value = false
+                            _mBaixing_login.value = true
+                        }
+                    }
+
+                    override fun baixing_onStopTask(task: Baixing_LoginTask) {
+                    }
+
+                    override fun baixing_onDestroyTask(task: Baixing_LoginTask) {
+                        viewModelScope.launch {
+                            _mBaixing_loginLoading.value = false
+                            _mBaixing_login.value = false
+                        }
+                    }
+
+                })
         }
     }
 

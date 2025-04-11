@@ -25,7 +25,7 @@ class Baixing_SendVerficationCodeTask(taskName:String, val phoneNumber: String) 
         baixing_onStartTask()
         baixing_startCountdown()
         mbaixing_code = Baixing_CoreWork.baixing_sendVerificationCode()
-        baixing_onStopTask()
+        baixing_onEndTask()
         return mbaixing_code?:""
     }
 
@@ -73,9 +73,9 @@ class Baixing_SendVerficationCodeTask(taskName:String, val phoneNumber: String) 
         mBaixing_Listener?.baixing_onTime(this, second)
     }
 
-    override fun baixing_onStopTask() {
-        super.baixing_onStopTask()
-        mBaixing_Listener?.baixing_onStopTask(this)
+    override fun baixing_onEndTask() {
+        super.baixing_onEndTask()
+        mBaixing_Listener?.baixing_onEndTask(this)
     }
 
     override fun baixing_onDestroyTask() {

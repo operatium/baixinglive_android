@@ -24,10 +24,23 @@ class Baixing_LocalDataManager(private val context: Context) {
         mBaixing_sharedPreferences.edit { putBoolean(BAIXING_KEY_PRIVACY_AGREED, agreed) }
     }
 
+    fun baixing_getLoginToken(): String {
+        return mBaixing_sharedPreferences.getString(BAIXING_KEY_LOGIN_TOKEN, "") ?: ""
+    }
+
+    fun baixing_setLoginToken(token: String) {
+        mBaixing_sharedPreferences.edit { putString(BAIXING_KEY_LOGIN_TOKEN, token) }
+    }
+
+    fun baixing_clearLoginToken() {
+        mBaixing_sharedPreferences.edit { remove(BAIXING_KEY_LOGIN_TOKEN) }
+    }
+
     companion object {
         private const val BAIXING_PRIVACY_PREFERENCES = "baixing_privacy_preferences"
 
         private const val BAIXING_KEY_PRIVACY_AGREED = "baixing_key_privacy_agreed"
+        private const val BAIXING_KEY_LOGIN_TOKEN = "baixing_key_login_token"
 
         @SuppressLint("StaticFieldLeak")
         @Volatile

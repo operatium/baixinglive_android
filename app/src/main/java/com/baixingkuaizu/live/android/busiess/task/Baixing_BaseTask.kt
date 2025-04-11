@@ -23,6 +23,10 @@ open class Baixing_BaseTask(val taskName:String) {
 
     }
 
+    open fun baixing_onEndTask() {
+
+    }
+
     open fun baixing_onStopTask() {
 
     }

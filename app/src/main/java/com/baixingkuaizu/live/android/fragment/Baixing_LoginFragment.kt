@@ -20,6 +20,8 @@ import com.baixingkuaizu.live.android.databinding.BaixingFragmentLoginBinding
 import com.baixingkuaizu.live.android.viewmodel.Baixing_LoginViewModel
 import com.baixingkuaizu.live.android.widget.toast.CenterToast
 import androidx.core.graphics.toColorInt
+import com.baixingkuaizu.live.android.widget.loading.Baixing_FullScreenLoadingDialog
+import kotlin.math.min
 
 /**
  * @author yuyuexing
@@ -31,6 +33,8 @@ class Baixing_LoginFragment : Baixing_BaseFragment() {
     private lateinit var mBaixing_binding: BaixingFragmentLoginBinding
 
     private lateinit var mBaixing_viewModel: Baixing_LoginViewModel
+
+    private var mBaixing_loading: Baixing_FullScreenLoadingDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,6 +60,16 @@ class Baixing_LoginFragment : Baixing_BaseFragment() {
                 mBaixing_binding.baixingBtnSendCode.text = "发验证码"
             }
         }
+        mBaixing_viewModel.mBaixing_loginLoading.observe(viewLifecycleOwner) {
+            if (mBaixing_loading == null) {
+                mBaixing_loading = Baixing_FullScreenLoadingDialog(requireActivity())
+            }
+            if (it) {
+                mBaixing_loading?.show()
+            } else {
+                mBaixing_loading?.hide()
+            }
+        }
     }
 
     override fun onResume() {
@@ -72,7 +86,9 @@ class Baixing_LoginFragment : Baixing_BaseFragment() {
             }
             
             baixingBtnLogin.setClick {
-                baixing_agress()
+                baixing_agress {
+                    baixing_login()
+                }
             }
         }
         mBaixing_binding.baixingCheckboxAgreement.movementMethod = LinkMovementMethod.getInstance()
@@ -131,10 +147,17 @@ class Baixing_LoginFragment : Baixing_BaseFragment() {
     }
     
     private fun baixing_login() {
+        activity?:return
+        mBaixing_viewModel.baixing_login(
+            requireActivity().applicationContext,
+            mBaixing_binding.baixingEditPhone.text.toString(),
+            mBaixing_binding.baixingEditCode.text.toString(),
+            )
     }
     
     override fun onDestroyView() {
         super.onDestroyView()
+        mBaixing_loading?.dismiss()
     }
 
     private fun baixing_agress(doafter: (() -> Unit)? = null) {
