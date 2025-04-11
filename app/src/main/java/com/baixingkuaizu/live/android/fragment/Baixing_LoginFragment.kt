@@ -69,6 +69,12 @@ class Baixing_LoginFragment : Baixing_BaseFragment() {
                 mBaixing_loading?.hide()
             }
         }
+        mBaixing_viewModel.mBaixing_login.observe(viewLifecycleOwner) {
+            if (it) {
+                activity?.finish()
+                Baixing_GoRouter.baixing_jumpHomeActivity()
+            }
+        }
     }
 
     override fun onResume() {
@@ -175,5 +181,6 @@ class Baixing_LoginFragment : Baixing_BaseFragment() {
         if (activity is Baixing_BaseActivity) {
             (activity as Baixing_BaseActivity).vibrateOnce()
         }
+        CenterToast.show(requireActivity(), "请先同意用户协议和隐私政策")
     }
 }

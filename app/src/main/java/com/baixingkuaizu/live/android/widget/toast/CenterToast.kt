@@ -18,7 +18,7 @@ object CenterToast {
         textView.text = message
 
         // 创建 Toast 并设置布局
-        val toast = Toast(activity.applicationContext)
+        val toast = Toast(activity)
         toast.view = layout
         toast.duration = Toast.LENGTH_SHORT
         toast.setGravity(Gravity.CENTER, 0, 0)

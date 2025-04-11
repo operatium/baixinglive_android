@@ -15,8 +15,8 @@ interface Baixing_LoginTaskListener {
      */
     fun baixing_onEndTask(task: Baixing_LoginTask)
 
-    fun baixing_onLoginTimeOut(task: Baixing_LoginTask)
-
     fun baixing_onLoginError(task: Baixing_LoginTask)
+
+    fun baixing_onCancelTask(task: Baixing_LoginTask)
 
 }

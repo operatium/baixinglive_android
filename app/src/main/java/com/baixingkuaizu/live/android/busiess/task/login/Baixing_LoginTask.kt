@@ -4,6 +4,7 @@ import android.content.Context
 import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
 import com.baixingkuaizu.live.android.busiess.task.Baixing_BaseTask
 import com.baixingkuaizu.live.android.busiess.task.Baixing_CoreWork
+import java.util.Collections
 
 /**
  * @author yuyuexing
@@ -13,10 +14,11 @@ import com.baixingkuaizu.live.android.busiess.task.Baixing_CoreWork
 open class Baixing_LoginTask(
     appContext: Context,
     taskName: String,
-    private var mBaixing_login: Baixing_LoginData,
+    var mBaixing_login: Baixing_LoginData,
     private val mBaixing_code: String,
-):Baixing_BaseTask(taskName) {
-    var mBaixing_listener: Baixing_LoginTaskListener? = null
+) : Baixing_BaseTask(taskName) {
+    private val mBaixing_listeners: MutableMap<String, Baixing_LoginTaskListener> =
+        Collections.synchronizedMap(HashMap())
     private val mBaixing_localDataManager: Baixing_LocalDataManager =
         Baixing_LocalDataManager.baixing_getInstance(appContext)
 
@@ -30,12 +32,10 @@ open class Baixing_LoginTask(
         }
     }
 
-    suspend fun baixing_logout() {
-        baixing_onStopTask()
-        if (Baixing_CoreWork.baixing_logout()) {
-            mBaixing_localDataManager.baixing_clearLoginToken()
-            baixing_onDestroyTask()
-        }
+    override fun baixing_cancel() {
+        super.baixing_cancel()
+        baixing_onCancelTask()
+        mBaixing_login.mBaixing_token = ""
     }
 
     /**
@@ -44,18 +44,30 @@ open class Baixing_LoginTask(
     fun baixing_getToken(): String = mBaixing_login.mBaixing_token
 
     override fun baixing_onStartTask() {
-        mBaixing_listener?.baixing_onStartTask(this)
+        if (mBaixing_cancel) return
+        mBaixing_listeners.values.forEach { it.baixing_onStartTask(this) }
     }
 
     override fun baixing_onEndTask() {
-        mBaixing_listener?.baixing_onEndTask(this)
-    }
-
-    fun baixing_onLoginTimeOut() {
-        mBaixing_listener?.baixing_onLoginTimeOut(this)
+        if (mBaixing_cancel) return
+        mBaixing_listeners.values.forEach { it.baixing_onEndTask(this) }
     }
 
     fun baixing_onLoginError() {
-        mBaixing_listener?.baixing_onLoginError(this)
+        if (mBaixing_cancel) return
+        mBaixing_listeners.values.forEach { it.baixing_onLoginError(this) }
+    }
+
+    fun baixing_onCancelTask() {
+        mBaixing_listeners.values.forEach { it.baixing_onCancelTask(this) }
+        mBaixing_listeners.clear()
+    }
+
+    fun addListener(key: String, listener: Baixing_LoginTaskListener) {
+        mBaixing_listeners[key] = listener
+    }
+
+    fun removeListener(key: String) {
+        mBaixing_listeners.remove(key)
     }
 }

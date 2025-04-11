@@ -13,6 +13,31 @@ object Baixing_LoginTaskManager {
 
     private var mBaixing_ID = AtomicInteger(0)
 
+    private var mBaixing_loginInfo: Baixing_LoginData? = null
+
+    private val mBaixing_globalListener: Baixing_LoginTaskListener = object : Baixing_LoginTaskListener {
+        override fun baixing_onStartTask(task: Baixing_LoginTask) {}
+
+        override fun baixing_onEndTask(task: Baixing_LoginTask) {
+            if (task == mBaixing_currentTask) {
+                mBaixing_loginInfo = task.mBaixing_login
+                mBaixing_currentTask = null
+            }
+        }
+
+        override fun baixing_onLoginError(task: Baixing_LoginTask) {
+            if (task == mBaixing_currentTask) {
+                mBaixing_currentTask = null
+            }
+        }
+        override fun baixing_onCancelTask(task: Baixing_LoginTask) {
+            if (task == mBaixing_currentTask) {
+                mBaixing_currentTask = null
+            }
+        }
+
+    }
+
     fun baixing_obtainID(): Int {
         return mBaixing_ID.getAndIncrement()
     }
@@ -20,7 +45,7 @@ object Baixing_LoginTaskManager {
     /**
      * 创建新的登录任务
      */
-    fun baixing_createLoginTask(
+    private fun baixing_createLoginTask(
         appContext: Context,
         phone: String,
         code: String,
@@ -32,21 +57,10 @@ object Baixing_LoginTaskManager {
             mBaixing_login = Baixing_LoginData(mBaixing_phone = phone),
             mBaixing_code = code
         ).also {
-            it.mBaixing_listener = listener
+            it.addListener("self", listener)
+            it.addListener("global", mBaixing_globalListener)
             mBaixing_currentTask = it
         }
-    }
-
-    fun baixing_getCurrentTask(): Baixing_LoginTask? = mBaixing_currentTask
-
-    suspend fun baixing_switchAccount(
-        appContext: Context,
-        phone: String,
-        code: String,
-        listener: Baixing_LoginTaskListener
-    ): String {
-        mBaixing_currentTask?.baixing_logout()
-        return baixing_createLoginTask(appContext, phone, code, listener).baixing_login()
     }
 
     suspend fun baixing_loginAccount(
@@ -56,5 +70,10 @@ object Baixing_LoginTaskManager {
         listener: Baixing_LoginTaskListener
     ): String {
         return baixing_createLoginTask(appContext, phone, code, listener).baixing_login()
+    }
+
+    fun baixing_cancelLoginTask() {
+        mBaixing_currentTask?.baixing_cancel()
+        mBaixing_currentTask = null
     }
 }

@@ -34,6 +34,12 @@ object Baixing_GoRouter {
         currentActivity.startActivity(intent)
     }
 
+    fun baixing_jumpHomeActivity() {
+        val currentActivity = mBaixing_activityList.peek()
+        val intent = Intent(currentActivity, Baixing_MainActivity::class.java)
+        currentActivity.startActivity(intent)
+    }
+
     fun baixing_callOnCreate(activity: Baixing_BaseActivity) {
         mBaixing_activityList.push(activity)
     }
