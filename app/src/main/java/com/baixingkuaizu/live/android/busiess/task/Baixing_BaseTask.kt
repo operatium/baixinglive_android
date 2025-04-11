@@ -7,6 +7,12 @@ package com.baixingkuaizu.live.android.busiess.task
  * @description: 任务基类，所有任务类的父类，提供任务生命周期管理的基本方法
  */
 open class Baixing_BaseTask(val taskName:String) {
+    var mBaixing_cancel = false
+
+    open fun baixing_cancel() {
+        mBaixing_cancel = true
+    }
+
     override fun toString(): String {
         return "Baixing_BaseTask(taskName='$taskName')"
     }

@@ -19,10 +19,11 @@ object Baixing_SendVerficationCodeTaskManager: Baixing_TaskManager<Baixing_SendV
         return mBaixing_ID.getAndIncrement()
     }
 
-    suspend fun sendVerificationCode(taskName:String, phone:String, listener: Baixing_SendVerficationCodeTaskListener) {
-        mBaixing_currentTask = Baixing_SendVerficationCodeTask(taskName, phone).apply {
+    suspend fun sendVerificationCode(taskName:String, phone:String, listener: Baixing_SendVerficationCodeTaskListener):String {
+        Baixing_SendVerficationCodeTask(taskName, phone).run {
+            mBaixing_currentTask = this
             mBaixing_Listener = listener
-            baixing_sendVerificationCode()
+            return baixing_sendVerificationCode()
         }
     }
 
@@ -37,5 +38,12 @@ object Baixing_SendVerficationCodeTaskManager: Baixing_TaskManager<Baixing_SendV
             mBaixing_currentTask = null
         }
         return r
+    }
+
+    fun baixing_getCurrentTask():Baixing_SendVerficationCodeTask? = mBaixing_currentTask
+
+    fun baixing_cancelCurrentTask() {
+        mBaixing_currentTask?.baixing_cancel()
+        mBaixing_currentTask = null
     }
 }

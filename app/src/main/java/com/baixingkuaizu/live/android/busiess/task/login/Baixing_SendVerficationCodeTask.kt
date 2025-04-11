@@ -17,16 +17,17 @@ class Baixing_SendVerficationCodeTask(taskName:String, val phoneNumber: String) 
     var mBaixing_Listener: Baixing_SendVerficationCodeTaskListener? = null
     var mbaixing_code: String? = null
 
-    init {
-        baixing_onCreateTask()
-    }
-
     suspend fun baixing_sendVerificationCode():String {
         baixing_onStartTask()
         baixing_startCountdown()
         mbaixing_code = Baixing_CoreWork.baixing_sendVerificationCode()
         baixing_onEndTask()
         return mbaixing_code?:""
+    }
+
+    override fun baixing_cancel() {
+        super.baixing_cancel()
+        baixing_onCancelTask()
     }
 
     fun baixing_isTimeOver():Boolean {
@@ -46,6 +47,12 @@ class Baixing_SendVerficationCodeTask(taskName:String, val phoneNumber: String) 
             mBaixing_Timer = Timer()
             mBaixing_Timer?.schedule(object : TimerTask() {
                 override fun run() {
+                    if (mBaixing_cancel) {
+                        mBaixing_Timer?.cancel()
+                        mBaixing_Timer?.purge()
+                        mBaixing_Timer = null
+                        return
+                    }
                     if (baixing_isTimeOver()) {
                         mBaixing_Timer?.cancel()
                         mBaixing_Timer?.purge()
@@ -59,28 +66,28 @@ class Baixing_SendVerficationCodeTask(taskName:String, val phoneNumber: String) 
         }
     }
 
-    override fun baixing_onCreateTask() {
-        super.baixing_onCreateTask()
-        mBaixing_Listener?.baixing_onCreateTask(this)
-    }
-
     override fun baixing_onStartTask() {
-        super.baixing_onStartTask()
+        if (mBaixing_cancel) return
         mBaixing_Listener?.baixing_onStartTask(this)
     }
 
     fun baixing_onTime(second:Int) {
+        if (mBaixing_cancel) return
         mBaixing_Listener?.baixing_onTime(this, second)
     }
 
     override fun baixing_onEndTask() {
-        super.baixing_onEndTask()
+        if (mBaixing_cancel) return
         mBaixing_Listener?.baixing_onEndTask(this)
     }
 
     override fun baixing_onDestroyTask() {
-        super.baixing_onDestroyTask()
+        if (mBaixing_cancel) return
         mBaixing_Listener?.baixing_onDestroyTask(this)
     }
 
+    fun baixing_onCancelTask() {
+        mBaixing_Listener?.baixing_onCancelTask(this)
+        mBaixing_Listener = null
+    }
 }

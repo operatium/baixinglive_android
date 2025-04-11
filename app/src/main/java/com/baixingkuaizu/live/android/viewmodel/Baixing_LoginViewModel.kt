@@ -47,47 +47,63 @@ class Baixing_LoginViewModel:ViewModel() {
                 _mBaixing_toast.value = "验证码发送过于频繁"
                 return
             }
+            mBaixing_netCode = null
             viewModelScope.launch(Dispatchers.Default) {
-                Baixing_SendVerficationCodeTaskManager.sendVerificationCode(
-                    taskName = "发送验证码${Baixing_SendVerficationCodeTaskManager.baixing_obtainID()}",
-                    phone = phoneNumber,
-                    listener = object : Baixing_SendVerficationCodeTaskListener {
-                        override fun baixing_onCreateTask(task: Baixing_SendVerficationCodeTask) {
-
-                        }
-
-                        override fun baixing_onStartTask(task: Baixing_SendVerficationCodeTask) {
-                            viewModelScope.launch(Dispatchers.Main) {
-                                _mBaixing_toast.value = "验证码发送中"
-                            }
-                        }
-
-                        override fun baixing_onEndTask(task: Baixing_SendVerficationCodeTask) {
-                            viewModelScope.launch(Dispatchers.Main) {
-                                mBaixing_netCode = task.mbaixing_code
-                            }
-                        }
-
-                        override fun baixing_onTime(
-                            task: Baixing_SendVerficationCodeTask,
-                            second: Int
-                        ) {
-                            viewModelScope.launch(Dispatchers.Main) {
-                                _mBaixing_codeTime.value = second
-                            }
-                        }
-
-                        override fun baixing_onDestroyTask(task: Baixing_SendVerficationCodeTask) {
-                            viewModelScope.launch(Dispatchers.Main) {
-                                _mBaixing_codeTime.value = -1
-                            }
-                        }
-
+                withTimeoutOrNull(3000) {
+                    Baixing_SendVerficationCodeTaskManager.sendVerificationCode(
+                        taskName = "发送验证码${Baixing_SendVerficationCodeTaskManager.baixing_obtainID()}",
+                        phone = phoneNumber,
+                        listener = baixing_obtainSendCodeListener()
+                    )
+                } ?: run {
+                    viewModelScope.launch(Dispatchers.Main) {
+                        _mBaixing_toast.value = "验证码发送超时"
+                        mBaixing_netCode = null
+                        Baixing_SendVerficationCodeTaskManager.baixing_cancelCurrentTask()
                     }
-                )
+                }
             }
         }
     }
+
+    private fun baixing_obtainSendCodeListener() =
+        object : Baixing_SendVerficationCodeTaskListener {
+
+            override fun baixing_onStartTask(task: Baixing_SendVerficationCodeTask) {
+                viewModelScope.launch(Dispatchers.Main) {
+                    _mBaixing_toast.value = "验证码发送中"
+                }
+            }
+
+            override fun baixing_onEndTask(task: Baixing_SendVerficationCodeTask) {
+                viewModelScope.launch(Dispatchers.Main) {
+                    mBaixing_netCode = task.mbaixing_code
+                }
+            }
+
+            override fun baixing_onTime(
+                task: Baixing_SendVerficationCodeTask,
+                second: Int
+            ) {
+                viewModelScope.launch(Dispatchers.Main) {
+                    _mBaixing_codeTime.value = second
+                }
+            }
+
+            override fun baixing_onDestroyTask(task: Baixing_SendVerficationCodeTask) {
+                viewModelScope.launch(Dispatchers.Main) {
+                    _mBaixing_codeTime.value = -1
+                }
+            }
+
+            override fun baixing_onCancelTask(task: Baixing_SendVerficationCodeTask) {
+                viewModelScope.launch(Dispatchers.Main) {
+                    _mBaixing_codeTime.value = -1
+                    _mBaixing_toast.value = "取消发送验证码"
+                }
+            }
+
+        }
 
     fun baixing_login(appContext: Context, phoneNumber: String, code: String) {
         _mBaixing_loginLoading.value = true
