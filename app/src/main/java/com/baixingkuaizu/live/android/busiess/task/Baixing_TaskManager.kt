@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap
 open class Baixing_TaskManager<T: Baixing_BaseTask> {
     private val mBaixing_taskList = ConcurrentHashMap<String, T>()
 
+
     fun baixing_addTask(task: T) {
         mBaixing_taskList[task.taskName] = task
     }

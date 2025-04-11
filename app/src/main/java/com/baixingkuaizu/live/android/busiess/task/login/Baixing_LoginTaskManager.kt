@@ -1,6 +1,7 @@
 package com.baixingkuaizu.live.android.busiess.task.login
 
 import android.content.Context
+import java.util.concurrent.atomic.AtomicInteger
 
 /**
  * @author yuyuexing
@@ -9,6 +10,12 @@ import android.content.Context
  */
 object Baixing_LoginTaskManager {
     private var mBaixing_currentTask: Baixing_LoginTask? = null
+
+    private var mBaixing_ID = AtomicInteger(0)
+
+    fun baixing_obtainID(): Int {
+        return mBaixing_ID.getAndIncrement()
+    }
 
     /**
      * 创建新的登录任务
@@ -19,7 +26,12 @@ object Baixing_LoginTaskManager {
         code: String,
         listener: Baixing_LoginTaskListener
     ): Baixing_LoginTask {
-        return Baixing_LoginTask(appContext, Baixing_LoginData(mBaixing_phone = phone), code).also {
+        return Baixing_LoginTask(
+            appContext = appContext,
+            taskName = "phone_login_${baixing_obtainID()}",
+            mBaixing_login = Baixing_LoginData(mBaixing_phone = phone),
+            mBaixing_code = code
+        ).also {
             it.mBaixing_listener = listener
             mBaixing_currentTask = it
         }

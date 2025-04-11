@@ -10,19 +10,20 @@ import java.util.concurrent.atomic.AtomicInteger
  */
 object Baixing_SendVerficationCodeTaskManager: Baixing_TaskManager<Baixing_SendVerficationCodeTask>() {
     private const val TAG = "Baixing_SendVerficationCodeTaskManager"
-    private var mBaixing_ID = AtomicInteger(0)
 
     private var mBaixing_currentTask: Baixing_SendVerficationCodeTask? = null
+
+    private var mBaixing_ID = AtomicInteger(0)
+
+    fun baixing_obtainID(): Int {
+        return mBaixing_ID.getAndIncrement()
+    }
 
     fun sendVerificationCode(taskName:String, phone:String, listener: Baixing_SendVerficationCodeTaskListener) {
         mBaixing_currentTask = Baixing_SendVerficationCodeTask(taskName, phone).apply {
             mBaixing_Listener = listener
             baixing_sendVerificationCode()
         }
-    }
-
-    fun baixing_obtainID(): Int {
-        return mBaixing_ID.getAndIncrement()
     }
 
     fun baixing_isValidPhoneNumber(phoneNumber:String): Boolean {

@@ -31,15 +31,11 @@ open class Baixing_BaseTask(val taskName:String) {
 
     }
 
-    open fun baixing_onResumeTask() {
+    open fun baixing_onTimeOut() {
 
     }
 
-    open fun baixing_onPauseTask() {
-
-    }
-
-    open fun baixing_onRestartTask() {
+    open fun baixing_onError() {
 
     }
 }

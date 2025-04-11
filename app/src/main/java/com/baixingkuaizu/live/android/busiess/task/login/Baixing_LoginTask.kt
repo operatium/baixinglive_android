@@ -2,6 +2,7 @@ package com.baixingkuaizu.live.android.busiess.task.login
 
 import android.content.Context
 import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
+import com.baixingkuaizu.live.android.busiess.task.Baixing_BaseTask
 import com.baixingkuaizu.live.android.busiess.task.Baixing_CoreWork
 
 /**
@@ -11,38 +12,52 @@ import com.baixingkuaizu.live.android.busiess.task.Baixing_CoreWork
  */
 open class Baixing_LoginTask(
     appContext: Context,
+    taskName: String,
     private var mBaixing_login: Baixing_LoginData? = null,
     private val mBaixing_code: String,
-) {
+):Baixing_BaseTask(taskName) {
     var mBaixing_listener: Baixing_LoginTaskListener? = null
-    private val mBaixing_localDataManager: Baixing_LocalDataManager = Baixing_LocalDataManager.baixing_getInstance(appContext)
-
-    init {
-        mBaixing_listener?.baixing_onCreateTask(this)
-    }
+    private val mBaixing_localDataManager: Baixing_LocalDataManager =
+        Baixing_LocalDataManager.baixing_getInstance(appContext)
 
     fun baixing_login(): Boolean {
         mBaixing_login?.let {
-            mBaixing_listener?.baixing_onStartTask(this)
+            baixing_onStartTask()
             it.mBaixing_token = Baixing_CoreWork.baixing_login(it.mBaixing_phone, mBaixing_code)
             mBaixing_localDataManager.baixing_setLoginToken(it.mBaixing_token)
-            mBaixing_listener?.baixing_onEndTask(this)
+            baixing_onEndTask()
             return true
         }
         return false
     }
 
     fun baixing_logout() {
-        mBaixing_listener?.baixing_onStopTask(this)
+        baixing_onStopTask()
         if (Baixing_CoreWork.baixing_logout()) {
             mBaixing_login = null
             mBaixing_localDataManager.baixing_clearLoginToken()
-            mBaixing_listener?.baixing_onDestroyTask(this)
+            baixing_onDestroyTask()
         }
     }
 
     /**
      * 获取当前登录token
      */
-    fun baixing_getToken(): String = mBaixing_login?.mBaixing_token?:""
+    fun baixing_getToken(): String = mBaixing_login?.mBaixing_token ?: ""
+
+    override fun baixing_onStartTask() {
+        mBaixing_listener?.baixing_onStartTask(this)
+    }
+
+    override fun baixing_onEndTask() {
+        mBaixing_listener?.baixing_onEndTask(this)
+    }
+
+    fun baixing_onLoginTimeOut() {
+        mBaixing_listener?.baixing_onLoginTimeOut(this)
+    }
+
+    fun baixing_onLoginError() {
+        mBaixing_listener?.baixing_onLoginError(this)
+    }
 }
