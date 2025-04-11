@@ -8,6 +8,11 @@ import com.baixingkuaizu.live.android.base.Baixing_BaseFragment
 import com.baixingkuaizu.live.android.busiess.router.Baixing_GoRouter
 import com.baixingkuaizu.live.android.databinding.BaixingSelectLoginFragmentBinding
 
+/**
+ * @author yuyuexing
+ * @date: 2025/4/11
+ * @description: 登录选择界面Fragment
+ */
 class Baixing_SelectLoginFragment : Baixing_BaseFragment() {
     private lateinit var mBaixing_Binding: BaixingSelectLoginFragmentBinding
 

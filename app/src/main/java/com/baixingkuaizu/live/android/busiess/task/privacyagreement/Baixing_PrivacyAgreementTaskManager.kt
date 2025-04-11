@@ -5,6 +5,11 @@ import android.widget.FrameLayout
 import com.baixingkuaizu.live.android.busiess.task.Baixing_TaskManager
 import com.baixingkuaizu.live.android.widget.web.Baixing_WebViewWrapper
 
+/**
+ * @author yuyuexing
+ * @date: 2025/4/11
+ * @description: 隐私协议任务管理器，负责创建、管理和销毁隐私协议和用户协议相关任务
+ */
 object Baixing_PrivacyAgreementTaskManager : Baixing_TaskManager<Baixing_PrivacyAgreementTask>() {
 
     fun createTask(context: Context) {

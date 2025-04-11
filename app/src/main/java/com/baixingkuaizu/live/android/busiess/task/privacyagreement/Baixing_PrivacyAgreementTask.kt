@@ -13,6 +13,11 @@ import com.baixingkuaizu.live.android.widget.web.Baixing_WebViewWrapper
     提前预加载
     用户登陆后释放
  */
+/**
+ * @author yuyuexing
+ * @date: 2025/4/11
+ * @description: 隐私协议任务类，负责处理隐私协议和用户协议的预加载、显示和销毁
+ */
 class Baixing_PrivacyAgreementTask(private val mBaixing_name:String, private val mBaixing_url:String)
     : Baixing_BaseTask(mBaixing_name) {
         private val TAG = "yyx类Baixing_PrivacyAgreementTask"

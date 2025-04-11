@@ -2,6 +2,11 @@ package com.baixingkuaizu.live.android.busiess.task
 
 import java.util.concurrent.ConcurrentHashMap
 
+/**
+ * @author yuyuexing
+ * @date: 2025/4/11
+ * @description: 任务管理器基类，提供任务的添加、删除、查询和清理等通用功能
+ */
 open class Baixing_TaskManager<T: Baixing_BaseTask> {
     private val mBaixing_taskList = ConcurrentHashMap<String, T>()
 

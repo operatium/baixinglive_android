@@ -5,6 +5,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
 
+/**
+ * @author yuyuexing
+ * @date: 2025/4/11
+ * @description: 本地数据管理器，负责处理应用本地数据的存储和读取，如隐私政策同意状态
+ */
 class Baixing_LocalDataManager(private val context: Context) {
 
     private val mBaixing_sharedPreferences: SharedPreferences by lazy {

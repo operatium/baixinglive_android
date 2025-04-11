@@ -7,6 +7,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 
+/**
+ * @author yuyuexing
+ * @date: 2025/4/11
+ * @description: 权限检查类，负责处理应用所需权限的检查和请求
+ */
 class Baixing_PermissionCheck(mBaixing_activity: AppCompatActivity) {
     private var mBaixing_permissionCallback: ((Boolean) -> Unit)? = null
     

@@ -10,6 +10,11 @@ import com.baixingkuaizu.live.android.busiess.task.privacyagreement.Baixing_Priv
 import com.baixingkuaizu.live.android.databinding.BaixingWebActivityBinding
 import com.baixingkuaizu.live.android.widget.web.Baixing_WebViewWrapper
 
+/**
+ * @author yuyuexing
+ * @date: 2025/4/11
+ * @description: Web页面活动，用于展示网页内容，如隐私政策和用户协议
+ */
 class Baixing_WebActivity : Baixing_BaseActivity() {
     private val mBaixing_activityProxy = Baixing_ActivityProxy(this)
     private lateinit var mBaixing_binding: BaixingWebActivityBinding

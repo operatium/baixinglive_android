@@ -8,6 +8,11 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
 
+/**
+ * @author yuyuexing
+ * @date: 2025/4/11
+ * @description:webview的封装
+ */
 class Baixing_WebViewWrapper(private val context: Context) {
     var mBaixing_webView: WebView? = null
     private var mBaixing_onPageFinishedListener: ((String?) -> Unit)? = null

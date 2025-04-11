@@ -5,6 +5,11 @@ import com.baixingkuaizu.live.android.activity.*
 import com.baixingkuaizu.live.android.base.Baixing_BaseActivity
 import java.util.Stack
 
+/**
+ * @author yuyuexing
+ * @date: 2025/4/11
+ * @description: 路由管理器，负责处理应用内页面跳转和Activity生命周期管理
+ */
 object Baixing_GoRouter {
     private val mBaixing_activityList = Stack<Baixing_BaseActivity>()
 

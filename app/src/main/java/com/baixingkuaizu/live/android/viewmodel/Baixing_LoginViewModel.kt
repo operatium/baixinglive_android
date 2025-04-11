@@ -1,0 +1,89 @@
+package com.baixingkuaizu.live.android.viewmodel
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.baixingkuaizu.live.android.busiess.task.login.Baixing_SendVerficationCodeTask
+import com.baixingkuaizu.live.android.busiess.task.login.Baixing_SendVerficationCodeTaskListener
+import com.baixingkuaizu.live.android.busiess.task.login.Baixing_SendVerficationCodeTaskManager
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
+class Baixing_LoginViewModel:ViewModel() {
+    // 用于存储验证码倒计时时间
+    private val _mBaixing_codeTime = MutableLiveData<Int>()
+    val mBaixing_codeTime: LiveData<Int> = _mBaixing_codeTime
+
+    private val _mBaixing_toast = MutableLiveData<String>()
+    val mBaixing_toast: LiveData<String> = _mBaixing_toast
+
+    private var mBaixing_netCode: String? = null
+
+    // 发送验证码的函数
+    fun baixing_sendVerificationCode(phoneNumber: String) {
+        Baixing_SendVerficationCodeTaskManager.let { manager ->
+            if (!manager.baixing_isValidPhoneNumber(phoneNumber)) {
+                _mBaixing_toast.value = "手机号码不合法"
+                return
+            }
+            if (!manager.baixing_isTimeout()) {
+                _mBaixing_toast.value = "验证码发送过于频繁"
+                return
+            }
+            viewModelScope.launch(Dispatchers.Default) {
+                Baixing_SendVerficationCodeTaskManager.sendVerificationCode(
+                    taskName = "发送验证码${Baixing_SendVerficationCodeTaskManager.baixing_obtainID()}",
+                    phone = phoneNumber,
+                    listener = object : Baixing_SendVerficationCodeTaskListener {
+                        override fun baixing_onCreateTask(task: Baixing_SendVerficationCodeTask) {
+
+                        }
+
+                        override fun baixing_onStartTask(task: Baixing_SendVerficationCodeTask) {
+                            viewModelScope.launch(Dispatchers.Main) {
+                                _mBaixing_toast.value = "验证码发送中"
+                            }
+                        }
+
+                        override fun baixing_onStopTask(task: Baixing_SendVerficationCodeTask) {
+                            viewModelScope.launch(Dispatchers.Main) {
+                                mBaixing_netCode = task.mbaixing_code
+                            }
+                        }
+
+                        override fun baixing_onTime(
+                            task: Baixing_SendVerficationCodeTask,
+                            second: Int
+                        ) {
+                            viewModelScope.launch(Dispatchers.Main) {
+                                _mBaixing_codeTime.value = second
+                            }
+                        }
+
+                        override fun baixing_onDestroyTask(task: Baixing_SendVerficationCodeTask) {
+                            viewModelScope.launch(Dispatchers.Main) {
+                                _mBaixing_codeTime.value = -1
+                            }
+                        }
+
+                    }
+                )
+            }
+        }
+    }
+
+    fun baixing_checkVerificationCode(code: String): Boolean {
+        return mBaixing_netCode == code
+    }
+
+    fun baixing_clearNetCode() {
+        mBaixing_netCode = null
+    }
+
+    fun baixing_obtainCodeTime() {
+        if (Baixing_SendVerficationCodeTaskManager.baixing_isTimeout()) {
+            _mBaixing_codeTime.value = -1
+        }
+    }
+}

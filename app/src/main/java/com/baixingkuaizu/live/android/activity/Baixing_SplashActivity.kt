@@ -19,6 +19,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
+/**
+ * @author yuyuexing
+ * @date: 2025/4/11
+ * @description: 启动页活动，负责处理应用启动流程、隐私政策确认和权限申请
+ */
 @SuppressLint("CustomSplashScreen")
 class Baixing_SplashActivity : Baixing_BaseActivity() {
     private val mBaixing_ActivityProxy = Baixing_ActivityProxy(this)
@@ -62,7 +67,9 @@ class Baixing_SplashActivity : Baixing_BaseActivity() {
         mBaixing_privacyDialog = Baixing_PrivacyDialog(this)
         mBaixing_privacyDialog?.baixing_setOnAgreeListener {
             mBaixing_localDataManager.baixing_setPrivacyAgreed(true)
-            mBaixing_PermissionCheck.baixing_checkAndRequestPermissions(this)
+            mBaixing_PermissionCheck.baixing_checkAndRequestPermissions(this) { isGranted ->
+                baixing_startMainActivity(0)
+            }
         }
 
         mBaixing_privacyDialog?.baixing_setOnDisagreeListener {

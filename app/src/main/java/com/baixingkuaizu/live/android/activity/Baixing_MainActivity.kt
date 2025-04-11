@@ -2,12 +2,16 @@ package com.baixingkuaizu.live.android.activity
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.baixingkuaizu.live.android.R
 import com.baixingkuaizu.live.android.base.Baixing_BaseActivity
 
+/**
+ * @author yuyuexing
+ * @date: 2025/4/11
+ * @description: 主活动页面
+ */
 class Baixing_MainActivity : Baixing_BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

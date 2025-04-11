@@ -2,6 +2,11 @@ package com.baixingkuaizu.live.android.widget.web
 
 import android.content.Context
 
+/**
+ * @author yuyuexing
+ * @date: 2025/4/11
+ * @description: WebView管理器
+ */
 object Baixing_WebViewManager {
     private val mBaixing_webViewMap = HashMap<String, Baixing_WebViewWrapper>()
 

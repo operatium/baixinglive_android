@@ -15,6 +15,11 @@ import android.widget.Toast
 import com.baixingkuaizu.live.android.busiess.router.Baixing_GoRouter
 import com.baixingkuaizu.live.android.databinding.BaixingPrivacyDialogBinding
 
+/**
+ * @author yuyuexing
+ * @date: 2025/4/11
+ * @description: 隐私政策对话框，用于展示隐私政策内容并获取用户同意或拒绝的结果
+ */
 class Baixing_PrivacyDialog(context: Context) : Dialog(context) {
 
     private var mBaixing_onAgreeListener: (() -> Unit)? = null

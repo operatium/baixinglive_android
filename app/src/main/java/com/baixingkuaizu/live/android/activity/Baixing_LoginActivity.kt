@@ -2,6 +2,7 @@ package com.baixingkuaizu.live.android.activity
 
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.viewModels
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.FragmentTransaction
@@ -11,6 +12,11 @@ import com.baixingkuaizu.live.android.busiess.proxy.Baixing_ActivityProxy
 import com.baixingkuaizu.live.android.databinding.BaixingLoginActivityBinding
 import com.baixingkuaizu.live.android.fragment.Baixing_LoginFragment
 
+/**
+ * @author yuyuexing
+ * @date: 2025/4/11
+ * @description: 登录活动页面
+ */
 class Baixing_LoginActivity:Baixing_BaseActivity() {
     private val TAG = "Baixing_LoginActivity"
 
@@ -34,7 +40,11 @@ class Baixing_LoginActivity:Baixing_BaseActivity() {
                     if (fragmentManager.backStackEntryCount > 1) {
                         fragmentManager.popBackStack()
                     } else {
-                        finish()
+                        if (isTaskRoot) {
+                            moveTaskToBack(true)
+                        } else {
+                            finish()
+                        }
                     }
                 }
             }
@@ -47,7 +57,7 @@ class Baixing_LoginActivity:Baixing_BaseActivity() {
         mBaixing_activityProxy.baixing_unbind()
     }
 
-    private fun baixing_toLoginFragment() {
+    fun baixing_toLoginFragment() {
         supportFragmentManager.beginTransaction().run {
             add(R.id.baixing_framelayout2, Baixing_LoginFragment())
             setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
