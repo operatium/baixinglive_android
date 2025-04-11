@@ -99,4 +99,8 @@ class Baixing_SendVerficationCodeTask(taskName: String, val phoneNumber: String)
     fun removeListener(key: String) {
         mBaixing_Listeners.remove(key)
     }
+
+    override fun toString(): String {
+        return "Baixing_SendVerficationCodeTask(phoneNumber='$phoneNumber', mBaixing_TIME=$mBaixing_TIME, mBaixing_startTime=$mBaixing_startTime, mBaixing_Timer=$mBaixing_Timer, mBaixing_Listeners=$mBaixing_Listeners, mbaixing_code=$mbaixing_code)"
+    }
 }

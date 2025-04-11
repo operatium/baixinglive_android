@@ -15,28 +15,10 @@ object Baixing_SendVerficationCodeTaskManager: Baixing_TaskManager<Baixing_SendV
 
     private var mBaixing_ID = AtomicInteger(0)
 
-    fun baixing_obtainID(): Int {
-        return mBaixing_ID.getAndIncrement()
-    }
-
-    suspend fun sendVerificationCode(taskName:String, phone:String, listener: Baixing_SendVerficationCodeTaskListener):String {
-        Baixing_SendVerficationCodeTask(taskName, phone).run {
-            mBaixing_currentTask = this
-            addListener("self", listener)
-            addListener("global", baixing_obtainSendCodeListener())
-            return baixing_sendVerificationCode()
-        }
-    }
-
-    private fun baixing_obtainSendCodeListener(): Baixing_SendVerficationCodeTaskListener = object : Baixing_SendVerficationCodeTaskListener {
-        override fun baixing_onStartTask(task: Baixing_SendVerficationCodeTask) {
-        }
-
-        override fun baixing_onEndTask(task: Baixing_SendVerficationCodeTask) {
-        }
-
-        override fun baixing_onTime(task: Baixing_SendVerficationCodeTask, second: Int) {
-        }
+    private val globalListener: Baixing_SendVerficationCodeTaskListener = object : Baixing_SendVerficationCodeTaskListener {
+        override fun baixing_onStartTask(task: Baixing_SendVerficationCodeTask) {}
+        override fun baixing_onEndTask(task: Baixing_SendVerficationCodeTask) {}
+        override fun baixing_onTime(task: Baixing_SendVerficationCodeTask, second: Int) {}
 
         override fun baixing_onDestroyTask(task: Baixing_SendVerficationCodeTask) {
             if (mBaixing_currentTask == task) {
@@ -49,7 +31,22 @@ object Baixing_SendVerficationCodeTaskManager: Baixing_TaskManager<Baixing_SendV
                 mBaixing_currentTask = null
             }
         }
+    }
 
+    fun baixing_obtainID(): Int {
+        return mBaixing_ID.getAndIncrement()
+    }
+
+    suspend fun sendVerificationCode(taskName:String, phone:String, listener: Baixing_SendVerficationCodeTaskListener):String {
+        if (mBaixing_currentTask != null) {
+            throw Exception("当前验证码任务存在${mBaixing_currentTask}")
+        }
+        Baixing_SendVerficationCodeTask(taskName, phone).run {
+            mBaixing_currentTask = this
+            addListener("self", listener)
+            addListener("global", globalListener)
+            return baixing_sendVerificationCode()
+        }
     }
 
     fun baixing_isValidPhoneNumber(phoneNumber:String): Boolean {
