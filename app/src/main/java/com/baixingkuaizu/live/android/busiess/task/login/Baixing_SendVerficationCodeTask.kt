@@ -21,7 +21,7 @@ class Baixing_SendVerficationCodeTask(taskName:String, val phoneNumber: String) 
         baixing_onCreateTask()
     }
 
-    fun baixing_sendVerificationCode():String {
+    suspend fun baixing_sendVerificationCode():String {
         baixing_onStartTask()
         baixing_startCountdown()
         mbaixing_code = Baixing_CoreWork.baixing_sendVerificationCode()

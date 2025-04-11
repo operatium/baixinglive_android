@@ -1,5 +1,7 @@
 package com.baixingkuaizu.live.android.busiess.task
 
+import kotlinx.coroutines.delay
+
 /**
  * @author yuyuexing
  * @date: 2025/4/11
@@ -8,20 +10,20 @@ package com.baixingkuaizu.live.android.busiess.task
 object Baixing_CoreWork {
 
     //发送验证码
-    fun baixing_sendVerificationCode():String {
-        Thread.sleep(5000)
+    suspend fun baixing_sendVerificationCode():String {
+        delay(5000)
         return "000000"
     }
 
     //登陆
-    fun baixing_login(phone:String, code:String):String {
-        Thread.sleep(5000)
+    suspend fun baixing_login(phone:String, code:String):String {
+        delay(5000)
         return "userToken"
     }
 
     //登出
-    fun baixing_logout():Boolean {
-        Thread.sleep(5000)
+    suspend fun baixing_logout():Boolean {
+        delay(5000)
         return true
     }
 }

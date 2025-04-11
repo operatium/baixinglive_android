@@ -1,6 +1,7 @@
 package com.baixingkuaizu.live.android.viewmodel
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,10 +13,14 @@ import com.baixingkuaizu.live.android.busiess.task.login.Baixing_SendVerfication
 import com.baixingkuaizu.live.android.busiess.task.login.Baixing_SendVerficationCodeTaskListener
 import com.baixingkuaizu.live.android.busiess.task.login.Baixing_SendVerficationCodeTaskManager
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
 
 class Baixing_LoginViewModel:ViewModel() {
+    val TAG = "yyx类Baixing_LoginViewModel"
     // 用于存储验证码倒计时时间
     private val _mBaixing_codeTime = MutableLiveData<Int>()
     val mBaixing_codeTime: LiveData<Int> = _mBaixing_codeTime
@@ -86,38 +91,45 @@ class Baixing_LoginViewModel:ViewModel() {
 
     fun baixing_login(appContext: Context, phoneNumber: String, code: String) {
         _mBaixing_loginLoading.value = true
-        viewModelScope.launch(Dispatchers.Default) {
-            val loginListener = object : Baixing_LoginTaskListener {
+        val loginListener = object : Baixing_LoginTaskListener {
 
-                override fun baixing_onStartTask(task: Baixing_LoginTask) {}
+            override fun baixing_onStartTask(task: Baixing_LoginTask) {}
 
-                override fun baixing_onEndTask(task: Baixing_LoginTask) {
-                    viewModelScope.launch {
-                        _mBaixing_loginLoading.value = false
-                        _mBaixing_login.value = true
-                    }
-                }
-
-                override fun baixing_onLoginTimeOut(task: Baixing_LoginTask) {
-                    viewModelScope.launch {
-                        _mBaixing_loginLoading.value = false
-                        _mBaixing_toast.value = "登录超时"
-                    }
-                }
-
-                override fun baixing_onLoginError(task: Baixing_LoginTask) {
-                    viewModelScope.launch {
-                        _mBaixing_loginLoading.value = false
-                        _mBaixing_toast.value = "登录错误"
-                    }
+            override fun baixing_onEndTask(task: Baixing_LoginTask) {
+                viewModelScope.launch {
+                    _mBaixing_loginLoading.value = false
+                    _mBaixing_login.value = true
                 }
             }
 
-            withTimeoutOrNull(3000L) {
-                Baixing_LoginTaskManager.baixing_loginAccount(appContext, phoneNumber, code, loginListener)
+            override fun baixing_onLoginTimeOut(task: Baixing_LoginTask) {
+                viewModelScope.launch {
+                    _mBaixing_loginLoading.value = false
+                    _mBaixing_toast.value = "登录超时"
+                }
+            }
+
+            override fun baixing_onLoginError(task: Baixing_LoginTask) {
+                viewModelScope.launch {
+                    _mBaixing_loginLoading.value = false
+                    _mBaixing_toast.value = "登录错误"
+                }
+            }
+        }
+        viewModelScope.launch(Dispatchers.Default) {
+            val token1 = withTimeoutOrNull(1000) {
+                Log.d(TAG, "baixing_login: baixing_loginAccount1")
+                Baixing_LoginTaskManager.baixing_loginAccount(
+                    appContext,
+                    phoneNumber,
+                    code,
+                    loginListener
+                )
             } ?: run {
+                Log.d(TAG, "baixing_login: baixing_onLoginTimeOut")
                 Baixing_LoginTaskManager.baixing_getCurrentTask()?.baixing_onLoginTimeOut()
             }
+            Log.d(TAG, "baixing_login: token1: ${token1}")
         }
     }
 

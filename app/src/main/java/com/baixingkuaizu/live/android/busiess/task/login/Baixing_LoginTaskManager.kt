@@ -39,12 +39,22 @@ object Baixing_LoginTaskManager {
 
     fun baixing_getCurrentTask(): Baixing_LoginTask? = mBaixing_currentTask
 
-    fun baixing_switchAccount(appContext: Context, phone: String, code: String,listener: Baixing_LoginTaskListener): Boolean {
+    suspend fun baixing_switchAccount(
+        appContext: Context,
+        phone: String,
+        code: String,
+        listener: Baixing_LoginTaskListener
+    ): String {
         mBaixing_currentTask?.baixing_logout()
         return baixing_createLoginTask(appContext, phone, code, listener).baixing_login()
     }
 
-    fun baixing_loginAccount(appContext: Context, phone: String, code: String,listener: Baixing_LoginTaskListener): Boolean {
+    suspend fun baixing_loginAccount(
+        appContext: Context,
+        phone: String,
+        code: String,
+        listener: Baixing_LoginTaskListener
+    ): String {
         return baixing_createLoginTask(appContext, phone, code, listener).baixing_login()
     }
 }

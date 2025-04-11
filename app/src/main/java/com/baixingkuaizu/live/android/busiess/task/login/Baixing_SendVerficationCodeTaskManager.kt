@@ -19,7 +19,7 @@ object Baixing_SendVerficationCodeTaskManager: Baixing_TaskManager<Baixing_SendV
         return mBaixing_ID.getAndIncrement()
     }
 
-    fun sendVerificationCode(taskName:String, phone:String, listener: Baixing_SendVerficationCodeTaskListener) {
+    suspend fun sendVerificationCode(taskName:String, phone:String, listener: Baixing_SendVerficationCodeTaskListener) {
         mBaixing_currentTask = Baixing_SendVerficationCodeTask(taskName, phone).apply {
             mBaixing_Listener = listener
             baixing_sendVerificationCode()
