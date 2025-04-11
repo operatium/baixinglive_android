@@ -13,10 +13,7 @@ import com.baixingkuaizu.live.android.busiess.task.login.Baixing_SendVerfication
 import com.baixingkuaizu.live.android.busiess.task.login.Baixing_SendVerficationCodeTaskListener
 import com.baixingkuaizu.live.android.busiess.task.login.Baixing_SendVerficationCodeTaskManager
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
 
 class Baixing_LoginViewModel:ViewModel() {
@@ -76,9 +73,7 @@ class Baixing_LoginViewModel:ViewModel() {
             }
 
             override fun baixing_onEndTask(task: Baixing_SendVerficationCodeTask) {
-                viewModelScope.launch(Dispatchers.Main) {
-                    mBaixing_netCode = task.mbaixing_code
-                }
+                mBaixing_netCode = task.mbaixing_code
             }
 
             override fun baixing_onTime(
@@ -99,7 +94,6 @@ class Baixing_LoginViewModel:ViewModel() {
             override fun baixing_onCancelTask(task: Baixing_SendVerficationCodeTask) {
                 viewModelScope.launch(Dispatchers.Main) {
                     _mBaixing_codeTime.value = -1
-                    _mBaixing_toast.value = "取消发送验证码"
                 }
             }
 
@@ -157,7 +151,7 @@ class Baixing_LoginViewModel:ViewModel() {
         mBaixing_netCode = null
     }
 
-    fun baixing_obtainCodeTime() {
+    fun baixing_checkCodeTime() {
         if (Baixing_SendVerficationCodeTaskManager.baixing_isTimeout()) {
             _mBaixing_codeTime.value = -1
         }

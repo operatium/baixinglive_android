@@ -4,25 +4,26 @@ import com.baixingkuaizu.live.android.busiess.task.Baixing_BaseTask
 import com.baixingkuaizu.live.android.busiess.task.Baixing_CoreWork
 import java.util.Timer
 import java.util.TimerTask
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  * @author yuyuexing
  * @date: 2025/4/11
  * @description: 发送验证码任务类，负责处理验证码发送逻辑和验证手机号格式
  */
-class Baixing_SendVerficationCodeTask(taskName:String, val phoneNumber: String) :Baixing_BaseTask(taskName) {
+class Baixing_SendVerficationCodeTask(taskName: String, val phoneNumber: String) : Baixing_BaseTask(taskName) {
     private val mBaixing_TIME = 60000
     private val mBaixing_startTime: Long = System.currentTimeMillis()
     private var mBaixing_Timer: Timer? = null
-    var mBaixing_Listener: Baixing_SendVerficationCodeTaskListener? = null
+    private val mBaixing_Listeners: ConcurrentHashMap<String, Baixing_SendVerficationCodeTaskListener> = ConcurrentHashMap()
     var mbaixing_code: String? = null
 
-    suspend fun baixing_sendVerificationCode():String {
+    suspend fun baixing_sendVerificationCode(): String {
         baixing_onStartTask()
         baixing_startCountdown()
         mbaixing_code = Baixing_CoreWork.baixing_sendVerificationCode()
         baixing_onEndTask()
-        return mbaixing_code?:""
+        return mbaixing_code ?: ""
     }
 
     override fun baixing_cancel() {
@@ -30,7 +31,7 @@ class Baixing_SendVerficationCodeTask(taskName:String, val phoneNumber: String) 
         baixing_onCancelTask()
     }
 
-    fun baixing_isTimeOver():Boolean {
+    fun baixing_isTimeOver(): Boolean {
         val t = System.currentTimeMillis() - mBaixing_startTime
         return t > mBaixing_TIME
     }
@@ -68,26 +69,34 @@ class Baixing_SendVerficationCodeTask(taskName:String, val phoneNumber: String) 
 
     override fun baixing_onStartTask() {
         if (mBaixing_cancel) return
-        mBaixing_Listener?.baixing_onStartTask(this)
+        mBaixing_Listeners.values.forEach { it.baixing_onStartTask(this) }
     }
 
-    fun baixing_onTime(second:Int) {
+    fun baixing_onTime(second: Int) {
         if (mBaixing_cancel) return
-        mBaixing_Listener?.baixing_onTime(this, second)
+        mBaixing_Listeners.values.forEach { it.baixing_onTime(this, second) }
     }
 
     override fun baixing_onEndTask() {
         if (mBaixing_cancel) return
-        mBaixing_Listener?.baixing_onEndTask(this)
+        mBaixing_Listeners.values.forEach { it.baixing_onEndTask(this) }
     }
 
     override fun baixing_onDestroyTask() {
         if (mBaixing_cancel) return
-        mBaixing_Listener?.baixing_onDestroyTask(this)
+        mBaixing_Listeners.values.forEach { it.baixing_onDestroyTask(this) }
     }
 
     fun baixing_onCancelTask() {
-        mBaixing_Listener?.baixing_onCancelTask(this)
-        mBaixing_Listener = null
+        mBaixing_Listeners.values.forEach { it.baixing_onCancelTask(this) }
+        mBaixing_Listeners.clear()
+    }
+
+    fun addListener(key: String, listener: Baixing_SendVerficationCodeTaskListener) {
+        mBaixing_Listeners[key] = listener
+    }
+
+    fun removeListener(key: String) {
+        mBaixing_Listeners.remove(key)
     }
 }

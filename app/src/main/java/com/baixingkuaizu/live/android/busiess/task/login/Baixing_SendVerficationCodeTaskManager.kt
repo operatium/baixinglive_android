@@ -22,9 +22,34 @@ object Baixing_SendVerficationCodeTaskManager: Baixing_TaskManager<Baixing_SendV
     suspend fun sendVerificationCode(taskName:String, phone:String, listener: Baixing_SendVerficationCodeTaskListener):String {
         Baixing_SendVerficationCodeTask(taskName, phone).run {
             mBaixing_currentTask = this
-            mBaixing_Listener = listener
+            addListener("self", listener)
+            addListener("global", baixing_obtainSendCodeListener())
             return baixing_sendVerificationCode()
         }
+    }
+
+    private fun baixing_obtainSendCodeListener(): Baixing_SendVerficationCodeTaskListener = object : Baixing_SendVerficationCodeTaskListener {
+        override fun baixing_onStartTask(task: Baixing_SendVerficationCodeTask) {
+        }
+
+        override fun baixing_onEndTask(task: Baixing_SendVerficationCodeTask) {
+        }
+
+        override fun baixing_onTime(task: Baixing_SendVerficationCodeTask, second: Int) {
+        }
+
+        override fun baixing_onDestroyTask(task: Baixing_SendVerficationCodeTask) {
+            if (mBaixing_currentTask == task) {
+                mBaixing_currentTask = null
+            }
+        }
+
+        override fun baixing_onCancelTask(task: Baixing_SendVerficationCodeTask) {
+            if (mBaixing_currentTask == task) {
+                mBaixing_currentTask = null
+            }
+        }
+
     }
 
     fun baixing_isValidPhoneNumber(phoneNumber:String): Boolean {
@@ -39,8 +64,6 @@ object Baixing_SendVerficationCodeTaskManager: Baixing_TaskManager<Baixing_SendV
         }
         return r
     }
-
-    fun baixing_getCurrentTask():Baixing_SendVerficationCodeTask? = mBaixing_currentTask
 
     fun baixing_cancelCurrentTask() {
         mBaixing_currentTask?.baixing_cancel()

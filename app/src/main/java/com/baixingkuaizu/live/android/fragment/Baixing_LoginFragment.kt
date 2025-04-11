@@ -21,7 +21,6 @@ import com.baixingkuaizu.live.android.viewmodel.Baixing_LoginViewModel
 import com.baixingkuaizu.live.android.widget.toast.CenterToast
 import androidx.core.graphics.toColorInt
 import com.baixingkuaizu.live.android.widget.loading.Baixing_FullScreenLoadingDialog
-import kotlin.math.min
 
 /**
  * @author yuyuexing
@@ -74,7 +73,7 @@ class Baixing_LoginFragment : Baixing_BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-        mBaixing_viewModel.baixing_obtainCodeTime()
+        mBaixing_viewModel.baixing_checkCodeTime()
     }
 
     private fun baixing_initView() {
