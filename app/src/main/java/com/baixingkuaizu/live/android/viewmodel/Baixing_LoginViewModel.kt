@@ -84,17 +84,16 @@ class Baixing_LoginViewModel:ViewModel() {
     }
 
     fun baixing_login(appContext: Context, phoneNumber: String, code: String) {
+        _mBaixing_loginLoading.value = true
         viewModelScope.launch(Dispatchers.Default) {
-            Baixing_LoginTaskManager.baixing_switchAccount(
+            Baixing_LoginTaskManager.baixing_loginAccount(
                 appContext, phoneNumber, code,
                 object : Baixing_LoginTaskListener {
                     override fun baixing_onCreateTask(task: Baixing_LoginTask) {
                     }
 
                     override fun baixing_onStartTask(task: Baixing_LoginTask) {
-                        viewModelScope.launch {
-                            _mBaixing_loginLoading.value = true
-                        }
+
                     }
 
                     override fun baixing_onEndTask(task: Baixing_LoginTask) {

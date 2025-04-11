@@ -25,16 +25,14 @@ object Baixing_LoginTaskManager {
         }
     }
 
-    /**
-     * 获取当前登录任务
-     */
     fun baixing_getCurrentTask(): Baixing_LoginTask? = mBaixing_currentTask
 
-    /**
-     * 切换账号
-     */
     fun baixing_switchAccount(appContext: Context, phone: String, code: String,listener: Baixing_LoginTaskListener): Boolean {
         mBaixing_currentTask?.baixing_logout()
+        return baixing_createLoginTask(appContext, phone, code, listener).baixing_login()
+    }
+
+    fun baixing_loginAccount(appContext: Context, phone: String, code: String,listener: Baixing_LoginTaskListener): Boolean {
         return baixing_createLoginTask(appContext, phone, code, listener).baixing_login()
     }
 }

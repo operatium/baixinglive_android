@@ -38,7 +38,7 @@ class Baixing_LoadingView @JvmOverloads constructor(
     // 阴影画笔
     private val mBaixing_shadowPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = "#000000".toColorInt()
-        alpha = 180 // 调整阴影透明度
+        alpha = 80 // 调整阴影透明度
         maskFilter = BlurMaskFilter(5f, BlurMaskFilter.Blur.NORMAL) // 模糊阴影
     }
 
