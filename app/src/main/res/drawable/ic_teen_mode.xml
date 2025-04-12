@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp"
+    android:height="120dp"
+    android:viewportWidth="120"
+    android:viewportHeight="120">
+
+    <!-- 背景圆 -->
+    <path
+        android:fillColor="#F0EAFF"
+        android:pathData="M60,60m-60,0a60,60 0,1 1,120 0a60,60 0,1 1,-120 0" />
+
+    <!-- 内部圆 -->
+    <path
+        android:fillColor="#C4A9FF"
+        android:pathData="M60,60m-45,0a45,45 0,1 1,90 0a45,45 0,1 1,-90 0" />
+
+    <!-- 雨伞 -->
+    <path
+        android:fillColor="#7246FF"
+        android:pathData="M84,55c0,-12.7 -10.3,-23 -23,-23S38,42.3 38,55H84z" />
+
+    <path
+        android:fillColor="#E0D1FF"
+        android:pathData="M61,55c0,-12.7 -10.3,-23 -23,-23S15,42.3 15,55H61z" />
+
+    <!-- 雨伞柄 -->
+    <path
+        android:fillColor="#333366"
+        android:pathData="M60,55v30c0,5 5,5 5,0s-5,-5 -5,-5" />
+
+    <!-- 绿色对勾 -->
+    <path
+        android:fillColor="#4CAF50"
+        android:pathData="M77,55l5,5l10,-10" />
+    <path
+        android:strokeColor="#4CAF50"
+        android:strokeWidth="2"
+        android:pathData="M77,55l5,5l10,-10" />
+
+</vector> 

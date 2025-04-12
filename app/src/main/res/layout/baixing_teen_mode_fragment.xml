@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <!-- 标题栏 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp.56"
+        android:background="#FFFFFF">
+
+        <ImageView
+            android:id="@+id/baixing_back"
+            android:layout_width="@dimen/dp.40"
+            android:layout_height="@dimen/dp.40"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp.10"
+            android:padding="@dimen/dp.8"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="青少年模式"
+            android:textColor="#222222"
+            android:textSize="@dimen/sp.18"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp.1"
+        android:background="#EEEEEE" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/dp.20">
+
+            <!-- 雨伞图标 -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp.30">
+                
+                <ImageView
+                    android:layout_width="@dimen/dp.120"
+                    android:layout_height="@dimen/dp.120"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_teen_mode" />
+            </FrameLayout>
+
+            <!-- 功能限制点 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dp.30"
+                android:layout_marginStart="@dimen/dp.20"
+                android:layout_marginEnd="@dimen/dp.20">
+
+                <ImageView
+                    android:layout_width="@dimen/dp.10"
+                    android:layout_height="@dimen/dp.10"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/dp.10"
+                    android:background="@drawable/ic_dot" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="观看内容限制"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/sp.16"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp.40"
+                android:layout_marginEnd="@dimen/dp.20"
+                android:layout_marginTop="@dimen/dp.10"
+                android:text="在青少年模式中，我们精选了一批适合青少年观看的优质内容;"
+                android:textColor="#4D4D4D"
+                android:textSize="@dimen/sp.14" />
+
+            <!-- 功能限制点 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dp.20"
+                android:layout_marginStart="@dimen/dp.20"
+                android:layout_marginEnd="@dimen/dp.20">
+
+                <ImageView
+                    android:layout_width="@dimen/dp.10"
+                    android:layout_height="@dimen/dp.10"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/dp.10"
+                    android:background="@drawable/ic_dot" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="使用功能限制"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/sp.16"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp.40"
+                android:layout_marginEnd="@dimen/dp.20"
+                android:layout_marginTop="@dimen/dp.10"
+                android:text="无法进行充值打赏、购买、弹幕评论、视频直播等操作;"
+                android:textColor="#4D4D4D"
+                android:textSize="@dimen/sp.14" />
+
+            <!-- 时间限制点 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/dp.20"
+                android:layout_marginStart="@dimen/dp.20"
+                android:layout_marginEnd="@dimen/dp.20">
+
+                <ImageView
+                    android:layout_width="@dimen/dp.10"
+                    android:layout_height="@dimen/dp.10"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/dp.10"
+                    android:background="@drawable/ic_dot" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="使用时间限制"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/sp.16"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp.40"
+                android:layout_marginEnd="@dimen/dp.20"
+                android:layout_marginTop="@dimen/dp.10"
+                android:text="开启青少年模式后，每日22时至6时将无法使用；单日累计使用时长超过40分钟，需要输入监护密码才能继续使用。"
+                android:textColor="#4D4D4D"
+                android:textSize="@dimen/sp.14" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- 底部按钮 -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:padding="@dimen/dp.20">
+
+        <Button
+            android:id="@+id/baixing_enable_teen_mode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/baixing_button_background2"
+            android:text="开启青少年模式"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/sp.16" />
+
+        <TextView
+            android:id="@+id/baixing_set_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp.60"
+            android:gravity="center"
+            android:text="开启前需设置监护密码"
+            android:textColor="#999999"
+            android:textSize="@dimen/sp.14" />
+    </FrameLayout>
+</LinearLayout> 

@@ -59,6 +59,38 @@ class Baixing_LocalDataManager(private val context: Context) {
     fun baixing_setTeenModeDialogShown(shown: Boolean) {
         mBaixing_sharedPreferences.edit { putBoolean(BAIXING_KEY_TEEN_MODE_DIALOG_SHOWN, shown) }
     }
+    
+    fun baixing_setParentPassword(password: String) {
+        mBaixing_sharedPreferences.edit { putString(BAIXING_KEY_PARENT_PASSWORD, password) }
+    }
+    
+    fun baixing_getParentPassword(): String {
+        return mBaixing_sharedPreferences.getString(BAIXING_KEY_PARENT_PASSWORD, "") ?: ""
+    }
+    
+    fun baixing_setTeenModeEnabled(enabled: Boolean) {
+        mBaixing_sharedPreferences.edit { putBoolean(BAIXING_KEY_TEEN_MODE_ENABLED, enabled) }
+    }
+    
+    fun baixing_isTeenModeEnabled(): Boolean {
+        return mBaixing_sharedPreferences.getBoolean(BAIXING_KEY_TEEN_MODE_ENABLED, false)
+    }
+    
+    fun baixing_setLastUsedTime(time: Long) {
+        mBaixing_sharedPreferences.edit { putLong(BAIXING_KEY_LAST_USED_TIME, time) }
+    }
+    
+    fun baixing_getLastUsedTime(): Long {
+        return mBaixing_sharedPreferences.getLong(BAIXING_KEY_LAST_USED_TIME, 0)
+    }
+    
+    fun baixing_setTodayUsedDuration(duration: Long) {
+        mBaixing_sharedPreferences.edit { putLong(BAIXING_KEY_TODAY_USED_DURATION, duration) }
+    }
+    
+    fun baixing_getTodayUsedDuration(): Long {
+        return mBaixing_sharedPreferences.getLong(BAIXING_KEY_TODAY_USED_DURATION, 0)
+    }
 
     companion object {
         private const val BAIXING_PRIVACY_PREFERENCES = "baixing_privacy_preferences"
@@ -67,6 +99,10 @@ class Baixing_LocalDataManager(private val context: Context) {
         private const val BAIXING_KEY_LOGIN_TOKEN = "baixing_key_login_token"
         private const val BAIXING_KEY_TOKEN_EXPIRE_TIME = "baixing_key_token_expire_time"
         private const val BAIXING_KEY_TEEN_MODE_DIALOG_SHOWN = "baixing_key_teen_mode_dialog_shown"
+        private const val BAIXING_KEY_PARENT_PASSWORD = "baixing_key_parent_password"
+        private const val BAIXING_KEY_TEEN_MODE_ENABLED = "baixing_key_teen_mode_enabled"
+        private const val BAIXING_KEY_LAST_USED_TIME = "baixing_key_last_used_time"
+        private const val BAIXING_KEY_TODAY_USED_DURATION = "baixing_key_today_used_duration"
 
         @SuppressLint("StaticFieldLeak")
         @Volatile
