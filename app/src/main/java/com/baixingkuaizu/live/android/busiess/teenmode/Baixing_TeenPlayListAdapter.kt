@@ -1,4 +1,4 @@
-package com.baixingkuaizu.live.android.fragment
+package com.baixingkuaizu.live.android.busiess.teenmode
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,16 +7,17 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.baixingkuaizu.live.android.R
+import com.baixingkuaizu.live.android.fragment.Baixing_VideoData
 
 /**
  * @author yuyuexing
  * @date: 2025/4/14
  * @description: 青少年模式播放列表适配器
  */
-class Baixing_PlayListAdapter(
+class Baixing_TeenPlayListAdapter(
     private var mBaixing_videoList: List<Baixing_VideoData>,
     private val mBaixing_onItemClick: (Baixing_VideoData) -> Unit
-) : RecyclerView.Adapter<Baixing_PlayListAdapter.Baixing_ViewHolder>() {
+) : RecyclerView.Adapter<Baixing_TeenPlayListAdapter.Baixing_ViewHolder>() {
 
     class Baixing_ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val mBaixing_cover: ImageView = itemView.findViewById(R.id.baixing_video_cover)

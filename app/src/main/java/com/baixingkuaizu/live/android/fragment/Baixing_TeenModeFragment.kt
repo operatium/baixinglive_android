@@ -148,7 +148,7 @@ class Baixing_TeenModeFragment : Baixing_BaseFragment() {
      * 跳转到播放列表页面
      */
     private fun baixing_navigateToPlayList() {
-        val playListFragment = Baixing_PlayListFragment.newInstance()
+        val playListFragment = Baixing_TeenPlayListFragment.newInstance()
         
         requireActivity().supportFragmentManager.beginTransaction()
             .replace(R.id.baixing_teen_mode_container, playListFragment)
