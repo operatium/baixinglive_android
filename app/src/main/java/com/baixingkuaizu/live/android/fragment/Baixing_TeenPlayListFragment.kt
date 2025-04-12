@@ -126,7 +126,6 @@ class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
     
     private fun baixing_initData() {
         mBaixing_adapter = Baixing_TeenPlayListAdapter(emptyList()) { video ->
-            // 当视频项被点击时，跳转到视频播放器Activity
             Baixing_GoRouter.baixing_jumpVideoPlayerActivity(video)
         }
         
