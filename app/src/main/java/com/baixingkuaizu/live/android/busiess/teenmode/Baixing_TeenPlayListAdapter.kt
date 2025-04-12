@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.baixingkuaizu.live.android.R
-import com.baixingkuaizu.live.android.fragment.Baixing_VideoData
 
 /**
  * @author yuyuexing

@@ -1,4 +1,6 @@
-package com.baixingkuaizu.live.android.fragment
+package com.baixingkuaizu.live.android.busiess.teenmode
+
+import com.baixingkuaizu.live.android.base.Baixing_Entity
 
 /**
  * @author yuyuexing
@@ -12,4 +14,4 @@ data class Baixing_VideoData(
     val mBaixing_coverUrl: String = "",
     val mBaixing_duration: String,
     val mBaixing_tag: String
-) 
+):Baixing_Entity()

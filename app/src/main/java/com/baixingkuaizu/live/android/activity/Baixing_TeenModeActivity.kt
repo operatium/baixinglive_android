@@ -6,6 +6,8 @@ import com.baixingkuaizu.live.android.base.Baixing_BaseActivity
 import com.baixingkuaizu.live.android.databinding.BaixingTeenModeActivityBinding
 import com.baixingkuaizu.live.android.fragment.Baixing_TeenModeFragment
 import com.baixingkuaizu.live.android.fragment.Baixing_TeenPlayListFragment
+import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
+import com.baixingkuaizu.live.android.utils.Baixing_ExitHelper
 
 /**
  * @author yuyuexing
@@ -15,12 +17,18 @@ import com.baixingkuaizu.live.android.fragment.Baixing_TeenPlayListFragment
 class Baixing_TeenModeActivity : Baixing_BaseActivity() {
 
     private lateinit var mBaixing_binding: BaixingTeenModeActivityBinding
+    private lateinit var mBaixing_exitHelper: Baixing_ExitHelper
+    private lateinit var mBaixing_localDataManager: Baixing_LocalDataManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBaixing_binding = BaixingTeenModeActivityBinding.inflate(layoutInflater)
         setContentView(mBaixing_binding.root)
         mBaixing_binding.root.setWindowListener()
+        
+        mBaixing_localDataManager = Baixing_LocalDataManager.baixing_getInstance(this)
+        mBaixing_exitHelper = Baixing_ExitHelper(this, mBaixing_localDataManager)
+        
         baixing_toTeenModeFragment()
     }
 
@@ -36,5 +44,10 @@ class Baixing_TeenModeActivity : Baixing_BaseActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.baixing_teen_mode_container, fragment)
             .commit()
+    }
+    
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        mBaixing_exitHelper.baixing_handleExit { super.onBackPressed() }
     }
 } 
