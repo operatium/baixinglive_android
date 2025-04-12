@@ -11,7 +11,7 @@ import com.baixingkuaizu.live.android.widget.web.Baixing_WebViewWrapper
 /**
  * @author yuyuexing
  * @date: 2025/4/11
- * @description: Web页面活动，用于展示网页内容，如隐私政策和用户协议
+ * @description: Web页面活动，用于展示网页内容，如隐私政策和用户协议。使用ViewBinding进行视图绑定，支持网页回退功能，并利用ActivityProxy管理生命周期。
  */
 class Baixing_WebActivity : Baixing_BaseActivity() {
     private val mBaixing_activityProxy = Baixing_ActivityProxy(this)

@@ -12,7 +12,7 @@ import com.baixingkuaizu.live.android.fragment.Baixing_LoginFragment
 /**
  * @author yuyuexing
  * @date: 2025/4/11
- * @description: 登录活动页面
+ * @description: 登录活动页面，负责加载登录相关的Fragment并处理返回键逻辑。使用ViewBinding进行视图绑定，并通过ActivityProxy管理生命周期。重写返回键处理，支持Fragment回退栈管理。
  */
 class Baixing_LoginActivity:Baixing_BaseActivity() {
     private val TAG = "Baixing_LoginActivity"

@@ -104,6 +104,11 @@ com.baixingkuaizu.live.android
 - **Baixing_AdapterHelper**: 适配器辅助类，提供点击事件防抖和尺寸转换功能。通过扩展函数方式提供setClick方法，该方法封装了防抖动点击监听，防止用户快速多次点击导致的重复操作。还提供dp2px转换方法，用于在代码中动态计算像素尺寸。
 - **Baixing_DebounceClickListener**: 防抖点击监听器，用于防止用户在短时间内多次点击同一控件导致的重复操作问题。该监听器通过记录上次点击时间，并在设定的时间间隔内（默认500毫秒）忽略重复点击，确保按钮或其他可点击控件的操作只会被执行一次。结合Baixing_AdapterHelper类中的setClick扩展函数使用，极大改善了应用的用户体验。
 
+### 12. 代理和工具类
+
+- **Baixing_ActivityProxy**: Activity代理类，负责管理Activity的生命周期和相关状态。提供bind和unbind方法，在Activity创建和销毁时调用，确保资源的正确管理和释放。这种代理模式的使用简化了Activity类的实现，将部分功能解耦，便于维护和测试。
+- **Baixing_PermissionCheck**: 权限检查类，负责检查和请求应用所需的各种权限。该类提供了统一的权限申请入口，简化了权限管理流程，并通过回调机制将权限结果返回给调用方。主要在应用启动阶段使用，确保获取必要的运行权限。
+
 ## 类关系图
 
 ### 活动类关系
@@ -160,6 +165,13 @@ Baixing_ConcurrentThreadPool
 ```
 View.OnClickListener
 └── Baixing_DebounceClickListener
+```
+
+### 代理类关系
+
+```
+Baixing_ActivityProxy
+└── 管理 Baixing_BaseActivity 生命周期
 ```
 
 ## 功能流程

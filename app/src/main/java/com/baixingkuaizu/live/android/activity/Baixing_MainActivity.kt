@@ -12,7 +12,7 @@ import com.baixingkuaizu.live.android.fragment.Baixing_TeenModeFragment
 /**
  * @author yuyuexing
  * @date: 2025/4/11
- * @description: 主活动页面
+ * @description: 主活动页面，应用的核心页面，负责应用的主要功能展示并管理青少年模式状态。使用ViewBinding进行视图绑定，在启动时会检查青少年模式状态，未启用则显示提示对话框，已启用则跳转到青少年模式页面。
  */
 class Baixing_MainActivity : Baixing_BaseActivity() {
     

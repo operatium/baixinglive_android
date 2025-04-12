@@ -13,7 +13,7 @@ import com.baixingkuaizu.live.android.dialog.Baixing_ExitDialog
 /**
  * @author yuyuexing
  * @date: 2025/4/13
- * @description: 青少年模式活动页面
+ * @description: 青少年模式活动页面，是青少年模式相关Fragment的容器，负责加载青少年模式相关的Fragment并处理返回键逻辑
  */
 class Baixing_TeenModeActivity : Baixing_BaseActivity() {
 

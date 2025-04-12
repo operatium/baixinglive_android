@@ -54,9 +54,6 @@ class Baixing_TeenModeFragment : Baixing_BaseFragment() {
         }
     }
     
-    /**
-     * 显示设置监护密码对话框
-     */
     private fun baixing_showSetPasswordDialog() {
         val dialogBinding = BaixingSetPasswordDialogBinding.inflate(LayoutInflater.from(context))
         
@@ -87,9 +84,6 @@ class Baixing_TeenModeFragment : Baixing_BaseFragment() {
         dialog.show()
     }
     
-    /**
-     * 跳转到播放列表页面
-     */
     private fun baixing_navigateToPlayList() {
         val playListFragment = Baixing_TeenPlayListFragment.newInstance()
         
