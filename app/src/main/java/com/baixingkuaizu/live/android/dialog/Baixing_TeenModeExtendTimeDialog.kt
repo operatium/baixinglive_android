@@ -6,7 +6,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Window
-import com.baixingkuaizu.live.android.adatperandroid.AdapterHelper.setClick
+import com.baixingkuaizu.live.android.adatperandroid.Baixing_AdapterHelper.setClick
 import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
 import com.baixingkuaizu.live.android.databinding.BaixingPasswordVerificationDialogBinding
 import com.baixingkuaizu.live.android.widget.toast.CenterToast
@@ -14,7 +14,7 @@ import com.baixingkuaizu.live.android.widget.toast.CenterToast
 /**
  * @author yuyuexing
  * @date: 2025/4/16
- * @description: 青少年模式使用时间延长对话框，用于验证监护密码以继续使用
+ * @description: 青少年模式使用时间延长对话框，用于验证监护密码以继续使用。当用户使用时间达到上限（40分钟）时弹出，要求输入正确的监护密码才能继续使用。禁用了取消功能，确保青少年保护机制的严格执行。与LocalDataManager协同工作，负责密码验证和时间记录。使用ViewBinding进行视图绑定，通过回调机制通知调用方验证结果。
  */
 class Baixing_TeenModeExtendTimeDialog(
     context: Context,
@@ -32,28 +32,17 @@ class Baixing_TeenModeExtendTimeDialog(
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(mBaixing_binding.root)
 
-        // 初始化视图
         baixing_initViews()
-        // 设置监听器
         baixing_setupListeners()
-        // 设置对话框属性
         baixing_setupDialogProperties()
     }
 
-    /**
-     * 初始化视图
-     */
     private fun baixing_initViews() {
-        // 设置标题和消息
         mBaixing_binding.baixingDialogTitle.text = mBaixing_title
         mBaixing_binding.baixingDialogMessage.text = mBaixing_message
     }
 
-    /**
-     * 设置监听器
-     */
     private fun baixing_setupListeners() {
-        // 确认按钮点击事件
         mBaixing_binding.baixingConfirmButton.setClick {
             val password = mBaixing_binding.baixingPasswordInput.text.toString()
             
@@ -63,13 +52,10 @@ class Baixing_TeenModeExtendTimeDialog(
             }
             
             if (password == mBaixing_localDataManager.baixing_getParentPassword()) {
-                // 密码验证成功，记录验证时间
                 mBaixing_localDataManager.baixing_setLastVerifiedTime(System.currentTimeMillis())
                 
-                // 回调验证成功
                 mBaixing_onPasswordVerified.invoke()
                 
-                // 关闭对话框
                 dismiss()
                 
                 CenterToast.show(context as? Activity, "验证成功，已重置使用时间")
@@ -78,15 +64,10 @@ class Baixing_TeenModeExtendTimeDialog(
             }
         }
         
-        // 取消按钮点击事件 - 在这个场景中禁用取消按钮
         mBaixing_binding.baixingCancelButton.visibility = android.view.View.GONE
     }
 
-    /**
-     * 设置对话框属性
-     */
     private fun baixing_setupDialogProperties() {
-        // 设置是否可以通过返回键或点击外部关闭
         setCancelable(false)
         setCanceledOnTouchOutside(false)
     }

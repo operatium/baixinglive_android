@@ -12,7 +12,7 @@ import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.view.Window
-import com.baixingkuaizu.live.android.adatperandroid.AdapterHelper.setClick
+import com.baixingkuaizu.live.android.adatperandroid.Baixing_AdapterHelper.setClick
 import com.baixingkuaizu.live.android.busiess.router.Baixing_GoRouter
 import com.baixingkuaizu.live.android.databinding.BaixingPrivacyDialogBinding
 import com.baixingkuaizu.live.android.widget.toast.CenterToast
@@ -20,7 +20,7 @@ import com.baixingkuaizu.live.android.widget.toast.CenterToast
 /**
  * @author yuyuexing
  * @date: 2025/4/11
- * @description: 隐私政策对话框，用于展示隐私政策内容并获取用户同意或拒绝的结果
+ * @description: 隐私政策对话框，用于展示隐私政策内容并获取用户同意或拒绝的结果。显示应用的隐私政策和用户协议，并提供同意和拒绝按钮。使用ViewBinding进行视图绑定，支持点击协议文本打开详细内容，通过回调机制向调用方传递用户的选择结果。设置为不可取消，确保用户必须做出选择。
  */
 class Baixing_PrivacyDialog(context: Context) : Dialog(context) {
 
@@ -37,20 +37,15 @@ class Baixing_PrivacyDialog(context: Context) : Dialog(context) {
         mBaixing_binding = BaixingPrivacyDialogBinding.inflate(layoutInflater)
         setContentView(mBaixing_binding.root)
 
-        // 设置文本可点击
         mBaixing_binding.baixingPrivacyContent.movementMethod = LinkMovementMethod.getInstance()
 
-        // 获取原始文本
         val content = mBaixing_binding.baixingPrivacyContent.text.toString()
 
-        // 创建SpannableString
         val spannableString = SpannableString(content)
 
-        // 处理《用户协议》
         val userAgreementStart = content.indexOf("《用户协议》")
         val userAgreementEnd = userAgreementStart + "《用户协议》".length
         if (userAgreementStart >= 0) {
-            // 设置点击事件
             spannableString.setSpan(
                 object : ClickableSpan() {
                     override fun onClick(view: View) {
@@ -62,7 +57,6 @@ class Baixing_PrivacyDialog(context: Context) : Dialog(context) {
                 userAgreementEnd,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
-            // 设置颜色
             spannableString.setSpan(
                 ForegroundColorSpan(Color.parseColor("#87CEEB")),
                 userAgreementStart,
@@ -71,11 +65,9 @@ class Baixing_PrivacyDialog(context: Context) : Dialog(context) {
             )
         }
 
-        // 处理《隐私政策》
         val privacyPolicyStart = content.indexOf("《隐私政策》")
         val privacyPolicyEnd = privacyPolicyStart + "《隐私政策》".length
         if (privacyPolicyStart >= 0) {
-            // 设置点击事件
             spannableString.setSpan(
                 object : ClickableSpan() {
                     override fun onClick(view: View) {
@@ -87,7 +79,6 @@ class Baixing_PrivacyDialog(context: Context) : Dialog(context) {
                 privacyPolicyEnd,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
-            // 设置颜色
             spannableString.setSpan(
                 ForegroundColorSpan(Color.parseColor("#87CEEB")),
                 privacyPolicyStart,
@@ -96,7 +87,6 @@ class Baixing_PrivacyDialog(context: Context) : Dialog(context) {
             )
         }
 
-        // 设置处理后的文本
         mBaixing_binding.baixingPrivacyContent.text = spannableString
 
         mBaixing_binding.baixingBtnAgree.setClick {
