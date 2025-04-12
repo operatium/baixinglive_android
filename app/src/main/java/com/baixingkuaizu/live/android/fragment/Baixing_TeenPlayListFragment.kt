@@ -8,15 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.baixingkuaizu.live.android.R
+import com.baixingkuaizu.live.android.adatperandroid.AdapterHelper.setClick
 import com.baixingkuaizu.live.android.base.Baixing_BaseFragment
 import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
 import com.baixingkuaizu.live.android.busiess.teenmode.Baixing_TeenPlayListAdapter
+import com.baixingkuaizu.live.android.databinding.BaixingPlayListFragmentBinding
 import com.baixingkuaizu.live.android.dialog.Baixing_ExitDialog
 import com.baixingkuaizu.live.android.dialog.Baixing_TeenModeExtendTimeDialog
+import com.baixingkuaizu.live.android.widget.toast.CenterToast
 import java.util.concurrent.TimeUnit
 
 /**
@@ -26,11 +26,10 @@ import java.util.concurrent.TimeUnit
  */
 class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
     
-    private lateinit var mBaixing_recyclerView: RecyclerView
+    private var _mBaixing_binding: BaixingPlayListFragmentBinding? = null
+    private val mBaixing_binding get() = _mBaixing_binding!!
+    
     private lateinit var mBaixing_adapter: Baixing_TeenPlayListAdapter
-    private lateinit var mBaixing_backButton: View
-    private lateinit var mBaixing_exitButton: TextView
-    private lateinit var mBaixing_usageTimeText: TextView
     private lateinit var mBaixing_localDataManager: Baixing_LocalDataManager
     
     // 标签按钮列表
@@ -38,7 +37,7 @@ class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
     
     // 使用时间相关
     private var mBaixing_usedTime: Long = 0
-    private var mBaixing_maxTime: Long = TimeUnit.MINUTES.toMillis(1) // 40分钟
+    private var mBaixing_maxTime: Long = TimeUnit.MINUTES.toMillis(40) // 40分钟
     private val mBaixing_updateInterval: Long = 60000 // 1分钟更新一次
     
     // 密码验证对话框
@@ -59,8 +58,9 @@ class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.baixing_play_list_fragment, container, false)
+    ): View {
+        _mBaixing_binding = BaixingPlayListFragmentBinding.inflate(inflater, container, false)
+        return mBaixing_binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -69,7 +69,7 @@ class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
         mBaixing_localDataManager = Baixing_LocalDataManager.getInstance()
         
         // 初始化视图
-        baixing_initViews(view)
+        baixing_initViews()
         // 设置监听器
         baixing_setupListeners()
         // 初始化数据
@@ -104,31 +104,37 @@ class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
         mBaixing_localDataManager.baixing_setTodayUsedDuration(mBaixing_usedTime)
     }
     
-    private fun baixing_initViews(view: View) {
-        mBaixing_recyclerView = view.findViewById(R.id.baixing_recycler_view)
-        mBaixing_backButton = view.findViewById(R.id.baixing_back)
-        mBaixing_exitButton = view.findViewById(R.id.baixing_exit_teen_mode)
-        mBaixing_usageTimeText = view.findViewById(R.id.baixing_usage_time)
-        
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _mBaixing_binding = null
+    }
+    
+    /**
+     * 初始化视图
+     */
+    private fun baixing_initViews() {
         // 标签按钮
         mBaixing_tagButtons = listOf(
-            view.findViewById(R.id.baixing_tag_all),
-            view.findViewById(R.id.baixing_tag_education),
-            view.findViewById(R.id.baixing_tag_science),
-            view.findViewById(R.id.baixing_tag_nature),
-            view.findViewById(R.id.baixing_tag_history),
-            view.findViewById(R.id.baixing_tag_cartoon)
+            mBaixing_binding.baixingTagAll,
+            mBaixing_binding.baixingTagEducation,
+            mBaixing_binding.baixingTagScience,
+            mBaixing_binding.baixingTagNature,
+            mBaixing_binding.baixingTagHistory,
+            mBaixing_binding.baixingTagCartoon
         )
     }
     
+    /**
+     * 设置监听器
+     */
     private fun baixing_setupListeners() {
         // 返回按钮点击事件
-        mBaixing_backButton.setClick {
+        mBaixing_binding.baixingBack.setClick {
             baixing_showPasswordVerificationForExit()
         }
         
         // 退出青少年模式按钮点击事件
-        mBaixing_exitButton.setClick {
+        mBaixing_binding.baixingExitTeenMode.setClick {
             baixing_showPasswordVerificationForExit()
         }
         
@@ -140,20 +146,26 @@ class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
         }
     }
     
+    /**
+     * 初始化数据
+     */
     private fun baixing_initData() {
         // 初始化RecyclerView和适配器
         mBaixing_adapter = Baixing_TeenPlayListAdapter(emptyList()) { video ->
             // 点击视频项的处理
-            Toast.makeText(requireContext(), "播放: ${video.mBaixing_title}", Toast.LENGTH_SHORT).show()
+            CenterToast.show(requireActivity(), "播放: ${video.mBaixing_title}")
         }
         
-        mBaixing_recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
-        mBaixing_recyclerView.adapter = mBaixing_adapter
+        mBaixing_binding.baixingRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+        mBaixing_binding.baixingRecyclerView.adapter = mBaixing_adapter
         
         // 加载初始数据
         baixing_loadInitialData()
     }
     
+    /**
+     * 加载初始数据
+     */
     private fun baixing_loadInitialData() {
         // 使用适配器的静态列表数据
         mBaixing_adapter.baixing_filterByTag("全部")
@@ -161,15 +173,16 @@ class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
     
     /**
      * 选择标签
+     * @param selectedIndex 所选标签的索引
      */
     private fun baixing_selectTag(selectedIndex: Int) {
         // 更新所有标签的背景和文字颜色
         mBaixing_tagButtons.forEachIndexed { index, textView ->
             if (index == selectedIndex) {
-                textView.setBackgroundResource(R.drawable.baixing_tag_selected_bg)
+                textView.setBackgroundResource(com.baixingkuaizu.live.android.R.drawable.baixing_tag_selected_bg)
                 textView.setTextColor(resources.getColor(android.R.color.white))
             } else {
-                textView.setBackgroundResource(R.drawable.baixing_tag_normal_bg)
+                textView.setBackgroundResource(com.baixingkuaizu.live.android.R.drawable.baixing_tag_normal_bg)
                 textView.setTextColor(resources.getColor(android.R.color.darker_gray))
             }
         }
@@ -190,7 +203,6 @@ class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
     
     /**
      * 显示因使用时间限制的密码验证对话框
-     * @param allowDismiss 是否允许用户关闭对话框
      */
     private fun baixing_showPasswordVerificationForTimeLimit() {
         // 停止计时器
@@ -241,10 +253,14 @@ class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
         val usedMinutes = TimeUnit.MILLISECONDS.toMinutes(mBaixing_usedTime)
         val remainMinutes = TimeUnit.MILLISECONDS.toMinutes(mBaixing_maxTime - mBaixing_usedTime).coerceAtLeast(0)
         
-        mBaixing_usageTimeText.text = "今日已使用 $usedMinutes 分钟，剩余可用时长 $remainMinutes 分钟"
+        mBaixing_binding.baixingUsageTime.text = "今日已使用 $usedMinutes 分钟，剩余可用时长 $remainMinutes 分钟"
     }
     
     companion object {
+        /**
+         * 创建TeenPlayListFragment实例
+         * @return TeenPlayListFragment实例
+         */
         fun newInstance(): Baixing_TeenPlayListFragment {
             return Baixing_TeenPlayListFragment()
         }
