@@ -17,6 +17,7 @@ import com.baixingkuaizu.live.android.R
 import com.baixingkuaizu.live.android.base.Baixing_BaseFragment
 import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
 import com.baixingkuaizu.live.android.busiess.teenmode.Baixing_TeenPlayListAdapter
+import com.baixingkuaizu.live.android.dialog.Baixing_ExitDialog
 import com.baixingkuaizu.live.android.widget.toast.CenterToast
 import java.util.concurrent.TimeUnit
 
@@ -184,36 +185,9 @@ class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
      * 显示退出青少年模式的密码验证对话框
      */
     private fun baixing_showPasswordVerificationForExit() {
-        val dialogView = LayoutInflater.from(context)
-            .inflate(R.layout.baixing_password_verification_dialog, null)
-        val passwordInput = dialogView.findViewById<EditText>(R.id.baixing_password_input)
-        
-        val dialog = AlertDialog.Builder(requireContext())
-            .setView(dialogView)
-            .setPositiveButton("确定", null) // 后面手动设置监听器以防止对话框自动关闭
-            .setNegativeButton("取消", null)
-            .create()
-        
-        dialog.setOnShowListener {
-            val positiveButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE)
-            positiveButton.setOnClickListener {
-                val password = passwordInput.text.toString()
-                
-                if (password.isEmpty()) {
-                    CenterToast.show(requireActivity(), "密码不能为空")
-                    return@setOnClickListener
-                }
-                
-                if (baixing_verifyPassword(password)) {
-                    dialog.dismiss()
-                    baixing_exitTeenMode()
-                } else {
-                    CenterToast.show(requireActivity(), "密码错误")
-                }
-            }
-        }
-        
-        dialog.show()
+        Baixing_ExitDialog(requireContext(), mBaixing_localDataManager) {
+            baixing_exitTeenMode()
+        }.show()
     }
     
     /**
@@ -259,7 +233,7 @@ class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
                     return@setOnClickListener
                 }
                 
-                if (baixing_verifyPassword(password)) {
+                if (password == mBaixing_localDataManager.baixing_getParentPassword()) {
                     // 密码验证成功，重置计时，记录验证时间
                     mBaixing_usedTime = 0
                     mBaixing_localDataManager.baixing_setTodayUsedDuration(0)
@@ -279,14 +253,6 @@ class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
         
         mBaixing_passwordVerificationDialog = dialog
         dialog.show()
-    }
-    
-    /**
-     * 验证密码
-     */
-    private fun baixing_verifyPassword(inputPassword: String): Boolean {
-        val savedPassword = mBaixing_localDataManager.baixing_getParentPassword()
-        return inputPassword == savedPassword
     }
     
     /**
