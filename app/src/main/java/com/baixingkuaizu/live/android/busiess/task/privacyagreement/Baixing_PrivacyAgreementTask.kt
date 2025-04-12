@@ -8,11 +8,6 @@ import com.baixingkuaizu.live.android.busiess.task.Baixing_BaseTask
 import com.baixingkuaizu.live.android.widget.web.Baixing_WebViewManager
 import com.baixingkuaizu.live.android.widget.web.Baixing_WebViewWrapper
 
-/*
-    隐私协议任务线
-    提前预加载
-    用户登陆后释放
- */
 /**
  * @author yuyuexing
  * @date: 2025/4/11

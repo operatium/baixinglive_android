@@ -5,8 +5,13 @@ import android.util.Log
 import android.util.TypedValue
 import android.view.View
 
-object AdapterHelper {
-    private const val TAG = "yyx类AdapterHelper"
+/**
+ * @author yuyuexing
+ * @date: 2025/4/11
+ * @description: 适配器辅助类，提供点击事件防抖和尺寸转换功能
+ */
+object Baixing_AdapterHelper {
+    private const val TAG = "yyx类Baixing_AdapterHelper"
 
     fun View.setClick(onClick: (View?) -> Unit) {
         setOnClickListener(Baixing_DebounceClickListener(onClick))
