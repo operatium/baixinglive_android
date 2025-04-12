@@ -13,5 +13,6 @@ data class Baixing_VideoData(
     val mBaixing_author: String,
     val mBaixing_coverUrl: String = "",
     val mBaixing_duration: String,
-    val mBaixing_tag: String
+    val mBaixing_tag: String,
+    val mBaixing_videoUrl: String = "https://media.w3.org/2010/05/sintel/trailer.mp4" // 默认提供一个示例视频URL
 ):Baixing_Entity()

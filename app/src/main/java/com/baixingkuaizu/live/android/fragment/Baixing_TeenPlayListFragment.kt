@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.baixingkuaizu.live.android.adatperandroid.Baixing_AdapterHelper.setClick
 import com.baixingkuaizu.live.android.base.Baixing_BaseFragment
 import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
+import com.baixingkuaizu.live.android.busiess.router.Baixing_GoRouter
 import com.baixingkuaizu.live.android.busiess.teenmode.Baixing_TeenPlayListAdapter
 import com.baixingkuaizu.live.android.databinding.BaixingPlayListFragmentBinding
 import com.baixingkuaizu.live.android.dialog.Baixing_ExitDialog
@@ -125,7 +126,8 @@ class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
     
     private fun baixing_initData() {
         mBaixing_adapter = Baixing_TeenPlayListAdapter(emptyList()) { video ->
-            CenterToast.show(requireActivity(), "播放: ${video.mBaixing_title}")
+            // 当视频项被点击时，跳转到视频播放器Activity
+            Baixing_GoRouter.baixing_jumpVideoPlayerActivity(video)
         }
         
         mBaixing_binding.baixingRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)

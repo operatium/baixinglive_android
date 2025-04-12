@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import com.baixingkuaizu.live.android.activity.*
 import com.baixingkuaizu.live.android.base.Baixing_BaseActivity
+import com.baixingkuaizu.live.android.busiess.teenmode.Baixing_VideoData
 import java.util.Stack
 
 /**
@@ -44,6 +45,14 @@ object Baixing_GoRouter {
     fun baixing_jumpTeenModeActivity() {
         val currentActivity = mBaixing_activityList.peek()
         val intent = Intent(currentActivity, Baixing_TeenModeActivity::class.java)
+        currentActivity.startActivity(intent)
+    }
+    
+    fun baixing_jumpVideoPlayerActivity(videoData: Baixing_VideoData) {
+        val currentActivity = mBaixing_activityList.peek()
+        val intent = Intent(currentActivity, Baixing_VideoPlayerActivity::class.java)
+        intent.putExtra("video_title", videoData.mBaixing_title)
+        intent.putExtra("video_url", videoData.mBaixing_videoUrl)
         currentActivity.startActivity(intent)
     }
 
