@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import com.baixingkuaizu.live.android.Baixing_MyApp
 
 /**
  * @author yuyuexing
@@ -136,9 +137,9 @@ class Baixing_LocalDataManager(private val context: Context) {
         @Volatile
         private var mBaixing_instance: Baixing_LocalDataManager? = null
 
-        fun baixing_getInstance(context: Context): Baixing_LocalDataManager {
+        fun getInstance(): Baixing_LocalDataManager {
             return mBaixing_instance ?: synchronized(this) {
-                mBaixing_instance ?: Baixing_LocalDataManager(context.applicationContext).also {
+                mBaixing_instance ?: Baixing_LocalDataManager(Baixing_MyApp.baixing_getContext()).also {
                     mBaixing_instance = it
                 }
             }

@@ -20,7 +20,7 @@ open class Baixing_LoginTask(
     private val mBaixing_listeners: MutableMap<String, Baixing_LoginTaskListener> =
         Collections.synchronizedMap(HashMap())
     private val mBaixing_localDataManager: Baixing_LocalDataManager =
-        Baixing_LocalDataManager.baixing_getInstance(appContext)
+        Baixing_LocalDataManager.getInstance()
 
     suspend fun baixing_login(): String {
         mBaixing_login.let {

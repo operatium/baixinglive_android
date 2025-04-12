@@ -18,7 +18,7 @@ import com.baixingkuaizu.live.android.fragment.Baixing_TeenModeFragment
  */
 class Baixing_MainActivity : Baixing_BaseActivity() {
     
-    private val mBaixing_localDataManager = Baixing_LocalDataManager.baixing_getInstance(this)
+    private val mBaixing_localDataManager = Baixing_LocalDataManager.getInstance()
 
     private lateinit var mBaixing_binding: BaixingMainActivityBinding
     

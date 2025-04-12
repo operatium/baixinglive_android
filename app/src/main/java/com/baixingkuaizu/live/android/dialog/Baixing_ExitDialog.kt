@@ -1,5 +1,6 @@
 package com.baixingkuaizu.live.android.dialog
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
@@ -9,7 +10,9 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.baixingkuaizu.live.android.R
+import com.baixingkuaizu.live.android.adatperandroid.AdapterHelper.setClick
 import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
+import com.baixingkuaizu.live.android.widget.toast.CenterToast
 
 /**
  * @author yuyuexing
@@ -42,44 +45,29 @@ class Baixing_ExitDialog(
     }
     
     private fun baixing_setupListeners() {
-        mBaixing_confirmButton.setOnClickListener {
+        mBaixing_confirmButton.setClick {
             val password = mBaixing_passwordInput.text.toString()
             
             if (password.isEmpty()) {
-                Toast.makeText(context, "密码不能为空", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+                CenterToast.show(context as? Activity,  "密码不能为空")
+                return@setClick
             }
             
             if (password == mBaixing_localDataManager.baixing_getParentPassword()) {
                 dismiss()
-                // 执行退出操作
+                Baixing_LocalDataManager.getInstance().run {
+                    baixing_setTeenModeEnabled(false)
+                    baixing_setParentPassword("")
+                    CenterToast.show(context as? Activity, "已退出青少年模式")
+                }
                 mBaixing_onExitConfirmed.invoke()
             } else {
-                Toast.makeText(context, "密码错误", Toast.LENGTH_SHORT).show()
+                CenterToast.show(context as? Activity,  "密码错误")
             }
         }
         
-        mBaixing_cancelButton.setOnClickListener {
+        mBaixing_cancelButton.setClick {
             dismiss()
         }
     }
-    
-    companion object {
-        /**
-         * 处理退出逻辑
-         * 如果青少年模式已启用，则需要密码验证
-         * 否则直接退出
-         * @param context 上下文
-         * @param exitAction 退出操作的回调
-         */
-        fun baixing_handleExit(context: Context, exitAction: () -> Unit) {
-            val localDataManager = Baixing_LocalDataManager.baixing_getInstance(context)
-            
-            if (localDataManager.baixing_isTeenModeEnabled()) {
-                Baixing_ExitDialog(context, localDataManager, exitAction).show()
-            } else {
-                exitAction.invoke()
-            }
-        }
-    }
-} 
+}

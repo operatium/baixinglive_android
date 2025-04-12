@@ -164,7 +164,7 @@ class Baixing_LoginViewModel:ViewModel() {
     private fun baixing_saveLoginInfo(context: Context, token: String) {
         if (token.isEmpty()) return
         
-        val localDataManager = Baixing_LocalDataManager.baixing_getInstance(context)
+        val localDataManager = Baixing_LocalDataManager.getInstance()
         
         // 保存token
         localDataManager.baixing_setLoginToken(token)

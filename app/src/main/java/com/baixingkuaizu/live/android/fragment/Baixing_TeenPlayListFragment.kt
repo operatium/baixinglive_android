@@ -1,14 +1,12 @@
 package com.baixingkuaizu.live.android.fragment
 
-import android.app.AlertDialog
-import android.content.DialogInterface
+import android.app.Dialog
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
@@ -18,7 +16,7 @@ import com.baixingkuaizu.live.android.base.Baixing_BaseFragment
 import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
 import com.baixingkuaizu.live.android.busiess.teenmode.Baixing_TeenPlayListAdapter
 import com.baixingkuaizu.live.android.dialog.Baixing_ExitDialog
-import com.baixingkuaizu.live.android.widget.toast.CenterToast
+import com.baixingkuaizu.live.android.dialog.Baixing_TeenModeExtendTimeDialog
 import java.util.concurrent.TimeUnit
 
 /**
@@ -40,11 +38,11 @@ class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
     
     // 使用时间相关
     private var mBaixing_usedTime: Long = 0
-    private var mBaixing_maxTime: Long = TimeUnit.MINUTES.toMillis(40) // 40分钟
+    private var mBaixing_maxTime: Long = TimeUnit.MINUTES.toMillis(1) // 40分钟
     private val mBaixing_updateInterval: Long = 60000 // 1分钟更新一次
     
     // 密码验证对话框
-    private var mBaixing_passwordVerificationDialog: AlertDialog? = null
+    private var mBaixing_passwordVerificationDialog: Dialog? = null
     
     // 处理器用于定时任务
     private val mBaixing_handler = Handler(Looper.getMainLooper())
@@ -68,7 +66,7 @@ class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
-        mBaixing_localDataManager = Baixing_LocalDataManager.baixing_getInstance(requireContext())
+        mBaixing_localDataManager = Baixing_LocalDataManager.getInstance()
         
         // 初始化视图
         baixing_initViews(view)
@@ -91,7 +89,7 @@ class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
         if (mBaixing_usedTime >= mBaixing_maxTime && 
             (currentTime - lastVerifiedTime) >= mBaixing_maxTime) {
             // 如果使用时间超过40分钟且自上次验证已经过了40分钟，则显示验证对话框
-            baixing_showPasswordVerificationForTimeLimit(false)
+            baixing_showPasswordVerificationForTimeLimit()
         } else {
             // 否则，开始计时
             mBaixing_handler.postDelayed(mBaixing_updateTimeRunnable, mBaixing_updateInterval)
@@ -186,7 +184,7 @@ class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
      */
     private fun baixing_showPasswordVerificationForExit() {
         Baixing_ExitDialog(requireContext(), mBaixing_localDataManager) {
-            baixing_exitTeenMode()
+            requireActivity().finish()
         }.show()
     }
     
@@ -194,81 +192,29 @@ class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
      * 显示因使用时间限制的密码验证对话框
      * @param allowDismiss 是否允许用户关闭对话框
      */
-    private fun baixing_showPasswordVerificationForTimeLimit(allowDismiss: Boolean) {
+    private fun baixing_showPasswordVerificationForTimeLimit() {
         // 停止计时器
         mBaixing_handler.removeCallbacks(mBaixing_updateTimeRunnable)
-        
+
         // 如果已经有对话框在显示，不再创建新的
         if (mBaixing_passwordVerificationDialog != null && mBaixing_passwordVerificationDialog!!.isShowing) {
             return
         }
-        
-        val dialogView = LayoutInflater.from(context)
-            .inflate(R.layout.baixing_password_verification_dialog, null)
-        val passwordInput = dialogView.findViewById<EditText>(R.id.baixing_password_input)
-        
-        val builder = AlertDialog.Builder(requireContext())
-            .setView(dialogView)
-            .setTitle("使用时间已达上限")
-            .setMessage("您今日的使用时间已达到上限（40分钟），请输入监护密码继续使用。")
-            .setPositiveButton("确定", null) // 后面手动设置监听器以防止对话框自动关闭
-        
-        // 如果不允许关闭，不提供取消按钮
-        if (allowDismiss) {
-            builder.setNegativeButton("取消", null)
+
+        mBaixing_passwordVerificationDialog = Baixing_TeenModeExtendTimeDialog(requireContext()) {
+            // 密码验证成功的回调
+            // 重置计时，记录验证时间
+            mBaixing_usedTime = 0
+            mBaixing_localDataManager.baixing_setTodayUsedDuration(0)
+            baixing_updateUsageTimeText()
+
+            // 重新开始计时
+            mBaixing_handler.postDelayed(mBaixing_updateTimeRunnable, mBaixing_updateInterval)
+        }.apply {
+            show()
         }
-        
-        val dialog = builder.create()
-        
-        // 设置是否可以通过返回键或点击外部关闭
-        dialog.setCancelable(allowDismiss)
-        
-        dialog.setOnShowListener {
-            val positiveButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE)
-            positiveButton.setOnClickListener {
-                val password = passwordInput.text.toString()
-                
-                if (password.isEmpty()) {
-                    Toast.makeText(requireContext(), "密码不能为空", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
-                }
-                
-                if (password == mBaixing_localDataManager.baixing_getParentPassword()) {
-                    // 密码验证成功，重置计时，记录验证时间
-                    mBaixing_usedTime = 0
-                    mBaixing_localDataManager.baixing_setTodayUsedDuration(0)
-                    mBaixing_localDataManager.baixing_setLastVerifiedTime(System.currentTimeMillis())
-                    baixing_updateUsageTimeText()
-                    
-                    // 关闭对话框，重新开始计时
-                    dialog.dismiss()
-                    mBaixing_handler.postDelayed(mBaixing_updateTimeRunnable, mBaixing_updateInterval)
-                    
-                    Toast.makeText(requireContext(), "验证成功，已重置使用时间", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(requireContext(), "密码错误", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-        
-        mBaixing_passwordVerificationDialog = dialog
-        dialog.show()
     }
-    
-    /**
-     * 退出青少年模式
-     */
-    private fun baixing_exitTeenMode() {
-        // 关闭青少年模式，清空密码
-        mBaixing_localDataManager.baixing_setTeenModeEnabled(false)
-        mBaixing_localDataManager.baixing_setParentPassword("")
-        
-        Toast.makeText(requireContext(), "已退出青少年模式", Toast.LENGTH_SHORT).show()
-        
-        // 关闭当前页面
-        requireActivity().finish()
-    }
-    
+
     /**
      * 更新使用时间
      */
@@ -284,7 +230,7 @@ class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
         
         // 检查是否超过最大使用时间
         if (mBaixing_usedTime >= mBaixing_maxTime) {
-            baixing_showPasswordVerificationForTimeLimit(false)
+            baixing_showPasswordVerificationForTimeLimit()
         }
     }
     
@@ -303,4 +249,4 @@ class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
             return Baixing_TeenPlayListFragment()
         }
     }
-} 
+}

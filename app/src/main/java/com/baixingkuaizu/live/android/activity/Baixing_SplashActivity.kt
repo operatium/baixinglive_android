@@ -29,7 +29,7 @@ class Baixing_SplashActivity : Baixing_BaseActivity() {
     private val mBaixing_ActivityProxy = Baixing_ActivityProxy(this)
 
     private val mBaixing_localDataManager: Baixing_LocalDataManager
-        get() = Baixing_LocalDataManager.baixing_getInstance(this)
+        get() = Baixing_LocalDataManager.getInstance()
 
     var mBaixing_privacyDialog: Baixing_PrivacyDialog? = null
 

@@ -38,7 +38,7 @@ class Baixing_TeenModeFragment : Baixing_BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mBaixing_localDataManager = Baixing_LocalDataManager.baixing_getInstance(requireContext())
+        mBaixing_localDataManager = Baixing_LocalDataManager.getInstance()
         // 设置监听器
         baixing_setupListeners()
         if (mBaixing_localDataManager.baixing_isTeenModeEnabled()) {
@@ -113,4 +113,4 @@ class Baixing_TeenModeFragment : Baixing_BaseFragment() {
             return Baixing_TeenModeFragment()
         }
     }
-} 
+}

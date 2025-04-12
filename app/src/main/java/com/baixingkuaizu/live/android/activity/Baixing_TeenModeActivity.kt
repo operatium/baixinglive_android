@@ -1,8 +1,10 @@
 package com.baixingkuaizu.live.android.activity
 
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import com.baixingkuaizu.live.android.R
 import com.baixingkuaizu.live.android.base.Baixing_BaseActivity
+import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
 import com.baixingkuaizu.live.android.databinding.BaixingTeenModeActivityBinding
 import com.baixingkuaizu.live.android.fragment.Baixing_TeenModeFragment
 import com.baixingkuaizu.live.android.fragment.Baixing_TeenPlayListFragment
@@ -24,6 +26,20 @@ class Baixing_TeenModeActivity : Baixing_BaseActivity() {
         mBaixing_binding.root.setWindowListener()
         
         baixing_toTeenModeFragment()
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                Baixing_LocalDataManager.getInstance().let { localDataManager->
+                    if (localDataManager.baixing_isTeenModeEnabled()) {
+                        Baixing_ExitDialog(this@Baixing_TeenModeActivity, localDataManager, {
+                            finish()
+                        }).show()
+                        return
+                    }
+                    finish()
+                }
+            }
+        })
     }
 
     fun baixing_toTeenModeFragment() {
@@ -39,11 +55,4 @@ class Baixing_TeenModeActivity : Baixing_BaseActivity() {
             .replace(R.id.baixing_teen_mode_container, fragment)
             .commit()
     }
-    
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        Baixing_ExitDialog.baixing_handleExit(this) {
-            super.onBackPressed()
-        }
-    }
-} 
+}

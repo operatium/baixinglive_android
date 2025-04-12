@@ -42,7 +42,7 @@ class Baixing_SelectLoginFragment : Baixing_BaseFragment() {
     }
     
     private fun baixing_checkLoginStatus() {
-        if (Baixing_LocalDataManager.baixing_getInstance(requireContext()).baixing_isTokenValid()) {
+        if (Baixing_LocalDataManager.getInstance().baixing_isTokenValid()) {
             Baixing_GoRouter.baixing_jumpHomeActivity()
             activity?.finish()
         }
