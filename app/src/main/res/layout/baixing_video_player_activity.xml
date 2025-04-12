@@ -36,16 +36,13 @@
 
     </LinearLayout>
 
-    <com.google.android.exoplayer2.ui.PlayerView
-        android:id="@+id/baixing_player_view"
+    <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
+        android:id="@+id/baixing_video_player"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="#000000"
         app:layout_constraintTop_toBottomOf="@id/baixing_header"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:use_controller="true"
-        app:resize_mode="fit"
-        app:show_timeout="3000" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <ProgressBar
         android:id="@+id/baixing_loading_progress"
