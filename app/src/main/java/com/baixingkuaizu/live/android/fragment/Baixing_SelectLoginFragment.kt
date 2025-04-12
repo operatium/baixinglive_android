@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.baixingkuaizu.live.android.adatperandroid.AdapterHelper.setClick
 import com.baixingkuaizu.live.android.base.Baixing_BaseFragment
 import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
 import com.baixingkuaizu.live.android.busiess.router.Baixing_GoRouter
@@ -23,10 +24,10 @@ class Baixing_SelectLoginFragment : Baixing_BaseFragment() {
         savedInstanceState: Bundle?
     ): View? {
         mBaixing_Binding = BaixingSelectLoginFragmentBinding.inflate(inflater)
-        mBaixing_Binding.baixingPhone.setOnClickListener {
+        mBaixing_Binding.baixingPhone.setClick {
             baixing_goLogin()
         }
-        mBaixing_Binding.baixingMore.setOnClickListener {
+        mBaixing_Binding.baixingMore.setClick {
             baixing_goLogin()
         }
         return mBaixing_Binding.root

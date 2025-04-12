@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.GridLayoutManager
+import com.baixingkuaizu.live.android.adatperandroid.AdapterHelper.setClick
 import com.baixingkuaizu.live.android.base.Baixing_BaseFragment
 import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
 import com.baixingkuaizu.live.android.busiess.teenmode.Baixing_TeenPlayListAdapter
@@ -128,18 +129,18 @@ class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
      */
     private fun baixing_setupListeners() {
         // 返回按钮点击事件
-        mBaixing_binding.baixingBack.setOnClickListener {
+        mBaixing_binding.baixingBack.setClick {
             baixing_showPasswordVerificationForExit()
         }
         
         // 退出青少年模式按钮点击事件
-        mBaixing_binding.baixingExitTeenMode.setOnClickListener {
+        mBaixing_binding.baixingExitTeenMode.setClick {
             baixing_showPasswordVerificationForExit()
         }
         
         // 标签按钮点击事件
         mBaixing_tagButtons.forEachIndexed { index, textView ->
-            textView.setOnClickListener {
+            textView.setClick {
                 baixing_selectTag(index)
             }
         }

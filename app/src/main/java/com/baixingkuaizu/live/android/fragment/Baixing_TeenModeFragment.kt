@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import com.baixingkuaizu.live.android.R
 import com.baixingkuaizu.live.android.activity.Baixing_TeenModeActivity
+import com.baixingkuaizu.live.android.adatperandroid.AdapterHelper.setClick
 import com.baixingkuaizu.live.android.base.Baixing_BaseFragment
 import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
 import com.baixingkuaizu.live.android.databinding.BaixingSetPasswordDialogBinding
@@ -44,11 +45,11 @@ class Baixing_TeenModeFragment : Baixing_BaseFragment() {
     }
 
     private fun baixing_setupListeners() {
-        mBaixing_binding.baixingBack.setOnClickListener {
+        mBaixing_binding.baixingBack.setClick {
             activity?.finish()
         }
         
-        mBaixing_binding.baixingEnableTeenMode.setOnClickListener {
+        mBaixing_binding.baixingEnableTeenMode.setClick {
             baixing_showSetPasswordDialog()
         }
     }
