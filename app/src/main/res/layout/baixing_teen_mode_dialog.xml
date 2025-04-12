@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="#ffffff"
+    app:cardCornerRadius="@dimen/dp.10"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="青少年模式"
+            android:textColor="#333333"
+            android:textSize="@dimen/sp.22"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/baixing_privacy_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="@dimen/dp.4"
+            android:padding="@dimen/dp.20"
+            android:text="@string/baixing_teen_mode"
+            android:textColor="#4D4D4D"
+            android:textSize="@dimen/sp.14" />
+
+        <TextView
+            android:id="@+id/tv_enter_teen_mode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:text="进入青少年模式 >"
+            android:textColor="#8B5CF6"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/btn_dismiss"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/dp.20"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/baixing_button_background2"
+            android:gravity="center"
+            android:paddingVertical="@dimen/dp.10"
+            android:text="我知道了"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/sp.20"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

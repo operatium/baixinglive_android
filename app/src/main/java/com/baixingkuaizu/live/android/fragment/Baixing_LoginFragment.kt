@@ -16,7 +16,7 @@ import com.baixingkuaizu.live.android.base.Baixing_BaseActivity
 import com.baixingkuaizu.live.android.base.Baixing_BaseFragment
 import com.baixingkuaizu.live.android.busiess.router.Baixing_GoRouter
 
-import com.baixingkuaizu.live.android.databinding.BaixingFragmentLoginBinding
+import com.baixingkuaizu.live.android.databinding.BaixingLoginFragmentBinding
 import com.baixingkuaizu.live.android.viewmodel.Baixing_LoginViewModel
 import com.baixingkuaizu.live.android.widget.toast.CenterToast
 import androidx.core.graphics.toColorInt
@@ -29,7 +29,7 @@ import com.baixingkuaizu.live.android.widget.loading.Baixing_FullScreenLoadingDi
  */
 class Baixing_LoginFragment : Baixing_BaseFragment() {
     
-    private lateinit var mBaixing_binding: BaixingFragmentLoginBinding
+    private lateinit var mBaixing_binding: BaixingLoginFragmentBinding
 
     private lateinit var mBaixing_viewModel: Baixing_LoginViewModel
 
@@ -40,7 +40,7 @@ class Baixing_LoginFragment : Baixing_BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mBaixing_binding = BaixingFragmentLoginBinding.inflate(inflater, container, false)
+        mBaixing_binding = BaixingLoginFragmentBinding.inflate(inflater, container, false)
         return mBaixing_binding.root
     }
     

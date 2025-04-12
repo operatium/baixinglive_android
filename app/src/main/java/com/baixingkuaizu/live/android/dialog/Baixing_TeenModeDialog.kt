@@ -4,37 +4,40 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import android.view.Gravity
-import android.view.ViewGroup
 import android.view.Window
-import android.widget.Button
-import android.widget.TextView
-import com.baixingkuaizu.live.android.R
+import android.view.WindowManager
 import androidx.core.graphics.drawable.toDrawable
+import com.baixingkuaizu.live.android.adatperandroid.AdapterHelper.setClick
+import com.baixingkuaizu.live.android.databinding.BaixingTeenModeDialogBinding
 
+/**
+ * @author yuyuexing
+ * @date: 2025/4/11
+ * @description: 青少年模式对话框
+
+ */
 class Baixing_TeenModeDialog(context: Context) : Dialog(context) {
 
     private var mBaixing_onEnterTeenModeListener: (() -> Unit)? = null
     private var mBaixing_onDismissListener: (() -> Unit)? = null
 
+    private lateinit var mBaixing_binding: BaixingTeenModeDialogBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
-        window?.setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
+        window?.setBackgroundDrawableResource(android.R.color.transparent)
+        window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+        setCancelable(false)
 
-        setContentView(R.layout.baixing_dialog_teen_mode)
+        mBaixing_binding = BaixingTeenModeDialogBinding.inflate(layoutInflater)
+        setContentView(mBaixing_binding.root)
 
-        window?.apply {
-            setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            setGravity(Gravity.CENTER)
-        }
-
-        findViewById<TextView>(R.id.tv_enter_teen_mode)?.setOnClickListener {
+        mBaixing_binding.tvEnterTeenMode.setClick {
             mBaixing_onEnterTeenModeListener?.invoke()
             dismiss()
         }
-
-        findViewById<Button>(R.id.btn_dismiss)?.setOnClickListener {
+        mBaixing_binding.btnDismiss.setClick {
             mBaixing_onDismissListener?.invoke()
             dismiss()
         }

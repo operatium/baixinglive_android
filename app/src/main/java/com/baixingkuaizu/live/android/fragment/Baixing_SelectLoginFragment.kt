@@ -16,7 +16,6 @@ import com.baixingkuaizu.live.android.databinding.BaixingSelectLoginFragmentBind
  */
 class Baixing_SelectLoginFragment : Baixing_BaseFragment() {
     private lateinit var mBaixing_Binding: BaixingSelectLoginFragmentBinding
-    private lateinit var mBaixing_localDataManager: Baixing_LocalDataManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,21 +24,16 @@ class Baixing_SelectLoginFragment : Baixing_BaseFragment() {
     ): View? {
         mBaixing_Binding = BaixingSelectLoginFragmentBinding.inflate(inflater)
         mBaixing_Binding.baixingPhone.setOnClickListener {
-            goLogin()
+            baixing_goLogin()
         }
         mBaixing_Binding.baixingMore.setOnClickListener {
-            goLogin()
+            baixing_goLogin()
         }
         return mBaixing_Binding.root
     }
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        
-        // 初始化本地数据管理器
-        mBaixing_localDataManager = Baixing_LocalDataManager.baixing_getInstance(requireContext())
-        
-        // 检查用户是否已登录且token有效
         baixing_checkLoginStatus()
     }
 
@@ -47,28 +41,18 @@ class Baixing_SelectLoginFragment : Baixing_BaseFragment() {
         super.onDestroyView()
     }
     
-    /**
-     * 检查用户是否已登录且token有效
-     * 如果已登录且token有效，直接跳转到主页面
-     */
     private fun baixing_checkLoginStatus() {
-        // 检查token是否有效
-        if (mBaixing_localDataManager.baixing_isTokenValid()) {
-            // token有效，直接跳转到主页面
+        if (Baixing_LocalDataManager.baixing_getInstance(requireContext()).baixing_isTokenValid()) {
             baixing_goToMainActivity()
         }
-        // 如果token无效或不存在，不做处理，用户需要手动登录
     }
     
-    /**
-     * 跳转到主页面
-     */
     private fun baixing_goToMainActivity() {
         Baixing_GoRouter.baixing_jumpMainActivity(requireContext())
         requireActivity().finish()
     }
 
-    private fun goLogin() {
+    private fun baixing_goLogin() {
         Baixing_GoRouter.baixing_jumpLoginActivity()
         requireActivity().finish()
     }

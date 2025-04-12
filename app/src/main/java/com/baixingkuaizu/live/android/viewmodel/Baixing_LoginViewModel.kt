@@ -122,23 +122,22 @@ class Baixing_LoginViewModel:ViewModel() {
             override fun baixing_onStartTask(task: Baixing_LoginTask) {}
 
             override fun baixing_onEndTask(task: Baixing_LoginTask) {
-                viewModelScope.launch {
-                    // 登录成功，保存token和过期时间
-                    baixing_saveLoginInfo(appContext, task.baixing_getToken())
+                baixing_saveLoginInfo(appContext, task.baixing_getToken())
+                viewModelScope.launch(Dispatchers.Main) {
                     _mBaixing_loginLoading.value = false
                     _mBaixing_login.value = true
                 }
             }
 
             override fun baixing_onLoginError(task: Baixing_LoginTask) {
-                viewModelScope.launch {
+                viewModelScope.launch(Dispatchers.Main) {
                     _mBaixing_loginLoading.value = false
                     _mBaixing_toast.value = "登录错误"
                 }
             }
 
             override fun baixing_onCancelTask(task: Baixing_LoginTask) {
-                viewModelScope.launch {
+                viewModelScope.launch(Dispatchers.Main) {
                     _mBaixing_loginLoading.value = false
                     _mBaixing_toast.value = "登录取消"
                 }
