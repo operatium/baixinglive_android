@@ -5,6 +5,7 @@ import com.baixingkuaizu.live.android.R
 import com.baixingkuaizu.live.android.base.Baixing_BaseActivity
 import com.baixingkuaizu.live.android.databinding.BaixingTeenModeActivityBinding
 import com.baixingkuaizu.live.android.fragment.Baixing_TeenModeFragment
+import com.baixingkuaizu.live.android.fragment.Baixing_TeenPlayListFragment
 
 /**
  * @author yuyuexing
@@ -20,23 +21,18 @@ class Baixing_TeenModeActivity : Baixing_BaseActivity() {
         mBaixing_binding = BaixingTeenModeActivityBinding.inflate(layoutInflater)
         setContentView(mBaixing_binding.root)
         mBaixing_binding.root.setWindowListener()
-        // 初始化视图
-        baixing_initViews()
+        baixing_toTeenModeFragment()
     }
-    
-    /**
-     * 初始化视图
-     */
-    private fun baixing_initViews() {
-        // 加载青少年模式Fragment
-        baixing_loadTeenModeFragment()
-    }
-    
-    /**
-     * 加载青少年模式Fragment
-     */
-    private fun baixing_loadTeenModeFragment() {
+
+    fun baixing_toTeenModeFragment() {
         val fragment = Baixing_TeenModeFragment.newInstance()
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.baixing_teen_mode_container, fragment)
+            .commit()
+    }
+
+    fun baixing_toTeenPlayListFragment() {
+        val fragment = Baixing_TeenPlayListFragment.newInstance()
         supportFragmentManager.beginTransaction()
             .replace(R.id.baixing_teen_mode_container, fragment)
             .commit()

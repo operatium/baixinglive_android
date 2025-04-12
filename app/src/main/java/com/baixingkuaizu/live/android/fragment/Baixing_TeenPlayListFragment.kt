@@ -17,6 +17,7 @@ import com.baixingkuaizu.live.android.R
 import com.baixingkuaizu.live.android.base.Baixing_BaseFragment
 import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
 import com.baixingkuaizu.live.android.busiess.teenmode.Baixing_TeenPlayListAdapter
+import com.baixingkuaizu.live.android.widget.toast.CenterToast
 import java.util.concurrent.TimeUnit
 
 /**
@@ -124,7 +125,7 @@ class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
     private fun baixing_setupListeners() {
         // 返回按钮点击事件
         mBaixing_backButton.setClick {
-            requireActivity().finish()
+            baixing_showPasswordVerificationForExit()
         }
         
         // 退出青少年模式按钮点击事件
@@ -199,7 +200,7 @@ class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
                 val password = passwordInput.text.toString()
                 
                 if (password.isEmpty()) {
-                    Toast.makeText(requireContext(), "密码不能为空", Toast.LENGTH_SHORT).show()
+                    CenterToast.show(requireActivity(), "密码不能为空")
                     return@setOnClickListener
                 }
                 
@@ -207,7 +208,7 @@ class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
                     dialog.dismiss()
                     baixing_exitTeenMode()
                 } else {
-                    Toast.makeText(requireContext(), "密码错误", Toast.LENGTH_SHORT).show()
+                    CenterToast.show(requireActivity(), "密码错误")
                 }
             }
         }

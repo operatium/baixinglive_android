@@ -51,6 +51,7 @@
         <activity android:name="com.baixingkuaizu.live.android.activity.Baixing_LoginActivity"
             android:screenOrientation="sensorPortrait"/>
         <activity android:name="com.baixingkuaizu.live.android.activity.Baixing_TeenModeActivity"
+            android:launchMode="singleInstance"
             android:screenOrientation="sensorPortrait"/>
     </application>
 

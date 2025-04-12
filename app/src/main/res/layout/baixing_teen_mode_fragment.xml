@@ -175,10 +175,13 @@
         android:background="#FFFFFF"
         android:padding="@dimen/dp.20">
 
-        <Button
+        <TextView
             android:id="@+id/baixing_enable_teen_mode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/dp.10"
+            android:layout_marginHorizontal="@dimen/dp.20"
+            android:gravity="center"
             android:background="@drawable/baixing_button_background2"
             android:text="开启青少年模式"
             android:textColor="#FFFFFF"
@@ -190,7 +193,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp.60"
             android:gravity="center"
-            android:text="开启前需设置监护密码"
+            android:text="每次开启青少年模式都需要设置密码"
             android:textColor="#999999"
             android:textSize="@dimen/sp.14" />
     </FrameLayout>
