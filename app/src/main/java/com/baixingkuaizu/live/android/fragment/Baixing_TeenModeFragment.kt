@@ -43,6 +43,8 @@ class Baixing_TeenModeFragment : Baixing_BaseFragment() {
         baixing_initViews(view)
         // 设置监听器
         baixing_setupListeners()
+        // 检查是否已设置密码
+        baixing_checkExistingPassword()
     }
     
     private fun baixing_initViews(view: View) {
@@ -54,7 +56,7 @@ class Baixing_TeenModeFragment : Baixing_BaseFragment() {
     private fun baixing_setupListeners() {
         // 返回按钮点击事件
         mBaixing_backButton.setClick {
-            requireActivity().onBackPressed()
+            requireActivity().finish()
         }
         
         // 开启青少年模式按钮点击事件
@@ -63,6 +65,23 @@ class Baixing_TeenModeFragment : Baixing_BaseFragment() {
                 baixing_showSetPasswordDialog()
             } else {
                 baixing_enableTeenMode()
+            }
+        }
+    }
+    
+    /**
+     * 检查是否已经设置过监护密码
+     */
+    private fun baixing_checkExistingPassword() {
+        val savedPassword = mBaixing_localDataManager.baixing_getParentPassword()
+        if (savedPassword.isNotEmpty()) {
+            mBaixing_parentPassword = savedPassword
+            mBaixing_setPasswordText.text = "已设置监护密码"
+            
+            // 如果已经启用了青少年模式，更新按钮文字
+            if (mBaixing_localDataManager.baixing_isTeenModeEnabled()) {
+                mBaixing_enableButton.text = "已启用青少年模式"
+                mBaixing_enableButton.isEnabled = false
             }
         }
     }
@@ -111,6 +130,7 @@ class Baixing_TeenModeFragment : Baixing_BaseFragment() {
     private fun baixing_saveParentPassword(password: String) {
         // 使用LocalDataManager保存密码
         mBaixing_localDataManager.baixing_setParentPassword(password)
+        mBaixing_setPasswordText.text = "已设置监护密码"
     }
     
     /**
@@ -122,8 +142,14 @@ class Baixing_TeenModeFragment : Baixing_BaseFragment() {
         
         Toast.makeText(requireContext(), "青少年模式已启用", Toast.LENGTH_SHORT).show()
         
-        // 跳转到主页面或其他操作
-        requireActivity().onBackPressed()
+        // 更新UI状态
+        mBaixing_enableButton.text = "已启用青少年模式"
+        mBaixing_enableButton.isEnabled = false
+        
+        // 延迟退出页面
+        mBaixing_enableButton.postDelayed({
+            requireActivity().finish()
+        }, 1500)
     }
     
     companion object {
