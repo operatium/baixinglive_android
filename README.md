@@ -81,10 +81,11 @@ com.baixingkuaizu.live.android
 
 - **Baixing_TeenModeActivity**: 青少年模式活动页面，是青少年模式相关Fragment的容器，使用ViewBinding进行视图绑定，负责加载青少年模式相关的Fragment并处理返回键逻辑。
 - **Baixing_TeenModeFragment**: 青少年模式设置页面，负责启用青少年模式和设置监护密码。当用户点击启用青少年模式按钮时，会弹出密码设置对话框，要求设置并确认监护密码。设置成功后会将密码保存到LocalDataManager并跳转到播放列表页面。如果青少年模式已启用，会直接跳转到播放列表页面。
-- **Baixing_TeenPlayListFragment**: 青少年模式播放列表页面，展示适合青少年的内容并管理使用时间限制。该页面实现了标签筛选、内容展示、使用时间监控等功能。使用时间到达限制后，会显示密码验证对话框，要求输入监护密码才能继续使用。该页面使用ViewBinding进行视图绑定，Handler处理定时任务，与多个对话框类和LocalDataManager协同工作。
+- **Baixing_TeenPlayListFragment**: 青少年模式播放列表页面，展示适合青少年的内容并管理使用时间限制。该页面实现了标签筛选、内容展示、使用时间监控等功能。使用时间到达限制后，会显示密码验证对话框，要求输入监护密码才能继续使用。该页面使用ViewBinding进行视图绑定，Handler处理定时任务，与多个对话框类和LocalDataManager协同工作。当用户点击视频项时，会跳转到Baixing_VideoPlayerActivity播放相应视频。
 - **Baixing_TeenPlayListAdapter**: 青少年模式播放列表适配器。
-- **Baixing_VideoData**: 视频数据模型类。
+- **Baixing_VideoData**: 视频数据模型类，包含视频ID、标题、作者、封面URL、播放时长、分类标签、视频URL等信息，为视频播放提供必要的数据支持。
 - **Baixing_TeenModeExtendTimeDialog**: 青少年模式使用时间延长对话框，当用户使用时间达到限制时（默认40分钟），显示该对话框进行监护密码验证。该对话框与Baixing_LocalDataManager密切配合，通过后者验证监护密码的正确性并记录验证时间。验证成功后会重置计时器并允许继续使用，失败则会提示密码错误。为了确保青少年保护机制的有效性，该对话框禁用了取消按钮，且不允许通过返回键或点击外部区域关闭。
+- **Baixing_VideoPlayerActivity**: 视频播放器活动页面，负责播放青少年模式中用户点击的视频内容。该活动使用VideoView实现视频播放功能，支持视频标题显示、加载进度条以及错误处理机制。通过Intent接收视频标题和URL等信息，并在生命周期事件中管理视频播放状态，如在页面暂停时暂停播放，页面销毁时释放播放资源。该活动实现了一个轻量级但功能完整的视频播放器，与青少年模式的内容保护机制无缝集成。
 
 ### 9. Web功能
 
@@ -124,7 +125,8 @@ Baixing_BaseActivity
 ├── Baixing_LoginActivity
 ├── Baixing_TeenModeActivity
 ├── Baixing_SplashActivity
-└── Baixing_WebActivity
+├── Baixing_WebActivity
+└── Baixing_VideoPlayerActivity
 ```
 
 ### Fragment类关系
@@ -203,6 +205,7 @@ View
 3. 已启用 -> 跳转到 Baixing_TeenModeActivity
 4. 在青少年模式中 -> 显示适合青少年的内容，限制使用时间
 5. 使用时间到限制（40分钟）-> 显示Baixing_TeenModeExtendTimeDialog -> 输入正确监护密码 -> 重置使用时间 -> 继续使用
+6. 点击视频 -> 跳转到Baixing_VideoPlayerActivity -> 播放视频
 
 ### 3. 登录流程
 
