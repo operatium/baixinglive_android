@@ -32,7 +32,7 @@ class Baixing_VideoPlayerActivity : Baixing_BaseActivity() {
         mBaixing_binding.baixingVideoTitle.text = mBaixing_videoTitle
         
         mBaixing_binding.baixingBack.setClick {
-            onBackPressed()
+            finish()
         }
         
         baixing_initializePlayer(mBaixing_videoTitle, mBaixing_videoUrl)
@@ -55,7 +55,7 @@ class Baixing_VideoPlayerActivity : Baixing_BaseActivity() {
             // 设置返回按键功能
             mBaixing_binding.baixingVideoPlayer.backButton.visibility = View.VISIBLE
             mBaixing_binding.baixingVideoPlayer.backButton.setOnClickListener {
-                onBackPressed()
+                handleBackPressed()
             }
             
             // 设置旋转
@@ -93,7 +93,7 @@ class Baixing_VideoPlayerActivity : Baixing_BaseActivity() {
         }
     }
     
-    override fun onBackPressed() {
+    private fun handleBackPressed() {
         // 先返回正常状态
         if (mBaixing_orientationUtils?.screenType == 1) {
             mBaixing_binding.baixingVideoPlayer.onBackFullscreen()
@@ -103,7 +103,11 @@ class Baixing_VideoPlayerActivity : Baixing_BaseActivity() {
         // 释放所有
         mBaixing_binding.baixingVideoPlayer.releaseVideos()
         GSYVideoManager.releaseAllVideos()
-        super.onBackPressed()
+        finish()
+    }
+    
+    override fun onBackPressed() {
+        handleBackPressed()
     }
     
     override fun onPause() {
