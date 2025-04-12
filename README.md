@@ -96,7 +96,7 @@ com.baixingkuaizu.live.android
 
 - **Baixing_PrivacyDialog**: 隐私政策对话框，用于显示和同意隐私政策。
 - **Baixing_TeenModeDialog**: 青少年模式提示对话框，用于引导用户进入青少年模式。
-- **Baixing_ExitDialog**: 退出对话框，用于验证监护密码以退出青少年模式。
+- **Baixing_ExitDialog**: 退出对话框，用于验证监护密码以退出青少年模式。该对话框提供密码输入界面，用户需要输入正确的监护密码才能退出青少年模式。验证通过后会清除密码、禁用青少年模式并通知调用方。该对话框使用ViewBinding进行视图绑定，与Baixing_LocalDataManager类配合，负责密码验证和青少年模式状态修改。对话框采用CenterToast显示操作结果，并提供取消功能允许用户放弃退出操作。
 - **Baixing_TeenModeExtendTimeDialog**: 青少年模式使用时间延长对话框，用于验证监护密码以继续使用，当用户使用时间达到上限时显示。此对话框与Baixing_LocalDataManager类协同工作，负责密码验证和时间记录。对话框采用ViewBinding进行视图绑定，使用CenterToast显示验证结果。为确保青少年保护机制的严格执行，对话框禁用了取消按钮，且不允许通过返回键或点击外部区域关闭，必须输入正确的监护密码才能继续使用。
 
 ## 类关系图
