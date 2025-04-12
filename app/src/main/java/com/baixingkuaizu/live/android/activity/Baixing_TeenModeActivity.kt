@@ -19,7 +19,7 @@ class Baixing_TeenModeActivity : Baixing_BaseActivity() {
         super.onCreate(savedInstanceState)
         mBaixing_binding = BaixingTeenModeActivityBinding.inflate(layoutInflater)
         setContentView(mBaixing_binding.root)
-        
+        mBaixing_binding.root.setWindowListener()
         // 初始化视图
         baixing_initViews()
     }

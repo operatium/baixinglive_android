@@ -6,6 +6,7 @@ import android.view.View
 import com.baixingkuaizu.live.android.R
 import com.baixingkuaizu.live.android.base.Baixing_BaseActivity
 import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
+import com.baixingkuaizu.live.android.busiess.router.Baixing_GoRouter
 import com.baixingkuaizu.live.android.databinding.BaixingMainActivityBinding
 import com.baixingkuaizu.live.android.dialog.Baixing_TeenModeDialog
 import com.baixingkuaizu.live.android.fragment.Baixing_TeenModeFragment
@@ -39,8 +40,7 @@ class Baixing_MainActivity : Baixing_BaseActivity() {
         if (!mBaixing_localDataManager.baixing_isTeenModeDialogShown()) {
             val dialog = Baixing_TeenModeDialog(this)
             dialog.baixing_setOnEnterTeenModeListener {
-                // 处理进入青少年模式的逻辑
-                baixing_navigateToTeenModeActivity()
+                Baixing_GoRouter.baixing_jumpTeenModeActivity()
             }
             dialog.baixing_setOnDismissListener {
                 // 用户点击"我知道了"按钮
@@ -48,20 +48,5 @@ class Baixing_MainActivity : Baixing_BaseActivity() {
             }
             dialog.show()
         }
-    }
-    
-    /**
-     * 跳转到青少年模式Activity
-     */
-    private fun baixing_navigateToTeenModeActivity() {
-        val intent = Intent(this, Baixing_TeenModeActivity::class.java)
-        startActivity(intent)
-    }
-    
-    /**
-     * 提供给其他类调用的青少年模式跳转方法
-     */
-    fun baixing_openTeenModeSettings() {
-        baixing_navigateToTeenModeActivity()
     }
 }

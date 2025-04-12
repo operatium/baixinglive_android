@@ -40,11 +40,11 @@ object Baixing_GoRouter {
         val intent = Intent(currentActivity, Baixing_MainActivity::class.java)
         currentActivity.startActivity(intent)
     }
-    
-    fun baixing_jumpMainActivity(context: Context) {
-        val intent = Intent(context, Baixing_MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        context.startActivity(intent)
+
+    fun baixing_jumpTeenModeActivity() {
+        val currentActivity = mBaixing_activityList.peek()
+        val intent = Intent(currentActivity, Baixing_TeenModeActivity::class.java)
+        currentActivity.startActivity(intent)
     }
 
     fun baixing_callOnCreate(activity: Baixing_BaseActivity) {
