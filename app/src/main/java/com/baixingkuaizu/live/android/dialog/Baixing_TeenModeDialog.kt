@@ -2,12 +2,10 @@ package com.baixingkuaizu.live.android.dialog
 
 import android.app.Dialog
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
-import androidx.core.graphics.drawable.toDrawable
-import com.baixingkuaizu.live.android.adatperandroid.AdapterHelper.setClick
+import com.baixingkuaizu.live.android.adatperandroid.Baixing_AdapterHelper.setClick
 import com.baixingkuaizu.live.android.databinding.BaixingTeenModeDialogBinding
 
 /**

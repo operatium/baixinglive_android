@@ -69,7 +69,7 @@ class Baixing_SplashActivity : Baixing_BaseActivity() {
         }
 
         mBaixing_privacyDialog?.baixing_setOnDisagreeListener {
-            CenterToast.makeText(this, "您需要同意隐私政策才能使用本应用").show()
+            CenterToast.show(this, "您需要同意隐私政策才能使用本应用")
             System.exit(0)
         }
 
