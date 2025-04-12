@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
 import com.baixingkuaizu.live.android.busiess.task.login.Baixing_LoginTask
 import com.baixingkuaizu.live.android.busiess.task.login.Baixing_LoginTaskListener
 import com.baixingkuaizu.live.android.busiess.task.login.Baixing_LoginTaskManager
@@ -15,11 +16,15 @@ import com.baixingkuaizu.live.android.busiess.task.login.Baixing_SendVerfication
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
+import java.util.concurrent.TimeUnit
 
 class Baixing_LoginViewModel:ViewModel() {
     val TAG = "yyx类Baixing_LoginViewModel"
 
     val mBaixing_TimeOut = 6000L
+    
+    // 默认token有效期为7天
+    private val mBaixing_defaultTokenValidDays = 7L
 
     // 用于存储验证码倒计时时间
     private val _mBaixing_codeTime = MutableLiveData<Int>()
@@ -118,6 +123,8 @@ class Baixing_LoginViewModel:ViewModel() {
 
             override fun baixing_onEndTask(task: Baixing_LoginTask) {
                 viewModelScope.launch {
+                    // 登录成功，保存token和过期时间
+                    baixing_saveLoginInfo(appContext, task.baixing_getToken())
                     _mBaixing_loginLoading.value = false
                     _mBaixing_login.value = true
                 }
@@ -153,6 +160,21 @@ class Baixing_LoginViewModel:ViewModel() {
                 }
             }
         }
+    }
+    
+    private fun baixing_saveLoginInfo(context: Context, token: String) {
+        if (token.isEmpty()) return
+        
+        val localDataManager = Baixing_LocalDataManager.baixing_getInstance(context)
+        
+        // 保存token
+        localDataManager.baixing_setLoginToken(token)
+        
+        // 计算过期时间 (当前时间 + 7天)
+        val expireTime = System.currentTimeMillis() + TimeUnit.DAYS.toMillis(mBaixing_defaultTokenValidDays)
+        localDataManager.baixing_setTokenExpireTime(expireTime)
+        
+        Log.d(TAG, "Token saved, expires at: ${expireTime}")
     }
 
     fun baixing_checkVerificationCode(code: String): Boolean {

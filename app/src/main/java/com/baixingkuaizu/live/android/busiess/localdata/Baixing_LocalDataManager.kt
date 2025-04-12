@@ -36,6 +36,22 @@ class Baixing_LocalDataManager(private val context: Context) {
         mBaixing_sharedPreferences.edit { remove(BAIXING_KEY_LOGIN_TOKEN) }
     }
     
+    fun baixing_getTokenExpireTime(): Long {
+        return mBaixing_sharedPreferences.getLong(BAIXING_KEY_TOKEN_EXPIRE_TIME, 0)
+    }
+    
+    fun baixing_setTokenExpireTime(expireTime: Long) {
+        mBaixing_sharedPreferences.edit { putLong(BAIXING_KEY_TOKEN_EXPIRE_TIME, expireTime) }
+    }
+    
+    fun baixing_isTokenValid(): Boolean {
+        val token = baixing_getLoginToken()
+        val expireTime = baixing_getTokenExpireTime()
+        val currentTime = System.currentTimeMillis()
+        
+        return token.isNotEmpty() && expireTime > currentTime
+    }
+    
     fun baixing_isTeenModeDialogShown(): Boolean {
         return mBaixing_sharedPreferences.getBoolean(BAIXING_KEY_TEEN_MODE_DIALOG_SHOWN, false)
     }
@@ -49,6 +65,7 @@ class Baixing_LocalDataManager(private val context: Context) {
 
         private const val BAIXING_KEY_PRIVACY_AGREED = "baixing_key_privacy_agreed"
         private const val BAIXING_KEY_LOGIN_TOKEN = "baixing_key_login_token"
+        private const val BAIXING_KEY_TOKEN_EXPIRE_TIME = "baixing_key_token_expire_time"
         private const val BAIXING_KEY_TEEN_MODE_DIALOG_SHOWN = "baixing_key_teen_mode_dialog_shown"
 
         @SuppressLint("StaticFieldLeak")

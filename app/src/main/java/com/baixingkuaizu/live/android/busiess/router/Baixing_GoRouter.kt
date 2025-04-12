@@ -1,5 +1,6 @@
 package com.baixingkuaizu.live.android.busiess.router
 
+import android.content.Context
 import android.content.Intent
 import com.baixingkuaizu.live.android.activity.*
 import com.baixingkuaizu.live.android.base.Baixing_BaseActivity
@@ -38,6 +39,12 @@ object Baixing_GoRouter {
         val currentActivity = mBaixing_activityList.peek()
         val intent = Intent(currentActivity, Baixing_MainActivity::class.java)
         currentActivity.startActivity(intent)
+    }
+    
+    fun baixing_jumpMainActivity(context: Context) {
+        val intent = Intent(context, Baixing_MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        context.startActivity(intent)
     }
 
     fun baixing_callOnCreate(activity: Baixing_BaseActivity) {
