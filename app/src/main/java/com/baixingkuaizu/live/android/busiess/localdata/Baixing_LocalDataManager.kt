@@ -35,12 +35,21 @@ class Baixing_LocalDataManager(private val context: Context) {
     fun baixing_clearLoginToken() {
         mBaixing_sharedPreferences.edit { remove(BAIXING_KEY_LOGIN_TOKEN) }
     }
+    
+    fun baixing_isTeenModeDialogShown(): Boolean {
+        return mBaixing_sharedPreferences.getBoolean(BAIXING_KEY_TEEN_MODE_DIALOG_SHOWN, false)
+    }
+    
+    fun baixing_setTeenModeDialogShown(shown: Boolean) {
+        mBaixing_sharedPreferences.edit { putBoolean(BAIXING_KEY_TEEN_MODE_DIALOG_SHOWN, shown) }
+    }
 
     companion object {
         private const val BAIXING_PRIVACY_PREFERENCES = "baixing_privacy_preferences"
 
         private const val BAIXING_KEY_PRIVACY_AGREED = "baixing_key_privacy_agreed"
         private const val BAIXING_KEY_LOGIN_TOKEN = "baixing_key_login_token"
+        private const val BAIXING_KEY_TEEN_MODE_DIALOG_SHOWN = "baixing_key_teen_mode_dialog_shown"
 
         @SuppressLint("StaticFieldLeak")
         @Volatile
