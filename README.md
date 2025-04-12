@@ -73,17 +73,18 @@ com.baixingkuaizu.live.android
 ### 7. 登录系统
 
 - **Baixing_LoginActivity**: 登录活动页面。
-- **Baixing_LoginFragment**: 登录界面Fragment。
+- **Baixing_SelectLoginFragment**: 登录选择界面，负责展示不同的登录方式选项，并在启动时自动检查登录状态，如果已登录则直接跳转到主页面。
+- **Baixing_LoginFragment**: 登录表单界面，实现手机号验证码登录功能，包括发送验证码、验证用户协议同意状态、处理登录请求等。该页面与Baixing_LoginViewModel协同工作，处理登录业务逻辑并观察登录结果。
 - **Baixing_LoginViewModel**: 登录相关的视图模型，处理登录业务逻辑。
 
 ### 8. 青少年模式
 
-- **Baixing_TeenModeActivity**: 青少年模式活动页面。
-- **Baixing_TeenModeFragment**: 青少年模式设置页面。
-- **Baixing_TeenPlayListFragment**: 青少年模式播放列表页面。
+- **Baixing_TeenModeActivity**: 青少年模式活动页面，是青少年模式相关Fragment的容器。
+- **Baixing_TeenModeFragment**: 青少年模式设置页面，负责启用青少年模式和设置监护密码。当用户点击启用青少年模式按钮时，会弹出密码设置对话框，要求设置并确认监护密码。设置成功后会将密码保存到LocalDataManager并跳转到播放列表页面。如果青少年模式已启用，会直接跳转到播放列表页面。
+- **Baixing_TeenPlayListFragment**: 青少年模式播放列表页面，展示适合青少年的内容并管理使用时间限制。该页面实现了标签筛选、内容展示、使用时间监控等功能。使用时间到达限制后，会显示密码验证对话框，要求输入监护密码才能继续使用。该页面使用ViewBinding进行视图绑定，Handler处理定时任务，与多个对话框类和LocalDataManager协同工作。
 - **Baixing_TeenPlayListAdapter**: 青少年模式播放列表适配器。
 - **Baixing_VideoData**: 视频数据模型类。
-- **Baixing_TeenModeExtendTimeDialog**: 青少年模式使用时间延长对话框，当用户使用时间达到限制时（默认40分钟），显示该对话框进行监护密码验证，验证成功后重置计时器并允许继续使用。
+- **Baixing_TeenModeExtendTimeDialog**: 青少年模式使用时间延长对话框，当用户使用时间达到限制时（默认40分钟），显示该对话框进行监护密码验证。该对话框与Baixing_LocalDataManager密切配合，通过后者验证监护密码的正确性并记录验证时间。验证成功后会重置计时器并允许继续使用，失败则会提示密码错误。为了确保青少年保护机制的有效性，该对话框禁用了取消按钮，且不允许通过返回键或点击外部区域关闭。
 
 ### 9. Web功能
 
@@ -96,7 +97,7 @@ com.baixingkuaizu.live.android
 - **Baixing_PrivacyDialog**: 隐私政策对话框，用于显示和同意隐私政策。
 - **Baixing_TeenModeDialog**: 青少年模式提示对话框，用于引导用户进入青少年模式。
 - **Baixing_ExitDialog**: 退出对话框，用于验证监护密码以退出青少年模式。
-- **Baixing_TeenModeExtendTimeDialog**: 青少年模式使用时间延长对话框，用于验证监护密码以继续使用，当用户使用时间达到上限时显示。此对话框禁止用户取消或通过返回键关闭，必须输入正确的监护密码才能继续使用。
+- **Baixing_TeenModeExtendTimeDialog**: 青少年模式使用时间延长对话框，用于验证监护密码以继续使用，当用户使用时间达到上限时显示。此对话框与Baixing_LocalDataManager类协同工作，负责密码验证和时间记录。对话框采用ViewBinding进行视图绑定，使用CenterToast显示验证结果。为确保青少年保护机制的严格执行，对话框禁用了取消按钮，且不允许通过返回键或点击外部区域关闭，必须输入正确的监护密码才能继续使用。
 
 ## 类关系图
 
@@ -115,10 +116,10 @@ Baixing_BaseActivity
 
 ```
 Baixing_BaseFragment
-├── Baixing_LoginFragment
-├── Baixing_SelectLoginFragment
-├── Baixing_TeenModeFragment
-└── Baixing_TeenPlayListFragment
+├── Baixing_LoginFragment - 处理登录表单和验证码登录逻辑
+├── Baixing_SelectLoginFragment - 提供登录方式选择界面
+├── Baixing_TeenModeFragment - 管理青少年模式设置和密码设定
+└── Baixing_TeenPlayListFragment - 展示青少年内容并管理使用时间
 ```
 
 ### 对话框类关系
@@ -168,8 +169,8 @@ Baixing_ConcurrentThreadPool
 
 ### 3. 登录流程
 
-1. 进入登录界面 -> 选择登录方式
-2. 手机号登录 -> 输入手机号 -> 发送验证码 -> 验证 -> 登录成功
+1. 进入登录界面 -> 选择登录方式（Baixing_SelectLoginFragment）
+2. 手机号登录（Baixing_LoginFragment）-> 输入手机号 -> 发送验证码 -> 验证 -> 登录成功
 3. 登录成功 -> 保存登录令牌 -> 跳转到主界面
 
 ## 开发规范
@@ -177,3 +178,9 @@ Baixing_ConcurrentThreadPool
 1. 类名前缀统一为 "Baixing_"，便于识别项目中的类
 2. 方法名前缀统一为 "baixing_"，便于识别项目中的方法
 3. 成员变量前缀统一为 "mBaixing_"，便于识别项目中的成员变量
+4. 所有Fragment类继承自Baixing_BaseFragment基类
+5. Fragment与Activity之间通过接口或ViewModel进行通信
+6. 所有UI操作使用ViewBinding进行视图绑定
+7. 使用CenterToast替代Android原生Toast进行消息提示
+8. 命名资源文件时使用baixing_前缀
+9. 使用dimen资源定义尺寸，格式为@dimen/dp.XX和@dimen/sp.XX
