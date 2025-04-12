@@ -3,32 +3,31 @@ package com.baixingkuaizu.live.android.activity
 import android.os.Bundle
 import android.view.View
 import androidx.core.net.toUri
+import androidx.media3.common.MediaItem
+import androidx.media3.common.PlaybackException
+import androidx.media3.common.Player
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.datasource.DefaultDataSource
+import androidx.media3.datasource.DefaultHttpDataSource
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.hls.HlsMediaSource
+import androidx.media3.exoplayer.source.MediaSource
+import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import com.baixingkuaizu.live.android.adatperandroid.Baixing_AdapterHelper.setClick
 import com.baixingkuaizu.live.android.base.Baixing_BaseActivity
 import com.baixingkuaizu.live.android.databinding.BaixingVideoPlayerActivityBinding
 import com.baixingkuaizu.live.android.widget.toast.CenterToast
-import com.google.android.exoplayer2.C
-import com.google.android.exoplayer2.ExoPlaybackException
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.Player
-import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
-import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.source.hls.HlsMediaSource
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
-import com.google.android.exoplayer2.util.Util
 
 /**
  * @author yuyuexing
  * @date: 2025/4/16
  * @description: 视频播放器活动页面，负责播放青少年模式中点击的视频。使用ExoPlayer实现视频播放功能，支持显示标题、加载进度以及错误处理机制，通过Intent获取视频URL和标题等信息。特别优化了M3U8等流媒体格式的播放。
  */
+@UnstableApi
 class Baixing_VideoPlayerActivity : Baixing_BaseActivity() {
     
     private lateinit var mBaixing_binding: BaixingVideoPlayerActivityBinding
-    private var mBaixing_player: SimpleExoPlayer? = null
+    private var mBaixing_player: ExoPlayer? = null
     private var mBaixing_playWhenReady = true
     private var mBaixing_currentWindow = 0
     private var mBaixing_playbackPosition = 0L
@@ -48,11 +47,7 @@ class Baixing_VideoPlayerActivity : Baixing_BaseActivity() {
             finish()
         }
         
-        if (mBaixing_videoUrl.isNotEmpty()) {
-            baixing_initializePlayer(mBaixing_videoUrl)
-        } else {
-            baixing_initializePlayer("https://medias.kouyujie.cn/longtLshnk9NAaSbKBR-Fm6mycMQ")
-        }
+        baixing_initializePlayer(mBaixing_videoUrl)
     }
     
     private fun baixing_initializePlayer(videoUrl: String) {
@@ -64,7 +59,7 @@ class Baixing_VideoPlayerActivity : Baixing_BaseActivity() {
         
         try {
             // 创建播放器实例
-            mBaixing_player = SimpleExoPlayer.Builder(this)
+            mBaixing_player = ExoPlayer.Builder(this)
                 .build()
                 .also { exoPlayer ->
                     // 绑定播放器到视图
@@ -97,13 +92,12 @@ class Baixing_VideoPlayerActivity : Baixing_BaseActivity() {
             .setReadTimeoutMs(15000)
         
         // 创建默认数据源工厂
-        val dataSourceFactory = DefaultDataSourceFactory(this, httpDataSourceFactory)
+        val dataSourceFactory = DefaultDataSource.Factory(this, httpDataSourceFactory)
         
         // 根据URL类型创建不同的媒体源
         return if (videoUrl.endsWith(".m3u8", ignoreCase = true)) {
             // HLS格式（M3U8）媒体源
             HlsMediaSource.Factory(dataSourceFactory)
-                .setAllowChunklessPreparation(true)
                 .createMediaSource(MediaItem.fromUri(videoUrl))
         } else {
             // 常规格式媒体源
@@ -132,17 +126,9 @@ class Baixing_VideoPlayerActivity : Baixing_BaseActivity() {
                     }
                 }
             }
-            
-            override fun onPlayerError(error: ExoPlaybackException) {
-                val errorMessage = when (error.type) {
-                    ExoPlaybackException.TYPE_SOURCE -> "视频源错误: ${error.sourceException.message}"
-                    ExoPlaybackException.TYPE_RENDERER -> "渲染错误: ${error.rendererException.message}"
-                    ExoPlaybackException.TYPE_UNEXPECTED -> "意外错误: ${error.unexpectedException.message}"
-                    ExoPlaybackException.TYPE_REMOTE -> "远程错误"
-                    else -> "未知错误: ${error.message}"
-                }
-                
-                CenterToast.show(this@Baixing_VideoPlayerActivity, errorMessage)
+
+            override fun onPlayerError(error: PlaybackException) {
+                CenterToast.show(this@Baixing_VideoPlayerActivity, "播放错误: ${error.errorCodeName}")
                 mBaixing_binding.baixingLoadingProgress.visibility = View.GONE
             }
         }
@@ -151,7 +137,7 @@ class Baixing_VideoPlayerActivity : Baixing_BaseActivity() {
     private fun baixing_releasePlayer() {
         mBaixing_player?.let { player ->
             mBaixing_playbackPosition = player.currentPosition
-            mBaixing_currentWindow = player.currentWindowIndex
+            mBaixing_currentWindow = player.currentMediaItemIndex
             mBaixing_playWhenReady = player.playWhenReady
             player.release()
         }
@@ -160,28 +146,28 @@ class Baixing_VideoPlayerActivity : Baixing_BaseActivity() {
     
     override fun onStart() {
         super.onStart()
-        if (Util.SDK_INT >= 24) {
-            baixing_initializePlayer(intent.getStringExtra("video_url") ?: "https://medias.kouyujie.cn/longtLshnk9NAaSbKBR-Fm6mycMQ")
+        if (android.os.Build.VERSION.SDK_INT >= 24) {
+            baixing_initializePlayer(intent.getStringExtra("video_url") ?: "")
         }
     }
     
     override fun onResume() {
         super.onResume()
-        if (Util.SDK_INT < 24 || mBaixing_player == null) {
-            baixing_initializePlayer(intent.getStringExtra("video_url") ?: "https://medias.kouyujie.cn/longtLshnk9NAaSbKBR-Fm6mycMQ")
+        if (android.os.Build.VERSION.SDK_INT < 24 || mBaixing_player == null) {
+            baixing_initializePlayer(intent.getStringExtra("video_url") ?: "")
         }
     }
     
     override fun onPause() {
         super.onPause()
-        if (Util.SDK_INT < 24) {
+        if (android.os.Build.VERSION.SDK_INT < 24) {
             baixing_releasePlayer()
         }
     }
     
     override fun onStop() {
         super.onStop()
-        if (Util.SDK_INT >= 24) {
+        if (android.os.Build.VERSION.SDK_INT >= 24) {
             baixing_releasePlayer()
         }
     }
