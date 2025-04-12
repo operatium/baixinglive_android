@@ -16,7 +16,7 @@ import com.baixingkuaizu.live.android.busiess.router.Baixing_GoRouter
 /**
  * @author yuyuexing
  * @date: 2025/4/11
- * @description: 基础活动类，提供通用功能
+ * @description: 基础活动类，所有Activity的父类，提供生命周期管理、窗口设置、震动反馈等通用功能。集成了GoRouter路由管理，在Activity的创建和销毁时进行回调，并提供了View扩展方法setWindowListener用于处理系统窗口插入，支持全面屏和刘海屏适配。项目中所有Activity都继承自此类以保持一致的行为。
  */
 open class Baixing_BaseActivity: AppCompatActivity() {
 

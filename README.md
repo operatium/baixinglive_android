@@ -109,6 +109,11 @@ com.baixingkuaizu.live.android
 - **Baixing_ActivityProxy**: Activity代理类，负责管理Activity的生命周期和相关状态。提供bind和unbind方法，在Activity创建和销毁时调用，确保资源的正确管理和释放。这种代理模式的使用简化了Activity类的实现，将部分功能解耦，便于维护和测试。
 - **Baixing_PermissionCheck**: 权限检查类，负责检查和请求应用所需的各种权限。该类提供了统一的权限申请入口，简化了权限管理流程，并通过回调机制将权限结果返回给调用方。主要在应用启动阶段使用，确保获取必要的运行权限。
 
+### 13. 视图扩展功能
+
+- **View扩展函数**: 项目中为View类添加了多个扩展函数，如`setWindowListener()`，用于为View设置窗口监听事件，主要用于Activity和Fragment中的根View，简化了窗口事件处理。这些扩展函数极大地简化了代码，提高了可读性和可维护性。
+- **UI控件的统一处理**: 通过扩展函数和工具类，实现了对UI控件的统一处理，如点击事件防抖、尺寸转换等，确保了应用在不同设备上的一致体验和流畅操作。
+
 ## 类关系图
 
 ### 活动类关系
@@ -172,6 +177,14 @@ View.OnClickListener
 ```
 Baixing_ActivityProxy
 └── 管理 Baixing_BaseActivity 生命周期
+```
+
+### 视图扩展关系
+
+```
+View
+├── 扩展函数 setWindowListener()
+└── 其他UI相关扩展函数
 ```
 
 ## 功能流程

@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit
 /**
  * @author yuyuexing
  * @date: 2025/4/14
- * @description: 青少年模式播放列表页面
+ * @description: 青少年模式播放列表页面，负责展示适合青少年的内容并管理使用时间限制。实现了标签筛选、内容展示和使用时间监控功能，当使用时间达到限制（40分钟）时，会显示验证对话框要求输入监护密码。使用ViewBinding进行视图绑定，Handler处理定时任务，与多个对话框类和LocalDataManager协同工作。
  */
 class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
     

@@ -18,7 +18,7 @@ import com.baixingkuaizu.live.android.widget.toast.CenterToast
 /**
  * @author yuyuexing
  * @date: 2025/4/12
- * @description: 青少年模式设置页面
+ * @description: 青少年模式设置页面，负责启用青少年模式和设置监护密码。用户点击启用按钮时会弹出密码设置对话框，要求设置并确认监护密码。设置成功后将密码保存到LocalDataManager中并跳转到播放列表页面。如果青少年模式已启用，会直接跳转到播放列表页面。使用ViewBinding进行视图绑定。
  */
 class Baixing_TeenModeFragment : Baixing_BaseFragment() {
     
