@@ -12,15 +12,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.core.graphics.toColorInt
 import com.baixingkuaizu.live.android.base.Baixing_BaseActivity
 import com.baixingkuaizu.live.android.base.Baixing_BaseFragment
 import com.baixingkuaizu.live.android.busiess.router.Baixing_GoRouter
-
 import com.baixingkuaizu.live.android.databinding.BaixingLoginFragmentBinding
 import com.baixingkuaizu.live.android.viewmodel.Baixing_LoginViewModel
-import com.baixingkuaizu.live.android.widget.toast.CenterToast
-import androidx.core.graphics.toColorInt
 import com.baixingkuaizu.live.android.widget.loading.Baixing_FullScreenLoadingDialog
+import com.baixingkuaizu.live.android.widget.toast.CenterToast
 
 /**
  * @author yuyuexing
@@ -84,13 +83,13 @@ class Baixing_LoginFragment : Baixing_BaseFragment() {
 
     private fun baixing_initView() {
         mBaixing_binding.apply {
-            baixingBtnSendCode.setClick {
+            baixingBtnSendCode.setOnClickListener {
                 baixing_agress {
                     baixing_sendVerificationCode()
                 }
             }
             
-            baixingBtnLogin.setClick {
+            baixingBtnLogin.setOnClickListener {
                 baixing_agress {
                     baixing_login()
                 }
