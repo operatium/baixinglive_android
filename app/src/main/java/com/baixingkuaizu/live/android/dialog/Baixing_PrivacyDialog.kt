@@ -1,5 +1,6 @@
 package com.baixingkuaizu.live.android.dialog
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
@@ -11,9 +12,10 @@ import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.view.Window
-import android.widget.Toast
+import com.baixingkuaizu.live.android.adatperandroid.AdapterHelper.setClick
 import com.baixingkuaizu.live.android.busiess.router.Baixing_GoRouter
 import com.baixingkuaizu.live.android.databinding.BaixingPrivacyDialogBinding
+import com.baixingkuaizu.live.android.widget.toast.CenterToast
 
 /**
  * @author yuyuexing
@@ -52,7 +54,7 @@ class Baixing_PrivacyDialog(context: Context) : Dialog(context) {
             spannableString.setSpan(
                 object : ClickableSpan() {
                     override fun onClick(view: View) {
-                        Toast.makeText(context, "《用户协议》", Toast.LENGTH_SHORT).show()
+                        CenterToast.show(context as? Activity, "《用户协议》")
                         Baixing_GoRouter.baixing_jumpWebActivity(taskName = "用户协议", taskType = "Baixing_PrivacyAgreementTaskManager")
                     }
                 },
@@ -77,7 +79,7 @@ class Baixing_PrivacyDialog(context: Context) : Dialog(context) {
             spannableString.setSpan(
                 object : ClickableSpan() {
                     override fun onClick(view: View) {
-                        Toast.makeText(context, "《隐私政策》", Toast.LENGTH_SHORT).show()
+                        CenterToast.show(context as? Activity, "《隐私政策》")
                         Baixing_GoRouter.baixing_jumpWebActivity(taskName = "隐私政策", taskType = "Baixing_PrivacyAgreementTaskManager")
                     }
                 },
@@ -97,12 +99,12 @@ class Baixing_PrivacyDialog(context: Context) : Dialog(context) {
         // 设置处理后的文本
         mBaixing_binding.baixingPrivacyContent.text = spannableString
 
-        mBaixing_binding.baixingBtnAgree.setOnClickListener {
+        mBaixing_binding.baixingBtnAgree.setClick {
             mBaixing_onAgreeListener?.invoke()
             dismiss()
         }
         
-        mBaixing_binding.baixingBtnDisagree.setOnClickListener {
+        mBaixing_binding.baixingBtnDisagree.setClick {
             mBaixing_onDisagreeListener?.invoke()
             dismiss()
         }
