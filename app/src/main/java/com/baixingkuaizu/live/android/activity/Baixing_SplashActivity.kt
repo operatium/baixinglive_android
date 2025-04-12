@@ -2,9 +2,6 @@ package com.baixingkuaizu.live.android.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.widget.Toast
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
 import com.baixingkuaizu.live.android.R
@@ -14,10 +11,11 @@ import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
 import com.baixingkuaizu.live.android.busiess.task.permission.Baixing_PermissionCheck
 import com.baixingkuaizu.live.android.busiess.proxy.Baixing_ActivityProxy
 import com.baixingkuaizu.live.android.busiess.task.privacyagreement.Baixing_PrivacyAgreementTaskManager
+import com.baixingkuaizu.live.android.databinding.BaixingSplashActivityBinding
 import com.baixingkuaizu.live.android.fragment.Baixing_SelectLoginFragment
+import com.baixingkuaizu.live.android.widget.toast.CenterToast
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-
 
 /**
  * @author yuyuexing
@@ -34,14 +32,17 @@ class Baixing_SplashActivity : Baixing_BaseActivity() {
     var mBaixing_privacyDialog: Baixing_PrivacyDialog? = null
 
     private val mBaixing_PermissionCheck = Baixing_PermissionCheck(this)
+    
+    private lateinit var mBaixing_binding: BaixingSplashActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBaixing_ActivityProxy.baixing_bind(this)
-        setContentView(R.layout.baixing_splash_activity)
+        mBaixing_binding = BaixingSplashActivityBinding.inflate(layoutInflater)
+        setContentView(mBaixing_binding.root)
+        mBaixing_binding.root.setWindowListener()
         lifecycleScope.launch {
             delay(100)
-            // 检查用户是否已同意隐私政策
             if (mBaixing_localDataManager.baixing_isPrivacyAgreed()) {
                 baixing_startMainActivity()
             } else {
@@ -68,8 +69,7 @@ class Baixing_SplashActivity : Baixing_BaseActivity() {
         }
 
         mBaixing_privacyDialog?.baixing_setOnDisagreeListener {
-            // 用户拒绝隐私政策
-            Toast.makeText(this, "您需要同意隐私政策才能使用本应用", Toast.LENGTH_LONG).show()
+            CenterToast.makeText(this, "您需要同意隐私政策才能使用本应用").show()
             System.exit(0)
         }
 

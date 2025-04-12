@@ -2,8 +2,6 @@ package com.baixingkuaizu.live.android.activity
 
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.baixingkuaizu.live.android.base.Baixing_BaseActivity
 import com.baixingkuaizu.live.android.busiess.proxy.Baixing_ActivityProxy
 import com.baixingkuaizu.live.android.busiess.task.privacyagreement.Baixing_PrivacyAgreementTaskManager

@@ -60,23 +60,4 @@ class Baixing_ExitDialog(
             dismiss()
         }
     }
-    
-    companion object {
-        /**
-         * 处理退出逻辑
-         * 如果青少年模式已启用，则需要密码验证
-         * 否则直接退出
-         * @param context 上下文
-         * @param exitAction 退出操作的回调
-         */
-        fun baixing_handleExit(context: Context, exitAction: () -> Unit) {
-            val localDataManager = Baixing_LocalDataManager.getInstance()
-            
-            if (localDataManager.baixing_isTeenModeEnabled()) {
-                Baixing_ExitDialog(context, localDataManager, exitAction).show()
-            } else {
-                exitAction.invoke()
-            }
-        }
-    }
 }

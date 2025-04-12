@@ -1,8 +1,6 @@
 package com.baixingkuaizu.live.android.activity
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import com.baixingkuaizu.live.android.R
 import com.baixingkuaizu.live.android.base.Baixing_BaseActivity
 import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager

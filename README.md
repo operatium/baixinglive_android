@@ -72,14 +72,14 @@ com.baixingkuaizu.live.android
 
 ### 7. 登录系统
 
-- **Baixing_LoginActivity**: 登录活动页面。
+- **Baixing_LoginActivity**: 登录活动页面，使用ViewBinding进行视图绑定，负责加载登录相关的Fragment并处理返回键逻辑。
 - **Baixing_SelectLoginFragment**: 登录选择界面，负责展示不同的登录方式选项，并在启动时自动检查登录状态，如果已登录则直接跳转到主页面。
 - **Baixing_LoginFragment**: 登录表单界面，实现手机号验证码登录功能，包括发送验证码、验证用户协议同意状态、处理登录请求等。该页面与Baixing_LoginViewModel协同工作，处理登录业务逻辑并观察登录结果。
 - **Baixing_LoginViewModel**: 登录相关的视图模型，处理登录业务逻辑。
 
 ### 8. 青少年模式
 
-- **Baixing_TeenModeActivity**: 青少年模式活动页面，是青少年模式相关Fragment的容器。
+- **Baixing_TeenModeActivity**: 青少年模式活动页面，是青少年模式相关Fragment的容器，使用ViewBinding进行视图绑定，负责加载青少年模式相关的Fragment并处理返回键逻辑。
 - **Baixing_TeenModeFragment**: 青少年模式设置页面，负责启用青少年模式和设置监护密码。当用户点击启用青少年模式按钮时，会弹出密码设置对话框，要求设置并确认监护密码。设置成功后会将密码保存到LocalDataManager并跳转到播放列表页面。如果青少年模式已启用，会直接跳转到播放列表页面。
 - **Baixing_TeenPlayListFragment**: 青少年模式播放列表页面，展示适合青少年的内容并管理使用时间限制。该页面实现了标签筛选、内容展示、使用时间监控等功能。使用时间到达限制后，会显示密码验证对话框，要求输入监护密码才能继续使用。该页面使用ViewBinding进行视图绑定，Handler处理定时任务，与多个对话框类和LocalDataManager协同工作。
 - **Baixing_TeenPlayListAdapter**: 青少年模式播放列表适配器。
@@ -88,7 +88,7 @@ com.baixingkuaizu.live.android
 
 ### 9. Web功能
 
-- **Baixing_WebActivity**: Web活动页面。
+- **Baixing_WebActivity**: Web活动页面，使用ViewBinding进行视图绑定，负责加载和显示网页内容，如隐私政策和用户协议。
 - **Baixing_WebViewManager**: WebView管理器，负责WebView的创建、获取、更新和销毁。
 - **Baixing_WebViewWrapper**: WebView包装类，提供WebView的基本功能。
 
@@ -180,7 +180,11 @@ Baixing_ConcurrentThreadPool
 3. 成员变量前缀统一为 "mBaixing_"，便于识别项目中的成员变量
 4. 所有Fragment类继承自Baixing_BaseFragment基类
 5. Fragment与Activity之间通过接口或ViewModel进行通信
-6. 所有UI操作使用ViewBinding进行视图绑定
+6. 所有UI操作使用ViewBinding进行视图绑定，不使用findViewById()
 7. 使用CenterToast替代Android原生Toast进行消息提示
 8. 命名资源文件时使用baixing_前缀
 9. 使用dimen资源定义尺寸，格式为@dimen/dp.XX和@dimen/sp.XX
+10. 所有Activity类继承自Baixing_BaseActivity基类
+11. 所有Activity和Fragment类都使用ViewBinding进行视图绑定，提高代码可读性和类型安全性
+12. 所有UI相关的尺寸使用@dimen资源引用，确保界面在不同设备上的一致性
+13. 支持中文输入和显示，确保用户界面友好
