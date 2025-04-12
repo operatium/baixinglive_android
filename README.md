@@ -48,8 +48,8 @@ com.baixingkuaizu.live.android
 
 ### 2. 基础组件
 
-- **Baixing_BaseActivity**: 活动基类，提供通用功能和生命周期管理。
-- **Baixing_BaseFragment**: Fragment基类，提供通用功能。
+- **Baixing_BaseActivity**: 基础活动类，所有Activity的父类，提供生命周期管理、窗口设置、震动反馈等通用功能。集成了GoRouter路由管理，在Activity的创建和销毁时进行回调，并提供了View扩展方法setWindowListener用于处理系统窗口插入，支持全面屏和刘海屏适配。项目中所有Activity都继承自此类以保持一致的行为。另外，提供vibrateOnce方法便于触发设备震动反馈，增强用户交互体验。
+- **Baixing_BaseFragment**: Fragment基类，所有Fragment的父类，提供生命周期管理、页面切换等通用功能。定义了Fragment的基本行为规范，确保所有子类有一致的表现。使用ViewBinding进行视图绑定，简化视图操作，提高代码可读性。
 - **Baixing_Entity**: 所有实体类的基类。
 
 ### 3. 路由管理
