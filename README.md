@@ -99,6 +99,11 @@ com.baixingkuaizu.live.android
 - **Baixing_ExitDialog**: 退出对话框，用于验证监护密码以退出青少年模式。该对话框提供密码输入界面，用户需要输入正确的监护密码才能退出青少年模式。验证通过后会清除密码、禁用青少年模式并通知调用方。该对话框使用ViewBinding进行视图绑定，与Baixing_LocalDataManager类配合，负责密码验证和青少年模式状态修改。对话框采用CenterToast显示操作结果，并提供取消功能允许用户放弃退出操作。
 - **Baixing_TeenModeExtendTimeDialog**: 青少年模式使用时间延长对话框，用于验证监护密码以继续使用，当用户使用时间达到上限时显示。此对话框与Baixing_LocalDataManager类协同工作，负责密码验证和时间记录。对话框采用ViewBinding进行视图绑定，使用CenterToast显示验证结果。为确保青少年保护机制的严格执行，对话框禁用了取消按钮，且不允许通过返回键或点击外部区域关闭，必须输入正确的监护密码才能继续使用。
 
+### 11. 适配器和UI工具
+
+- **Baixing_AdapterHelper**: 适配器辅助类，提供点击事件防抖和尺寸转换功能。通过扩展函数方式提供setClick方法，该方法封装了防抖动点击监听，防止用户快速多次点击导致的重复操作。还提供dp2px转换方法，用于在代码中动态计算像素尺寸。
+- **Baixing_DebounceClickListener**: 防抖点击监听器，用于防止用户在短时间内多次点击同一控件导致的重复操作问题。该监听器通过记录上次点击时间，并在设定的时间间隔内（默认500毫秒）忽略重复点击，确保按钮或其他可点击控件的操作只会被执行一次。结合Baixing_AdapterHelper类中的setClick扩展函数使用，极大改善了应用的用户体验。
+
 ## 类关系图
 
 ### 活动类关系
@@ -148,6 +153,13 @@ Baixing_TaskManager<T: Baixing_BaseTask>
 ```
 Baixing_ConcurrentThreadPool
 └── 管理 Baixing_Thread 实例
+```
+
+### UI工具类关系
+
+```
+View.OnClickListener
+└── Baixing_DebounceClickListener
 ```
 
 ## 功能流程
