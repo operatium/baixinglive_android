@@ -61,11 +61,8 @@ class Baixing_TeenModeFragment : Baixing_BaseFragment() {
         
         // 开启青少年模式按钮点击事件
         mBaixing_enableButton.setClick {
-            if (mBaixing_parentPassword.isEmpty()) {
-                baixing_showSetPasswordDialog()
-            } else {
-                baixing_enableTeenMode()
-            }
+            // 每次都需要设置密码
+            baixing_showSetPasswordDialog()
         }
     }
     
@@ -76,12 +73,13 @@ class Baixing_TeenModeFragment : Baixing_BaseFragment() {
         val savedPassword = mBaixing_localDataManager.baixing_getParentPassword()
         if (savedPassword.isNotEmpty()) {
             mBaixing_parentPassword = savedPassword
-            mBaixing_setPasswordText.text = "已设置监护密码"
+            mBaixing_setPasswordText.text = "每次开启青少年模式都需要设置密码"
             
             // 如果已经启用了青少年模式，更新按钮文字
             if (mBaixing_localDataManager.baixing_isTeenModeEnabled()) {
-                mBaixing_enableButton.text = "已启用青少年模式"
-                mBaixing_enableButton.isEnabled = false
+                mBaixing_enableButton.text = "重新设置密码并进入"
+            } else {
+                mBaixing_enableButton.text = "设置密码并进入"
             }
         }
     }
@@ -142,14 +140,19 @@ class Baixing_TeenModeFragment : Baixing_BaseFragment() {
         
         Toast.makeText(requireContext(), "青少年模式已启用", Toast.LENGTH_SHORT).show()
         
-        // 更新UI状态
-        mBaixing_enableButton.text = "已启用青少年模式"
-        mBaixing_enableButton.isEnabled = false
+        // 跳转到播放列表页面
+        baixing_navigateToPlayList()
+    }
+    
+    /**
+     * 跳转到播放列表页面
+     */
+    private fun baixing_navigateToPlayList() {
+        val playListFragment = Baixing_PlayListFragment.newInstance()
         
-        // 延迟退出页面
-        mBaixing_enableButton.postDelayed({
-            requireActivity().finish()
-        }, 1500)
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.baixing_teen_mode_container, playListFragment)
+            .commit()
     }
     
     companion object {

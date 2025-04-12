@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+
+    <!-- 标题栏 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp.56"
+        android:background="#FFFFFF">
+
+        <ImageView
+            android:id="@+id/baixing_back"
+            android:layout_width="@dimen/dp.40"
+            android:layout_height="@dimen/dp.40"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp.10"
+            android:padding="@dimen/dp.8"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="青少年推荐内容"
+            android:textColor="#222222"
+            android:textSize="@dimen/sp.18"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/baixing_exit_teen_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/dp.16"
+            android:text="退出模式"
+            android:textColor="#8B5CF6"
+            android:textSize="@dimen/sp.14" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp.1"
+        android:background="#EEEEEE" />
+
+    <!-- 标签栏 -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dp.44"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/dp.10"
+            android:paddingEnd="@dimen/dp.10">
+
+            <TextView
+                android:id="@+id/baixing_tag_all"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp.28"
+                android:background="@drawable/baixing_tag_selected_bg"
+                android:gravity="center"
+                android:paddingStart="@dimen/dp.12"
+                android:paddingEnd="@dimen/dp.12"
+                android:text="全部"
+                android:textColor="#FFFFFF"
+                android:textSize="@dimen/sp.14" />
+
+            <TextView
+                android:id="@+id/baixing_tag_education"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp.28"
+                android:layout_marginStart="@dimen/dp.10"
+                android:background="@drawable/baixing_tag_normal_bg"
+                android:gravity="center"
+                android:paddingStart="@dimen/dp.12"
+                android:paddingEnd="@dimen/dp.12"
+                android:text="教育"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp.14" />
+
+            <TextView
+                android:id="@+id/baixing_tag_science"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp.28"
+                android:layout_marginStart="@dimen/dp.10"
+                android:background="@drawable/baixing_tag_normal_bg"
+                android:gravity="center"
+                android:paddingStart="@dimen/dp.12"
+                android:paddingEnd="@dimen/dp.12"
+                android:text="科普"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp.14" />
+
+            <TextView
+                android:id="@+id/baixing_tag_nature"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp.28"
+                android:layout_marginStart="@dimen/dp.10"
+                android:background="@drawable/baixing_tag_normal_bg"
+                android:gravity="center"
+                android:paddingStart="@dimen/dp.12"
+                android:paddingEnd="@dimen/dp.12"
+                android:text="自然"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp.14" />
+
+            <TextView
+                android:id="@+id/baixing_tag_history"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp.28"
+                android:layout_marginStart="@dimen/dp.10"
+                android:background="@drawable/baixing_tag_normal_bg"
+                android:gravity="center"
+                android:paddingStart="@dimen/dp.12"
+                android:paddingEnd="@dimen/dp.12"
+                android:text="历史"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp.14" />
+
+            <TextView
+                android:id="@+id/baixing_tag_cartoon"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/dp.28"
+                android:layout_marginStart="@dimen/dp.10"
+                android:background="@drawable/baixing_tag_normal_bg"
+                android:gravity="center"
+                android:paddingStart="@dimen/dp.12"
+                android:paddingEnd="@dimen/dp.12"
+                android:text="动画"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp.14" />
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp.1"
+        android:background="#EEEEEE" />
+
+    <!-- 列表或网格视图 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/baixing_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="@dimen/dp.8"
+        android:layout_marginBottom="@dimen/dp.8"
+        android:clipToPadding="false"
+        android:padding="@dimen/dp.8"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2" />
+
+    <!-- 使用时长提示 -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#F6F3FF"
+        android:padding="@dimen/dp.12">
+
+        <TextView
+            android:id="@+id/baixing_usage_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="今日已使用 0 分钟，剩余可用时长 40 分钟"
+            android:textColor="#666666"
+            android:textSize="@dimen/sp.14" />
+    </FrameLayout>
+
+</LinearLayout> 
