@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.baixingkuaizu.live.android.adatperandroid.Baixing_AdapterHelper.setClick
 import com.baixingkuaizu.live.android.base.Baixing_BaseFragment
@@ -141,10 +142,10 @@ class Baixing_TeenPlayListFragment : Baixing_BaseFragment() {
         mBaixing_tagButtons.forEachIndexed { index, textView ->
             if (index == selectedIndex) {
                 textView.setBackgroundResource(com.baixingkuaizu.live.android.R.drawable.baixing_tag_selected_bg)
-                textView.setTextColor(resources.getColor(android.R.color.white))
+                textView.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.white))
             } else {
                 textView.setBackgroundResource(com.baixingkuaizu.live.android.R.drawable.baixing_tag_normal_bg)
-                textView.setTextColor(resources.getColor(android.R.color.darker_gray))
+                textView.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.darker_gray))
             }
         }
         
