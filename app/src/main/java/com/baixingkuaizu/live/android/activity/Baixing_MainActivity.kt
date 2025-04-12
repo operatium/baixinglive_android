@@ -29,6 +29,13 @@ class Baixing_MainActivity : Baixing_BaseActivity() {
         mBaixing_binding.root.setWindowListener()
         
         baixing_initData()
+        
+        // 检查是否启用了青少年模式
+        if (baixing_checkTeenModeEnabled()) {
+            return // 如果已跳转到青少年模式，不再继续执行
+        }
+        
+        // 如果未启用青少年模式，则检查是否需要显示青少年模式对话框
         baixing_showTeenModeDialogIfNeeded()
     }
     
@@ -36,17 +43,39 @@ class Baixing_MainActivity : Baixing_BaseActivity() {
         mBaixing_localDataManager = Baixing_LocalDataManager.baixing_getInstance(this)
     }
     
+    /**
+     * 检查是否启用了青少年模式，如果启用则自动跳转到青少年模式界面
+     * @return 是否已跳转到青少年模式界面
+     */
+    private fun baixing_checkTeenModeEnabled(): Boolean {
+        if (mBaixing_localDataManager.baixing_isTeenModeEnabled()) {
+            val intent = Intent(this, Baixing_TeenModeActivity::class.java)
+            startActivity(intent)
+            return true
+        }
+        return false
+    }
+    
     private fun baixing_showTeenModeDialogIfNeeded() {
         if (!mBaixing_localDataManager.baixing_isTeenModeDialogShown()) {
             val dialog = Baixing_TeenModeDialog(this)
             dialog.baixing_setOnEnterTeenModeListener {
-                Baixing_GoRouter.baixing_jumpTeenModeActivity()
+                // 处理进入青少年模式的逻辑
+                baixing_navigateToTeenModeActivity()
             }
             dialog.baixing_setOnDismissListener {
-                // 用户点击"我知道了"按钮
-                mBaixing_localDataManager.baixing_setTeenModeDialogShown(true)
+                // 用户点击"我知道了"按钮，记录显示时间
+                mBaixing_localDataManager.baixing_setTeenModeDialogShown()
             }
             dialog.show()
         }
+    }
+    
+    /**
+     * 跳转到青少年模式Activity
+     */
+    private fun baixing_navigateToTeenModeActivity() {
+        val intent = Intent(this, Baixing_TeenModeActivity::class.java)
+        startActivity(intent)
     }
 }
