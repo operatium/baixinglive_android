@@ -24,19 +24,15 @@ class Baixing_VideoPlayerActivity : Baixing_BaseActivity() {
         setContentView(mBaixing_binding.root)
         mBaixing_binding.root.setWindowListener()
         
-        // 获取传递的数据
         val mBaixing_videoTitle = intent.getStringExtra("video_title") ?: "未知视频"
         val mBaixing_videoUrl = intent.getStringExtra("video_url") ?: ""
         
-        // 设置标题
         mBaixing_binding.baixingVideoTitle.text = mBaixing_videoTitle
         
-        // 设置返回按钮点击事件
         mBaixing_binding.baixingBack.setClick {
             finish()
         }
         
-        // 播放视频
         baixing_playVideo(mBaixing_videoUrl)
     }
     
@@ -50,33 +46,26 @@ class Baixing_VideoPlayerActivity : Baixing_BaseActivity() {
         val videoUri = Uri.parse(videoUrl)
         
         mBaixing_binding.baixingVideoView.setOnPreparedListener { mediaPlayer ->
-            // 隐藏加载进度条
             mBaixing_binding.baixingLoadingProgress.visibility = View.GONE
             
-            // 设置循环播放
             mediaPlayer.isLooping = true
             
-            // 开始播放
             mediaPlayer.start()
         }
         
         mBaixing_binding.baixingVideoView.setOnErrorListener { _, _, _ ->
-            // 显示错误信息
             CenterToast.show(this, "视频播放失败")
             mBaixing_binding.baixingLoadingProgress.visibility = View.GONE
             true
         }
         
-        // 设置视频路径
         mBaixing_binding.baixingVideoView.setVideoURI(videoUri)
         
-        // 请求获取焦点
         mBaixing_binding.baixingVideoView.requestFocus()
     }
     
     override fun onPause() {
         super.onPause()
-        // 暂停视频播放
         if (mBaixing_binding.baixingVideoView.isPlaying) {
             mBaixing_binding.baixingVideoView.pause()
         }
@@ -84,7 +73,6 @@ class Baixing_VideoPlayerActivity : Baixing_BaseActivity() {
     
     override fun onDestroy() {
         super.onDestroy()
-        // 释放资源
         mBaixing_binding.baixingVideoView.stopPlayback()
     }
 } 
