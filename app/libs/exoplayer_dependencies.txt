@@ -1,0 +1,11 @@
+// 添加以下依赖到app/build.gradle文件的dependencies块中
+// ExoPlayer核心库
+implementation 'com.google.android.exoplayer:exoplayer-core:2.18.6'
+// UI组件
+implementation 'com.google.android.exoplayer:exoplayer-ui:2.18.6'
+// 支持各种媒体格式
+implementation 'com.google.android.exoplayer:exoplayer-dash:2.18.6'
+implementation 'com.google.android.exoplayer:exoplayer-hls:2.18.6'
+implementation 'com.google.android.exoplayer:exoplayer-rtsp:2.18.6'
+// 可选：使用扩展库支持额外的编解码器
+implementation 'com.google.android.exoplayer:extension-mediasession:2.18.6' 
