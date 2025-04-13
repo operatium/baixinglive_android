@@ -1,13 +1,7 @@
 package com.baixingkuaizu.live.android.busiess.teenmode
 
-/**
- * @author yuyuexing
- * @date: 2025/4/14
- * @description: 视频数据缓存管理类，负责视频数据的加载、缓存和过滤操作
- */
 class Baixing_VideoDataCache {
     
-    // 所有视频的缓存列表
     private val mBaixing_allVideoList = listOf(
         Baixing_VideoData(
             mBaixing_id = "1",
@@ -75,26 +69,16 @@ class Baixing_VideoDataCache {
         )
     )
     
-    // 当前过滤后的视频列表
     private var mBaixing_currentVideoList: List<Baixing_VideoData> = mBaixing_allVideoList
     
-    /**
-     * 获取所有视频数据
-     */
     fun baixing_getAllVideos(): List<Baixing_VideoData> {
         return mBaixing_allVideoList
     }
     
-    /**
-     * 获取当前过滤后的视频列表
-     */
     fun baixing_getCurrentVideos(): List<Baixing_VideoData> {
         return mBaixing_currentVideoList
     }
     
-    /**
-     * 根据标签过滤视频
-     */
     fun baixing_filterByTag(tag: String): List<Baixing_VideoData> {
         mBaixing_currentVideoList = if (tag.isEmpty() || tag == "全部") {
             mBaixing_allVideoList
@@ -104,22 +88,15 @@ class Baixing_VideoDataCache {
         return mBaixing_currentVideoList
     }
     
-    /**
-     * 获取所有可用的标签
-     */
     fun baixing_getAllTags(): List<String> {
         return mBaixing_allVideoList.map { it.mBaixing_tag }.distinct()
     }
     
-    /**
-     * 根据ID查找视频
-     */
     fun baixing_findVideoById(id: String): Baixing_VideoData? {
         return mBaixing_allVideoList.find { it.mBaixing_id == id }
     }
     
     companion object {
-        // 单例实现
         private var INSTANCE: Baixing_VideoDataCache? = null
         
         fun getInstance(): Baixing_VideoDataCache {
