@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.baixingkuaizu.live.android.R
 import com.baixingkuaizu.live.android.adatperandroid.Baixing_AdapterHelper.setClick
+import com.baixingkuaizu.live.android.databinding.BaixingPlayListItemBinding
 import com.bumptech.glide.Glide
 
 /**
@@ -18,9 +18,12 @@ class Baixing_TeenPlayListAdapter(
 ) : ListAdapter<Baixing_VideoData, Baixing_ViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Baixing_ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.baixing_play_list_item, parent, false)
-        return Baixing_ViewHolder(view)
+        val binding = BaixingPlayListItemBinding.inflate(
+            LayoutInflater.from(parent.context), 
+            parent, 
+            false
+        )
+        return Baixing_ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: Baixing_ViewHolder, position: Int) {
@@ -34,7 +37,7 @@ class Baixing_TeenPlayListAdapter(
         if (video.mBaixing_coverUrl.isNotEmpty()) {
             Glide.with(holder.itemView.context).load(video.mBaixing_coverUrl).into(holder.mBaixing_cover)
         } else {
-            Glide.with(holder.itemView.context).load(R.drawable.baixing_default_cover).into(holder.mBaixing_cover)
+            Glide.with(holder.itemView.context).load(com.baixingkuaizu.live.android.R.drawable.baixing_default_cover).into(holder.mBaixing_cover)
         }
         
         holder.itemView.setClick {
