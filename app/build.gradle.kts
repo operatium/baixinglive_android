@@ -50,4 +50,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation (libs.androidx.lifecycle.viewmodel.ktx)
+
+    implementation (libs.gsyvideoplayer)
+    implementation(libs.glide)
 }

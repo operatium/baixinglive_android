@@ -6,51 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".activity.Baixing_VideoPlayerActivity">
 
-    <LinearLayout
-        android:id="@+id/baixing_header"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp.56"
-        android:background="#1A1A1A"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/baixing_back"
-            android:layout_width="@dimen/dp.48"
-            android:layout_height="@dimen/dp.48"
-            android:padding="@dimen/dp.12"
-            android:src="@android:drawable/ic_menu_close_clear_cancel"
-            android:contentDescription="返回" />
-
-        <TextView
-            android:id="@+id/baixing_video_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="#FFFFFF"
-            android:textSize="@dimen/sp.18"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:layout_marginEnd="@dimen/dp.12" />
-
-    </LinearLayout>
-
     <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
         android:id="@+id/baixing_video_player"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#000000"
-        app:layout_constraintTop_toBottomOf="@id/baixing_header"
+        android:background="#ffffff"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
-    <ProgressBar
-        android:id="@+id/baixing_loading_progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/baixing_header"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout> 
+</androidx.constraintlayout.widget.ConstraintLayout>

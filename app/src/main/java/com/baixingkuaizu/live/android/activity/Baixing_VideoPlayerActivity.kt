@@ -1,7 +1,9 @@
 package com.baixingkuaizu.live.android.activity
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import com.baixingkuaizu.live.android.adatperandroid.Baixing_AdapterHelper.setClick
 import com.baixingkuaizu.live.android.base.Baixing_BaseActivity
 import com.baixingkuaizu.live.android.databinding.BaixingVideoPlayerActivityBinding
@@ -25,23 +27,33 @@ class Baixing_VideoPlayerActivity : Baixing_BaseActivity() {
         mBaixing_binding = BaixingVideoPlayerActivityBinding.inflate(layoutInflater)
         setContentView(mBaixing_binding.root)
         mBaixing_binding.root.setWindowListener()
-        
+
         val mBaixing_videoTitle = intent.getStringExtra("video_title") ?: "未知视频"
         val mBaixing_videoUrl = intent.getStringExtra("video_url") ?: ""
         
-        mBaixing_binding.baixingVideoTitle.text = mBaixing_videoTitle
-        
-        mBaixing_binding.baixingBack.setClick {
-            finish()
-        }
-        
         baixing_initializePlayer(mBaixing_videoTitle, mBaixing_videoUrl)
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                baixing_back()
+            }
+
+        })
+    }
+
+    private fun baixing_back() {
+        if (mBaixing_orientationUtils?.screenType == ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR) {
+            mBaixing_binding.baixingVideoPlayer.onBackFullscreen()
+            return
+        }
+        mBaixing_binding.baixingVideoPlayer.release()
+        GSYVideoManager.releaseAllVideos()
+        finish()
     }
     
     private fun baixing_initializePlayer(videoTitle: String, videoUrl: String) {
         if (videoUrl.isEmpty()) {
             CenterToast.show(this, "视频地址无效")
-            mBaixing_binding.baixingLoadingProgress.visibility = View.GONE
             return
         }
         
@@ -54,8 +66,8 @@ class Baixing_VideoPlayerActivity : Baixing_BaseActivity() {
             
             // 设置返回按键功能
             mBaixing_binding.baixingVideoPlayer.backButton.visibility = View.VISIBLE
-            mBaixing_binding.baixingVideoPlayer.backButton.setOnClickListener {
-                handleBackPressed()
+            mBaixing_binding.baixingVideoPlayer.backButton.setClick {
+                baixing_back()
             }
             
             // 设置旋转
@@ -68,14 +80,12 @@ class Baixing_VideoPlayerActivity : Baixing_BaseActivity() {
             mBaixing_binding.baixingVideoPlayer.setVideoAllCallBack(object : GSYSampleCallBack() {
                 override fun onPrepared(url: String?, vararg objects: Any?) {
                     super.onPrepared(url, *objects)
-                    mBaixing_binding.baixingLoadingProgress.visibility = View.GONE
                     mBaixing_orientationUtils?.isEnable = true
                 }
                 
                 override fun onPlayError(url: String?, vararg objects: Any?) {
                     super.onPlayError(url, *objects)
                     CenterToast.show(this@Baixing_VideoPlayerActivity, "播放错误")
-                    mBaixing_binding.baixingLoadingProgress.visibility = View.GONE
                 }
                 
                 override fun onQuitFullscreen(url: String?, vararg objects: Any?) {
@@ -89,25 +99,7 @@ class Baixing_VideoPlayerActivity : Baixing_BaseActivity() {
             
         } catch (e: Exception) {
             CenterToast.show(this, "视频初始化失败: ${e.message}")
-            mBaixing_binding.baixingLoadingProgress.visibility = View.GONE
         }
-    }
-    
-    private fun handleBackPressed() {
-        // 先返回正常状态
-        if (mBaixing_orientationUtils?.screenType == 1) {
-            mBaixing_binding.baixingVideoPlayer.onBackFullscreen()
-            return
-        }
-        
-        // 释放所有
-        mBaixing_binding.baixingVideoPlayer.releaseVideos()
-        GSYVideoManager.releaseAllVideos()
-        finish()
-    }
-    
-    override fun onBackPressed() {
-        handleBackPressed()
     }
     
     override fun onPause() {

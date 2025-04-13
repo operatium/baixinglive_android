@@ -15,6 +15,7 @@ dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         maven ("https://storage.zego.im/maven")
+        maven ("https://jitpack.io")
         google()
         mavenCentral()
     }

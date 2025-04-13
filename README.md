@@ -85,7 +85,7 @@ com.baixingkuaizu.live.android
 - **Baixing_TeenPlayListAdapter**: 青少年模式播放列表适配器。
 - **Baixing_VideoData**: 视频数据模型类，包含视频ID、标题、作者、封面URL、播放时长、分类标签、视频URL等信息，为视频播放提供必要的数据支持。
 - **Baixing_TeenModeExtendTimeDialog**: 青少年模式使用时间延长对话框，当用户使用时间达到限制时（默认40分钟），显示该对话框进行监护密码验证。该对话框与Baixing_LocalDataManager密切配合，通过后者验证监护密码的正确性并记录验证时间。验证成功后会重置计时器并允许继续使用，失败则会提示密码错误。为了确保青少年保护机制的有效性，该对话框禁用了取消按钮，且不允许通过返回键或点击外部区域关闭。
-- **Baixing_VideoPlayerActivity**: 视频播放器活动页面，负责播放青少年模式中用户点击的视频内容。该活动使用VideoView实现视频播放功能，支持视频标题显示、加载进度条以及错误处理机制。通过Intent接收视频标题和URL等信息，并在生命周期事件中管理视频播放状态，如在页面暂停时暂停播放，页面销毁时释放播放资源。该活动实现了一个轻量级但功能完整的视频播放器，与青少年模式的内容保护机制无缝集成。
+- **Baixing_VideoPlayerActivity**: 视频播放器活动页面，负责播放青少年模式中用户点击的视频内容。该活动使用VideoView实现视频播放功能，支持视频标题显示、加载进度条以及错误处理机制。通过Intent接收视频标题和URL等信息，并在生命周期事件中管理视频播放状态，如在页面暂停时暂停播放，页面销毁时释放播放资源。该活动实现了一个轻量级但功能完整的视频播放器，与青少年模式的内容保护机制无缝集成.
 
 ### 9. Web功能
 
@@ -107,13 +107,32 @@ com.baixingkuaizu.live.android
 
 ### 12. 代理和工具类
 
-- **Baixing_ActivityProxy**: Activity代理类，负责管理Activity的生命周期和相关状态。提供bind和unbind方法，在Activity创建和销毁时调用，确保资源的正确管理和释放。这种代理模式的使用简化了Activity类的实现，将部分功能解耦，便于维护和测试。
+- **Baixing_ActivityProxy**: Activity代理类，负责管理Activity的生命周期和相关状态。提供bind和unbind方法，在Activity创建和销毁时调用，确保资源的正确管理和释放。这种代理模式的使用简化了Activity类的实现，将部分功能解耦，便于维护和测试.
 - **Baixing_PermissionCheck**: 权限检查类，负责检查和请求应用所需的各种权限。该类提供了统一的权限申请入口，简化了权限管理流程，并通过回调机制将权限结果返回给调用方。主要在应用启动阶段使用，确保获取必要的运行权限。
 
 ### 13. 视图扩展功能
 
 - **View扩展函数**: 项目中为View类添加了多个扩展函数，如`setWindowListener()`，用于为View设置窗口监听事件，主要用于Activity和Fragment中的根View，简化了窗口事件处理。这些扩展函数极大地简化了代码，提高了可读性和可维护性。
 - **UI控件的统一处理**: 通过扩展函数和工具类，实现了对UI控件的统一处理，如点击事件防抖、尺寸转换等，确保了应用在不同设备上的一致体验和流畅操作。
+
+## 青少年模式组件
+
+### 类说明
+
+#### Baixing_VideoData
+视频数据模型类，包含以下属性：
+- mBaixing_id: 视频唯一标识
+- mBaixing_title: 视频标题
+- mBaixing_author: 视频作者
+- mBaixing_coverUrl: 视频封面URL
+- mBaixing_duration: 视频时长
+- mBaixing_tag: 视频标签
+
+#### Baixing_VideoDataCache
+视频数据缓存管理类，实现单例模式：
+- 负责视频数据的加载和缓存
+- 提供视频过滤功能
+- 管理视频标签
 
 ## 类关系图
 
@@ -204,13 +223,13 @@ View
 2. 未启用 -> 显示青少年模式对话框
 3. 已启用 -> 跳转到 Baixing_TeenModeActivity
 4. 在青少年模式中 -> 显示适合青少年的内容，限制使用时间
-5. 使用时间到限制（40分钟）-> 显示Baixing_TeenModeExtendTimeDialog -> 输入正确监护密码 -> 重置使用时间 -> 继续使用
+5. 使用时间到限制（40分钟） -> 显示Baixing_TeenModeExtendTimeDialog -> 输入正确监护密码 -> 重置使用时间 -> 继续使用
 6. 点击视频 -> 跳转到Baixing_VideoPlayerActivity -> 播放视频
 
 ### 3. 登录流程
 
 1. 进入登录界面 -> 选择登录方式（Baixing_SelectLoginFragment）
-2. 手机号登录（Baixing_LoginFragment）-> 输入手机号 -> 发送验证码 -> 验证 -> 登录成功
+2. 手机号登录（Baixing_LoginFragment） -> 输入手机号 -> 发送验证码 -> 验证 -> 登录成功
 3. 登录成功 -> 保存登录令牌 -> 跳转到主界面
 
 ## 开发规范
