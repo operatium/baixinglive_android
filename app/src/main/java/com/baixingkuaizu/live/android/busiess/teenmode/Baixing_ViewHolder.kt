@@ -1,6 +1,5 @@
 package com.baixingkuaizu.live.android.busiess.teenmode
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.baixingkuaizu.live.android.adatperandroid.Baixing_AdapterHelper.setClick
 import com.baixingkuaizu.live.android.busiess.router.Baixing_GoRouter
@@ -9,7 +8,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.target.Target
 
-class Baixing_ViewHolder(val binding: BaixingPlayListItemBinding) : RecyclerView.ViewHolder(binding.root) {    
+/**
+ * @author yuyuexing
+ * @date: 2025/4/11
+ * @description: 播放列表的ViewHolder
+
+ */
+class Baixing_ViewHolder(binding: BaixingPlayListItemBinding) : RecyclerView.ViewHolder(binding.root) {
     private var mBaixing_imageLoadRequest: Target<*>? = null
     private lateinit var mBaixing_requestManager: RequestManager
     val mBaixing_cover = binding.baixingVideoCover
