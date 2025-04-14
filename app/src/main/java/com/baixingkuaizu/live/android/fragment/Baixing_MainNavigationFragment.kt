@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import com.baixingkuaizu.live.android.R
 import com.baixingkuaizu.live.android.base.Baixing_BaseFragment
 import com.baixingkuaizu.live.android.databinding.BaixingFragmentMainNavigationBinding
-import com.baixingkuaizu.live.android.widget.toast.CenterToast
 
 /**
  * @author yuyuexing
@@ -18,8 +17,8 @@ import com.baixingkuaizu.live.android.widget.toast.CenterToast
 class Baixing_MainNavigationFragment : Baixing_BaseFragment() {
     
     private var mBaixing_binding: BaixingFragmentMainNavigationBinding? = null
-    private var mBaixing_currentTabIndex = 0
-    private val mBaixing_fragments = ArrayList<Fragment>()
+    private var mBaixing_currentTabIndex = -1
+    private val mBaixing_fragments = arrayOfNulls<Fragment>(4)
     
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,29 +31,20 @@ class Baixing_MainNavigationFragment : Baixing_BaseFragment() {
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        baixing_initFragments()
         baixing_initBottomNavigation()
         baixing_switchTab(0) // 默认选中第一个标签
     }
     
-    private fun baixing_initFragments() {
-        // 初始化四个主要的Fragment
-        mBaixing_fragments.clear()
-        mBaixing_fragments.add(Baixing_LiveFragment())
-        mBaixing_fragments.add(Baixing_MessageFragment())
-        mBaixing_fragments.add(Baixing_FollowFragment())
-        mBaixing_fragments.add(Baixing_ProfileFragment())
-        
-        // 预先加载所有Fragment
-        val transaction = childFragmentManager.beginTransaction()
-        for (i in mBaixing_fragments.indices) {
-            val fragment = mBaixing_fragments[i]
-            transaction.add(R.id.baixing_fragment_container, fragment)
-            if (i != 0) {
-                transaction.hide(fragment)
+    private fun baixing_getFragment(index: Int): Fragment {
+        if (mBaixing_fragments[index] == null) {
+            when (index) {
+                0 -> mBaixing_fragments[index] = Baixing_LiveFragment()
+                1 -> mBaixing_fragments[index] = Baixing_MessageFragment()
+                2 -> mBaixing_fragments[index] = Baixing_FollowFragment()
+                3 -> mBaixing_fragments[index] = Baixing_ProfileFragment()
             }
         }
-        transaction.commitAllowingStateLoss()
+        return mBaixing_fragments[index]!!
     }
     
     private fun baixing_initBottomNavigation() {
@@ -71,20 +61,31 @@ class Baixing_MainNavigationFragment : Baixing_BaseFragment() {
         if (index == mBaixing_currentTabIndex) {
             return
         }
-        
+        mBaixing_currentTabIndex = index
+
         // 更新UI状态
         baixing_updateTabState(index)
         
         // 切换Fragment
         val transaction = childFragmentManager.beginTransaction()
-        transaction.hide(mBaixing_fragments[mBaixing_currentTabIndex])
-        if (!mBaixing_fragments[index].isAdded) {
-            transaction.add(R.id.baixing_fragment_container, mBaixing_fragments[index])
+        
+        // 隐藏当前Fragment
+        if (mBaixing_fragments[mBaixing_currentTabIndex] != null) {
+            transaction.hide(mBaixing_fragments[mBaixing_currentTabIndex]!!)
         }
-        transaction.show(mBaixing_fragments[index])
+        
+        // 获取或创建目标Fragment
+        val targetFragment = baixing_getFragment(index)
+        
+        // 如果Fragment未添加，则添加
+        if (!targetFragment.isAdded) {
+            transaction.replace(R.id.baixing_fragment_container, targetFragment)
+        }
+        
+        // 显示目标Fragment
+        transaction.show(targetFragment)
         transaction.commitAllowingStateLoss()
         
-        mBaixing_currentTabIndex = index
     }
     
     private fun baixing_updateTabState(selectedIndex: Int) {
