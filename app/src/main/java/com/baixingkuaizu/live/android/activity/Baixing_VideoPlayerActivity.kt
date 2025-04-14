@@ -58,25 +58,20 @@ class Baixing_VideoPlayerActivity : Baixing_BaseActivity() {
         }
         
         try {
-            // 设置播放器标题
             mBaixing_binding.baixingVideoPlayer.setUp(videoUrl, true, videoTitle)
             
-            // 设置全屏按键功能
             mBaixing_orientationUtils = OrientationUtils(this, mBaixing_binding.baixingVideoPlayer)
             
-            // 设置返回按键功能
             mBaixing_binding.baixingVideoPlayer.backButton.visibility = View.VISIBLE
             mBaixing_binding.baixingVideoPlayer.backButton.setClick {
                 baixing_back()
             }
             
-            // 设置旋转
             mBaixing_binding.baixingVideoPlayer.fullscreenButton.setOnClickListener {
                 mBaixing_orientationUtils?.resolveByClick()
                 mBaixing_binding.baixingVideoPlayer.startWindowFullscreen(this, true, true)
             }
             
-            // 设置播放状态回调
             mBaixing_binding.baixingVideoPlayer.setVideoAllCallBack(object : GSYSampleCallBack() {
                 override fun onPrepared(url: String?, vararg objects: Any?) {
                     super.onPrepared(url, *objects)
@@ -94,7 +89,6 @@ class Baixing_VideoPlayerActivity : Baixing_BaseActivity() {
                 }
             })
             
-            // 设置自动播放
             mBaixing_binding.baixingVideoPlayer.startPlayLogic()
             
         } catch (e: Exception) {
@@ -117,4 +111,4 @@ class Baixing_VideoPlayerActivity : Baixing_BaseActivity() {
         mBaixing_orientationUtils?.releaseListener()
         super.onDestroy()
     }
-} 
+}

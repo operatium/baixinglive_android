@@ -53,21 +53,13 @@ class Baixing_LocalDataManager(private val context: Context) {
         return token.isNotEmpty() && expireTime > currentTime
     }
     
-    /**
-     * 检查青少年模式对话框是否在24小时内已显示过
-     */
     fun baixing_isTeenModeDialogShown(): Boolean {
         val lastShowTime = mBaixing_sharedPreferences.getLong(BAIXING_KEY_TEEN_MODE_DIALOG_SHOW_TIME, 0)
         val currentTime = System.currentTimeMillis()
-        val oneDayMillis = 24 * 60 * 60 * 1000L // 24小时的毫秒数
-        
-        // 如果距离上次显示不足24小时，则认为已显示
+        val oneDayMillis = 24 * 60 * 60 * 1000L
         return (currentTime - lastShowTime) < oneDayMillis
     }
     
-    /**
-     * 记录青少年模式对话框显示时间
-     */
     fun baixing_setTeenModeDialogShown() {
         mBaixing_sharedPreferences.edit { 
             putLong(BAIXING_KEY_TEEN_MODE_DIALOG_SHOW_TIME, System.currentTimeMillis()) 
@@ -106,16 +98,10 @@ class Baixing_LocalDataManager(private val context: Context) {
         return mBaixing_sharedPreferences.getLong(BAIXING_KEY_TODAY_USED_DURATION, 0)
     }
     
-    /**
-     * 记录最后验证密码的时间
-     */
     fun baixing_setLastVerifiedTime(time: Long) {
         mBaixing_sharedPreferences.edit { putLong(BAIXING_KEY_LAST_VERIFIED_TIME, time) }
     }
     
-    /**
-     * 获取最后验证密码的时间
-     */
     fun baixing_getLastVerifiedTime(): Long {
         return mBaixing_sharedPreferences.getLong(BAIXING_KEY_LAST_VERIFIED_TIME, 0)
     }
