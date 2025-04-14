@@ -7,6 +7,7 @@ import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
 import com.baixingkuaizu.live.android.busiess.router.Baixing_GoRouter
 import com.baixingkuaizu.live.android.databinding.BaixingMainActivityBinding
 import com.baixingkuaizu.live.android.dialog.Baixing_TeenModeDialog
+import com.baixingkuaizu.live.android.fragment.Baixing_MainNavigationFragment
 import com.baixingkuaizu.live.android.fragment.Baixing_TeenModeFragment
 
 /**
@@ -31,6 +32,11 @@ class Baixing_MainActivity : Baixing_BaseActivity() {
         } else {
             Baixing_GoRouter.baixing_jumpTeenModeActivity()
             return
+        }
+
+        supportFragmentManager.beginTransaction().apply {
+            add(R.id.baixing_fragment_container, Baixing_MainNavigationFragment())
+            commit()
         }
     }
     

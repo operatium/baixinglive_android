@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:id="@+id/baixing_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#E0E0E0" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp.56"
+        android:orientation="horizontal">
+
+        <!-- 直播 Tab -->
+        <LinearLayout
+            android:id="@+id/baixing_tab_live"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/baixing_tab_live_icon"
+                android:layout_width="@dimen/dp.24"
+                android:layout_height="@dimen/dp.24"
+                android:src="@drawable/baixing_tab_live_normal" />
+
+            <TextView
+                android:id="@+id/baixing_tab_live_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp.2"
+                android:text="直播"
+                android:textSize="@dimen/sp.12" />
+        </LinearLayout>
+
+        <!-- 消息 Tab -->
+        <LinearLayout
+            android:id="@+id/baixing_tab_message"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/baixing_tab_message_icon"
+                android:layout_width="@dimen/dp.24"
+                android:layout_height="@dimen/dp.24"
+                android:src="@drawable/baixing_tab_message_normal" />
+
+            <TextView
+                android:id="@+id/baixing_tab_message_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp.2"
+                android:text="消息"
+                android:textSize="@dimen/sp.12" />
+        </LinearLayout>
+
+        <!-- 关注 Tab -->
+        <LinearLayout
+            android:id="@+id/baixing_tab_follow"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/baixing_tab_follow_icon"
+                android:layout_width="@dimen/dp.24"
+                android:layout_height="@dimen/dp.24"
+                android:src="@drawable/baixing_tab_follow_normal" />
+
+            <TextView
+                android:id="@+id/baixing_tab_follow_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp.2"
+                android:text="关注"
+                android:textSize="@dimen/sp.12" />
+        </LinearLayout>
+
+        <!-- 我的 Tab -->
+        <LinearLayout
+            android:id="@+id/baixing_tab_profile"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/baixing_tab_profile_icon"
+                android:layout_width="@dimen/dp.24"
+                android:layout_height="@dimen/dp.24"
+                android:src="@drawable/baixing_tab_profile_normal" />
+
+            <TextView
+                android:id="@+id/baixing_tab_profile_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp.2"
+                android:text="我的"
+                android:textSize="@dimen/sp.12" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
