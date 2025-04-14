@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/dp.4"
+    app:cardCornerRadius="@dimen/dp.8"
+    app:cardElevation="@dimen/dp.2">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- 封面图片 -->
+        <ImageView
+            android:id="@+id/baixing_live_cover"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- 心动图标 -->
+        <ImageView
+            android:id="@+id/baixing_live_heart_icon"
+            android:layout_width="@dimen/dp.24"
+            android:layout_height="@dimen/dp.24"
+            android:layout_margin="@dimen/dp.8"
+            android:src="@drawable/baixing_heart_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- 底部信息背景 -->
+        <View
+            android:id="@+id/baixing_live_info_bg"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp.40"
+            android:background="#80000000"
+            app:layout_constraintBottom_toBottomOf="@id/baixing_live_cover"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- 主播昵称 -->
+        <TextView
+            android:id="@+id/baixing_live_anchor_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp.8"
+            android:layout_marginBottom="@dimen/dp.8"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/sp.12"
+            app:layout_constraintBottom_toBottomOf="@id/baixing_live_cover"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/baixing_live_viewer_count"
+            app:layout_constraintHorizontal_weight="1" />
+
+        <!-- 观看人数 -->
+        <TextView
+            android:id="@+id/baixing_live_viewer_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/dp.8"
+            android:layout_marginBottom="@dimen/dp.8"
+            android:textSize="@dimen/sp.12"
+            app:layout_constraintBottom_toBottomOf="@id/baixing_live_cover"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

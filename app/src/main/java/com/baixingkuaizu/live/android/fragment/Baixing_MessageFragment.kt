@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.baixingkuaizu.live.android.base.Baixing_BaseFragment
-import com.baixingkuaizu.live.android.databinding.BaixingFragmentMessageBinding
+import com.baixingkuaizu.live.android.databinding.BaixingMessageFragmentBinding
 
 /**
  * @author yuyuexing
@@ -14,14 +14,14 @@ import com.baixingkuaizu.live.android.databinding.BaixingFragmentMessageBinding
  */
 class Baixing_MessageFragment : Baixing_BaseFragment() {
     
-    private var mBaixing_binding: BaixingFragmentMessageBinding? = null
+    private var mBaixing_binding: BaixingMessageFragmentBinding? = null
     
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mBaixing_binding = BaixingFragmentMessageBinding.inflate(inflater, container, false)
+        mBaixing_binding = BaixingMessageFragmentBinding.inflate(inflater, container, false)
         return mBaixing_binding?.root
     }
     

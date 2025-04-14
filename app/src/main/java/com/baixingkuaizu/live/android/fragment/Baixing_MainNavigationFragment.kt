@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.baixingkuaizu.live.android.R
 import com.baixingkuaizu.live.android.base.Baixing_BaseFragment
-import com.baixingkuaizu.live.android.databinding.BaixingFragmentMainNavigationBinding
+import com.baixingkuaizu.live.android.databinding.BaixingMainNavigationFragmentBinding
 
 /**
  * @author yuyuexing
@@ -16,7 +16,7 @@ import com.baixingkuaizu.live.android.databinding.BaixingFragmentMainNavigationB
  */
 class Baixing_MainNavigationFragment : Baixing_BaseFragment() {
     
-    private var mBaixing_binding: BaixingFragmentMainNavigationBinding? = null
+    private var mBaixing_binding: BaixingMainNavigationFragmentBinding? = null
     private var mBaixing_currentTabIndex = -1
     private val mBaixing_fragments = arrayOfNulls<Fragment>(4)
     
@@ -25,7 +25,7 @@ class Baixing_MainNavigationFragment : Baixing_BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mBaixing_binding = BaixingFragmentMainNavigationBinding.inflate(inflater, container, false)
+        mBaixing_binding = BaixingMainNavigationFragmentBinding.inflate(inflater, container, false)
         return mBaixing_binding?.root
     }
     
