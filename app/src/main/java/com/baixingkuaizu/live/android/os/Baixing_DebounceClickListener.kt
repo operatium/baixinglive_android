@@ -1,4 +1,4 @@
-package com.baixingkuaizu.live.android.adatperandroid
+package com.baixingkuaizu.live.android.os
 
 import android.view.View
 import android.view.View.OnClickListener

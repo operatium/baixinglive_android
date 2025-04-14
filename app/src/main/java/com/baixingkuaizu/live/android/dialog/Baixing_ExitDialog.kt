@@ -6,7 +6,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Window
-import com.baixingkuaizu.live.android.adatperandroid.Baixing_AdapterHelper.setClick
+import com.baixingkuaizu.live.android.os.Baixing_AdapterHelper.setClick
 import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
 import com.baixingkuaizu.live.android.databinding.BaixingExitDialogBinding
 import com.baixingkuaizu.live.android.widget.toast.CenterToast

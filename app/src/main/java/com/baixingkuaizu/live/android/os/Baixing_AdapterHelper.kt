@@ -1,4 +1,4 @@
-package com.baixingkuaizu.live.android.adatperandroid
+package com.baixingkuaizu.live.android.os
 
 import android.content.res.Resources
 import android.util.Log

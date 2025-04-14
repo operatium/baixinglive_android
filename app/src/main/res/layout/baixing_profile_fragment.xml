@@ -1,13 +1,277 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#F5F5F5">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="我的页面"
-        android:textSize="@dimen/sp.18" />
+        android:orientation="vertical">
 
-</FrameLayout>
+        <!-- 顶部工具栏 -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp.48"
+            android:background="#FFFFFF">
+
+            <TextView
+                android:id="@+id/baixing_profile_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="我的"
+                android:textColor="#000000"
+                android:textSize="@dimen/sp.18"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/baixing_profile_settings"
+                android:layout_width="@dimen/dp.24"
+                android:layout_height="@dimen/dp.24"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/dp.16"
+                android:src="@drawable/baixing_tab_profile_selected" />
+        </RelativeLayout>
+
+        <!-- 用户信息卡片 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#FFFFFF"
+            android:padding="@dimen/dp.16">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- 用户头像 -->
+                <ImageView
+                    android:id="@+id/baixing_profile_avatar"
+                    android:layout_width="@dimen/dp.60"
+                    android:layout_height="@dimen/dp.60"
+                    android:src="@drawable/baixing_def_cover" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp.12"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <!-- 用户昵称 -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/baixing_profile_nickname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="超级颜十三"
+                            android:textColor="#000000"
+                            android:textSize="@dimen/sp.18"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/baixing_profile_level_tag"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp.8"
+                            android:background="@drawable/baixing_tag_tiny_bg"
+                            android:paddingStart="@dimen/dp.4"
+                            android:paddingTop="@dimen/dp.2"
+                            android:paddingEnd="@dimen/dp.4"
+                            android:paddingBottom="@dimen/dp.2"
+                            android:text="一星"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/sp.10" />
+                    </LinearLayout>
+
+                    <!-- 用户ID -->
+                    <TextView
+                        android:id="@+id/baixing_profile_user_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp.4"
+                        android:text="ID:128297340"
+                        android:textColor="#666666"
+                        android:textSize="@dimen/sp.14" />
+                </LinearLayout>
+
+                <!-- 切换账号按钮 -->
+                <TextView
+                    android:id="@+id/baixing_profile_switch_account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/baixing_button_background"
+                    android:paddingStart="@dimen/dp.12"
+                    android:paddingTop="@dimen/dp.6"
+                    android:paddingEnd="@dimen/dp.12"
+                    android:paddingBottom="@dimen/dp.6"
+                    android:text="切换账号和状态"
+                    android:textColor="#666666"
+                    android:textSize="@dimen/sp.12" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 会员卡片 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp.16"
+            android:layout_marginTop="@dimen/dp.16"
+            android:layout_marginEnd="@dimen/dp.16"
+            app:cardCornerRadius="@dimen/dp.12"
+            app:cardElevation="@dimen/dp.2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#D2A76C"
+                android:orientation="vertical"
+                android:padding="@dimen/dp.16">
+
+                <!-- 会员等级 -->
+                <TextView
+                    android:id="@+id/baixing_profile_member_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="青铜"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/sp.20"
+                    android:textStyle="bold" />
+
+                <!-- 会员描述 -->
+                <TextView
+                    android:id="@+id/baixing_profile_member_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp.8"
+                    android:text="保级成功！距离白银还需充值80.0元"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/sp.14" />
+
+                <!-- 会员到期时间 -->
+                <TextView
+                    android:id="@+id/baixing_profile_member_expire"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp.8"
+                    android:text="会员身份2025.03.23将重新结算"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/sp.14" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- 钱包卡片 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp.16"
+            android:layout_marginTop="@dimen/dp.16"
+            android:layout_marginEnd="@dimen/dp.16"
+            app:cardCornerRadius="@dimen/dp.12"
+            app:cardElevation="@dimen/dp.2">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:orientation="horizontal"
+                android:padding="@dimen/dp.16">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="我的钱包"
+                        android:textColor="#333333"
+                        android:textSize="@dimen/sp.16" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp.8"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/dp.24"
+                            android:layout_height="@dimen/dp.24"
+                            android:src="@drawable/baixing_ic_99" />
+
+                        <TextView
+                            android:id="@+id/baixing_profile_wallet_balance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp.4"
+                            android:text="1.700"
+                            android:textColor="#000000"
+                            android:textSize="@dimen/sp.24"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/baixing_profile_recharge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/baixing_button_background2"
+                    android:backgroundTint="#BB68FA"
+                    android:text="充值"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/sp.14" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- 特色功能菜单 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp.16"
+            android:layout_marginTop="@dimen/dp.16"
+            android:layout_marginEnd="@dimen/dp.16"
+            app:cardCornerRadius="@dimen/dp.12"
+            app:cardElevation="@dimen/dp.2">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/baixing_profile_feature_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:padding="@dimen/dp.16" />
+        </androidx.cardview.widget.CardView>
+
+        <!-- 常用功能菜单 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp.16"
+            android:layout_marginTop="@dimen/dp.16"
+            android:layout_marginEnd="@dimen/dp.16"
+            android:layout_marginBottom="@dimen/dp.16"
+            app:cardCornerRadius="@dimen/dp.12"
+            app:cardElevation="@dimen/dp.2">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/baixing_profile_common_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:padding="@dimen/dp.16" />
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

@@ -12,7 +12,7 @@ import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.view.Window
-import com.baixingkuaizu.live.android.adatperandroid.Baixing_AdapterHelper.setClick
+import com.baixingkuaizu.live.android.os.Baixing_AdapterHelper.setClick
 import com.baixingkuaizu.live.android.busiess.router.Baixing_GoRouter
 import com.baixingkuaizu.live.android.databinding.BaixingPrivacyDialogBinding
 import com.baixingkuaizu.live.android.widget.toast.CenterToast

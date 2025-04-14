@@ -1,7 +1,7 @@
 package com.baixingkuaizu.live.android.busiess.teenmode
 
 import androidx.recyclerview.widget.RecyclerView
-import com.baixingkuaizu.live.android.adatperandroid.Baixing_AdapterHelper.setClick
+import com.baixingkuaizu.live.android.os.Baixing_AdapterHelper.setClick
 import com.baixingkuaizu.live.android.busiess.router.Baixing_GoRouter
 import com.baixingkuaizu.live.android.databinding.BaixingPlayListItemBinding
 import com.bumptech.glide.Glide

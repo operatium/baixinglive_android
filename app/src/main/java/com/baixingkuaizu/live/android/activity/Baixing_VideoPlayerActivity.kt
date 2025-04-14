@@ -4,7 +4,7 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
-import com.baixingkuaizu.live.android.adatperandroid.Baixing_AdapterHelper.setClick
+import com.baixingkuaizu.live.android.os.Baixing_AdapterHelper.setClick
 import com.baixingkuaizu.live.android.base.Baixing_BaseActivity
 import com.baixingkuaizu.live.android.databinding.BaixingVideoPlayerActivityBinding
 import com.baixingkuaizu.live.android.widget.toast.CenterToast

@@ -5,7 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
-import com.baixingkuaizu.live.android.adatperandroid.Baixing_AdapterHelper.setClick
+import com.baixingkuaizu.live.android.os.Baixing_AdapterHelper.setClick
 import com.baixingkuaizu.live.android.databinding.BaixingTeenModeDialogBinding
 
 /**

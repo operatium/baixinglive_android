@@ -10,15 +10,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
-import com.baixingkuaizu.live.android.adatperandroid.Baixing_AdapterHelper.setClick
 import com.baixingkuaizu.live.android.base.Baixing_BaseFragment
 import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
-import com.baixingkuaizu.live.android.busiess.router.Baixing_GoRouter
 import com.baixingkuaizu.live.android.busiess.teenmode.Baixing_TeenPlayListAdapter
 import com.baixingkuaizu.live.android.databinding.BaixingPlayListFragmentBinding
 import com.baixingkuaizu.live.android.dialog.Baixing_ExitDialog
 import com.baixingkuaizu.live.android.dialog.Baixing_TeenModeExtendTimeDialog
-import com.baixingkuaizu.live.android.widget.toast.CenterToast
 import java.util.concurrent.TimeUnit
 
 /**
