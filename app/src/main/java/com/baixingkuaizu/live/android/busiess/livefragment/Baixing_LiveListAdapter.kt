@@ -5,21 +5,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.baixingkuaizu.live.android.databinding.BaixingLiveItemBinding
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 
 /**
  * @author yuyuexing
  * @date: 2025/4/18
  * @description: 直播列表适配器
  */
-class Baixing_LiveListAdapter : ListAdapter<Baixing_LiveData, Baixing_LiveViewHolder>(
-    object : DiffUtil.ItemCallback<Baixing_LiveData>() {
-        override fun areItemsTheSame(oldItem: Baixing_LiveData, newItem: Baixing_LiveData): Boolean {
+class Baixing_LiveListAdapter : ListAdapter<Baixing_LiveDataEntity, Baixing_LiveViewHolder>(
+    object : DiffUtil.ItemCallback<Baixing_LiveDataEntity>() {
+        override fun areItemsTheSame(oldItem: Baixing_LiveDataEntity, newItem: Baixing_LiveDataEntity): Boolean {
             return oldItem.id == newItem.id
         }
 
-        override fun areContentsTheSame(oldItem: Baixing_LiveData, newItem: Baixing_LiveData): Boolean {
+        override fun areContentsTheSame(oldItem: Baixing_LiveDataEntity, newItem: Baixing_LiveDataEntity): Boolean {
             return oldItem == newItem
         }
     }

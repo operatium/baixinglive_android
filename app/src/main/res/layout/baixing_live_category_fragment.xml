@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/baixing_live_swipe_refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    
+    <!-- 内容布局 -->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/baixing_live_swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/baixing_live_content_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/baixing_live_recycler_view"
@@ -50,6 +57,85 @@
                 android:visibility="gone" />
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    
+    <!-- 错误布局 -->
+    <LinearLayout
+        android:id="@+id/baixing_live_error_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="@dimen/dp.100"
+            android:layout_height="@dimen/dp.100"
+            android:src="@drawable/baixing_ic_99" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp.16"
+            android:text="网络连接失败"
+            android:textSize="@dimen/sp.16"
+            android:textColor="#666666" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp.8"
+            android:text="请检查您的网络设置后重试"
+            android:textSize="@dimen/sp.14"
+            android:textColor="#999999" />
+
+        <Button
+            android:id="@+id/baixing_live_error_retry_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp.24"
+            android:paddingStart="@dimen/dp.24"
+            android:paddingEnd="@dimen/dp.24"
+            android:text="重新加载"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+    <!-- 空数据布局 -->
+    <LinearLayout
+        android:id="@+id/baixing_live_empty_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="@dimen/dp.100"
+            android:layout_height="@dimen/dp.100"
+            android:src="@drawable/baixing_ic_99" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp.16"
+            android:text="暂无直播内容"
+            android:textSize="@dimen/sp.16"
+            android:textColor="#666666" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp.8"
+            android:text="稍后再来看看吧"
+            android:textSize="@dimen/sp.14"
+            android:textColor="#999999" />
+    </LinearLayout>
+
+    <com.baixingkuaizu.live.android.widget.loading.Baixing_LoadingView
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+</FrameLayout>

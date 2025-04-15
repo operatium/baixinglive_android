@@ -1,7 +1,7 @@
 package com.baixingkuaizu.live.android.busiess.task.login
 
 import com.baixingkuaizu.live.android.busiess.task.Baixing_BaseTask
-import com.baixingkuaizu.live.android.busiess.task.Baixing_CoreWork
+import com.baixingkuaizu.live.android.http.Baixing_CoreWork
 import java.util.Timer
 import java.util.TimerTask
 import java.util.concurrent.ConcurrentHashMap

@@ -1,15 +1,11 @@
 package com.baixingkuaizu.live.android.busiess.livefragment
 
-import android.content.res.Resources
 import androidx.recyclerview.widget.RecyclerView
 import com.baixingkuaizu.live.android.R
 import com.baixingkuaizu.live.android.databinding.BaixingLiveItemBinding
 import android.text.SpannableString
 import android.text.Spanned
-import android.util.TypedValue
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import android.text.style.TextAppearanceSpan
 import android.text.style.AbsoluteSizeSpan
 import android.graphics.Typeface
@@ -30,7 +26,7 @@ class Baixing_LiveViewHolder(private val mBaixing_binding: BaixingLiveItemBindin
             .clear(mBaixing_binding.baixingLiveCover)
     }
     
-    fun baixing_bind(liveData: Baixing_LiveData) {
+    fun baixing_bind(liveData: Baixing_LiveDataEntity) {
         mBaixing_binding.apply {
             val context = baixingLiveCover.context
             // 设置主播名称

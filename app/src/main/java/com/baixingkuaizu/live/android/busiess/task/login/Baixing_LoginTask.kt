@@ -3,7 +3,7 @@ package com.baixingkuaizu.live.android.busiess.task.login
 import android.content.Context
 import com.baixingkuaizu.live.android.busiess.localdata.Baixing_LocalDataManager
 import com.baixingkuaizu.live.android.busiess.task.Baixing_BaseTask
-import com.baixingkuaizu.live.android.busiess.task.Baixing_CoreWork
+import com.baixingkuaizu.live.android.http.Baixing_CoreWork
 import java.util.Collections
 
 /**

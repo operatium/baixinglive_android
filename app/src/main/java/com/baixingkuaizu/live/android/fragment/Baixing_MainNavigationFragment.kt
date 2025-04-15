@@ -16,7 +16,7 @@ import com.baixingkuaizu.live.android.databinding.BaixingMainNavigationFragmentB
  */
 class Baixing_MainNavigationFragment : Baixing_BaseFragment() {
     
-    private var mBaixing_binding: BaixingMainNavigationFragmentBinding? = null
+    private lateinit var mBaixing_binding: BaixingMainNavigationFragmentBinding
     private var mBaixing_currentTabIndex = -1
     private val mBaixing_fragments = arrayOfNulls<Fragment>(4)
     
@@ -48,7 +48,7 @@ class Baixing_MainNavigationFragment : Baixing_BaseFragment() {
     }
     
     private fun baixing_initBottomNavigation() {
-        mBaixing_binding?.apply {
+        mBaixing_binding.apply {
             // 设置底部导航按钮点击事件
             baixingTabLive.setOnClickListener { baixing_switchTab(0) }
             baixingTabMessage.setOnClickListener { baixing_switchTab(1) }
@@ -89,7 +89,7 @@ class Baixing_MainNavigationFragment : Baixing_BaseFragment() {
     }
     
     private fun baixing_updateTabState(selectedIndex: Int) {
-        mBaixing_binding?.apply {
+        mBaixing_binding.apply {
             // 重置所有Tab为未选中状态
             baixingTabLiveIcon.setImageResource(R.drawable.baixing_tab_live_normal)
             baixingTabLiveText.setTextColor(resources.getColor(R.color.baixing_tab_normal_color, null))
@@ -127,6 +127,5 @@ class Baixing_MainNavigationFragment : Baixing_BaseFragment() {
     
     override fun onDestroyView() {
         super.onDestroyView()
-        mBaixing_binding = null
     }
 }

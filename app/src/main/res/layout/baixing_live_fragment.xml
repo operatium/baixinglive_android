@@ -1,26 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/baixing_live_tab_layout"
+    <!-- 内容布局 -->
+    <LinearLayout
+        android:id="@+id/baixing_live_content_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabMode="scrollable"
-        app:tabGravity="fill"
-        app:tabIndicatorColor="#FF5722"
-        app:tabSelectedTextColor="#FF5722"
-        app:tabTextColor="#666666"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/baixing_live_view_pager"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/baixing_live_tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabMode="scrollable"
+            app:tabGravity="fill" />
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/baixing_live_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <!-- 错误布局 -->
+    <LinearLayout
+        android:id="@+id/baixing_live_error_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/baixing_live_tab_layout"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:layout_width="@dimen/dp.100"
+            android:layout_height="@dimen/dp.100"
+            android:src="@drawable/baixing_ic_99" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp.16"
+            android:text="网络连接失败"
+            android:textSize="@dimen/sp.16"
+            android:textColor="#666666" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp.8"
+            android:text="请检查您的网络设置后重试"
+            android:textSize="@dimen/sp.14"
+            android:textColor="#999999" />
+
+        <Button
+            android:id="@+id/baixing_live_error_retry_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp.24"
+            android:paddingStart="@dimen/dp.24"
+            android:paddingEnd="@dimen/dp.24"
+            android:text="重新加载"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+    <!-- 空数据布局 -->
+    <LinearLayout
+        android:id="@+id/baixing_live_empty_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="@dimen/dp.100"
+            android:layout_height="@dimen/dp.100"
+            android:src="@drawable/baixing_ic_99" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp.16"
+            android:text="暂无直播内容"
+            android:textSize="@dimen/sp.16"
+            android:textColor="#666666" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp.8"
+            android:text="稍后再来看看吧"
+            android:textSize="@dimen/sp.14"
+            android:textColor="#999999" />
+    </LinearLayout>
+</FrameLayout>
