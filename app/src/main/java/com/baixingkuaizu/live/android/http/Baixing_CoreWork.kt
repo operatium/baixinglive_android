@@ -1,6 +1,6 @@
 package com.baixingkuaizu.live.android.http
 
-import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_CategoryData
+import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_CategoryDataEntity
 import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_LiveDataEntity
 import kotlinx.coroutines.delay
 
@@ -29,12 +29,12 @@ object Baixing_CoreWork {
         return true
     }
 
-    suspend fun baixing_liveTabs(): ArrayList<Baixing_CategoryData> {
+    suspend fun baixing_liveTabs(): ArrayList<Baixing_CategoryDataEntity> {
         delayNet()
         return listOf(
             "推荐", "游戏", "音乐", "舞蹈", "美食",
             "旅游", "体育", "科技", "教育", "娱乐"
-        ).map {  Baixing_CategoryData(it, it) }.toList().let {
+        ).map {  Baixing_CategoryDataEntity(it, it) }.toList().let {
             ArrayList(it)
         }
     }

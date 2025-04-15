@@ -1,14 +1,15 @@
 package com.baixingkuaizu.live.android.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.baixingkuaizu.live.android.base.Baixing_BaseFragment
-import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_CategoryData
+import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_CategoryDataEntity
+import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_LiveViewPagerAdapter
+import com.baixingkuaizu.live.android.busiess.proxy.Baixing_FragmentProxy
 import com.baixingkuaizu.live.android.databinding.BaixingLiveFragmentBinding
 import com.baixingkuaizu.live.android.viewmodel.Baixing_LiveTableViewModel
 import com.baixingkuaizu.live.android.widget.loading.Baixing_FullScreenLoadingDialog
@@ -21,23 +22,28 @@ import com.google.android.material.tabs.TabLayoutMediator
  * @description: 直播页面Fragment，包含多个栏目的ViewPager
  */
 class Baixing_LiveFragment : Baixing_BaseFragment() {
+    private val TAG = "yyx类Baixing_LiveFragment"
     
     private lateinit var mBaixing_binding: BaixingLiveFragmentBinding
-    private val mBaixing_categoryList = mutableListOf<Baixing_CategoryData>()
+    private val mBaixing_categoryList = ArrayList<Baixing_CategoryDataEntity>()
     private lateinit var mBaixing_viewModel: Baixing_LiveTableViewModel
     private var mBaixing_loading: Baixing_FullScreenLoadingDialog? = null
+    private val mBaixing_Proxy = Baixing_FragmentProxy(this)
+    private var mBaixing_adapter: Baixing_LiveViewPagerAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d(TAG, "onCreateView: ")
         mBaixing_binding = BaixingLiveFragmentBinding.inflate(inflater, container, false)
         return mBaixing_binding.root
     }
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mBaixing_Proxy.bind(this)
         baixing_initViewModel()
         mBaixing_loading = Baixing_FullScreenLoadingDialog(context?:return)
         mBaixing_loading?.show()
@@ -64,74 +70,53 @@ class Baixing_LiveFragment : Baixing_BaseFragment() {
         }
     }
     
-    /**
-     * 显示内容视图
-     */
     private fun baixing_showContent() {
         mBaixing_binding.apply {
-            // 隐藏错误和空视图
             baixingLiveErrorLayout.visibility = View.GONE
             baixingLiveEmptyLayout.visibility = View.GONE
             
-            // 显示内容视图
             baixingLiveContentLayout.visibility = View.VISIBLE
-            
-            // 设置ViewPager2
-            baixingLiveViewPager.adapter = object : FragmentStateAdapter(this@Baixing_LiveFragment) {
-                override fun getItemCount(): Int = mBaixing_categoryList.size
 
-                override fun createFragment(position: Int): Fragment {
-                    val categoryId = mBaixing_categoryList[position].id
-                    return Baixing_LiveCategoryFragment.baixing_newInstance(categoryId)
-                }
+            if (mBaixing_adapter == null) {
+                baixingLiveViewPager.adapter =
+                    Baixing_LiveViewPagerAdapter(mBaixing_categoryList, this@Baixing_LiveFragment).apply {
+                        mBaixing_adapter = this
+                    }
             }
-
-            // 设置TabLayout与ViewPager2联动
             TabLayoutMediator(baixingLiveTabLayout, baixingLiveViewPager) { tab, position ->
                 tab.text = mBaixing_categoryList[position].name
             }.attach()
         }
     }
     
-    /**
-     * 显示网络错误视图并提供重试功能
-     */
     private fun baixing_retry() {
         mBaixing_binding.apply {
-            // 隐藏内容和空视图
             baixingLiveContentLayout.visibility = View.GONE
             baixingLiveEmptyLayout.visibility = View.GONE
             
-            // 显示错误视图
             baixingLiveErrorLayout.visibility = View.VISIBLE
             
-            // 设置重试按钮点击事件
             baixingLiveErrorRetryBtn.setOnClickListener {
-                // 显示加载中提示
                 CenterToast.show(activity, "正在重新加载...")
-                
-                // 重新请求数据
+                mBaixing_loading?.show()
                 mBaixing_viewModel.requestTable()
             }
         }
     }
     
-    /**
-     * 显示空数据视图
-     */
     private fun baixing_empty() {
         mBaixing_binding.apply {
-            // 隐藏内容和错误视图
             baixingLiveContentLayout.visibility = View.GONE
             baixingLiveErrorLayout.visibility = View.GONE
             
-            // 显示空视图
             baixingLiveEmptyLayout.visibility = View.VISIBLE
         }
     }
     
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.d(TAG, "onDestroyView: ")
         mBaixing_loading?.dismiss()
+        mBaixing_Proxy.unbind()
     }
 }

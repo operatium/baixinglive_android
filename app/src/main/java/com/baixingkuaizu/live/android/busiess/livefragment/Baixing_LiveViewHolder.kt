@@ -21,7 +21,6 @@ class Baixing_LiveViewHolder(private val mBaixing_binding: BaixingLiveItemBindin
     RecyclerView.ViewHolder(mBaixing_binding.root) {
     
     fun baixing_clearImage() {
-        // 清除图片加载请求
         Glide.with(mBaixing_binding.baixingLiveCover.context)
             .clear(mBaixing_binding.baixingLiveCover)
     }
@@ -29,14 +28,11 @@ class Baixing_LiveViewHolder(private val mBaixing_binding: BaixingLiveItemBindin
     fun baixing_bind(liveData: Baixing_LiveDataEntity) {
         mBaixing_binding.apply {
             val context = baixingLiveCover.context
-            // 设置主播名称
             baixingLiveAnchorName.text = liveData.anchorName
             
-            // 设置观看人数
             val viewerText = SpannableString("${liveData.viewerCount}人观看")
             val numberEndIndex = liveData.viewerCount.toString().length
             
-            // 设置数字部分为14sp加粗
             viewerText.setSpan(
                 TextAppearanceSpan(baixingLiveViewerCount.context, android.R.style.TextAppearance).apply {
                     Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
@@ -53,7 +49,6 @@ class Baixing_LiveViewHolder(private val mBaixing_binding: BaixingLiveItemBindin
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
             
-            // 设置'人观看'部分为12sp
             viewerText.setSpan(
                 AbsoluteSizeSpan(context.resources.getDimension(R.dimen.sp_12).toInt(), false),
                 numberEndIndex,
@@ -61,7 +56,6 @@ class Baixing_LiveViewHolder(private val mBaixing_binding: BaixingLiveItemBindin
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
 
-            // 设置文本为白色
             viewerText.setSpan(
                 ForegroundColorSpan(Color.WHITE),
                 0,
@@ -71,7 +65,6 @@ class Baixing_LiveViewHolder(private val mBaixing_binding: BaixingLiveItemBindin
             
             baixingLiveViewerCount.text = viewerText
             
-            // 加载封面图片，使用Glide避免图片加载错位问题
             Glide.with(baixingLiveCover.context)
                 .load(liveData.coverUrl)
                 .placeholder(R.drawable.baixing_def_cover)

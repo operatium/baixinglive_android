@@ -9,6 +9,7 @@ import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_LiveDataEntit
 import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_LivePageEntity
 import com.baixingkuaizu.live.android.http.Baixing_CoreWork
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeoutOrNull
@@ -33,6 +34,16 @@ class Baixing_LiveCategoryViewModel: ViewModel() {
         mBaixing_Page = 0
         _listloading.value = listLoading
         requestList(id)
+        viewModelScope.launch {
+            delay(100)
+            Baixing_LiveDataCache.getListById(id).let {
+                if (it.isNotEmpty()) {
+                    _liveList.value = it
+                    _isListBottom.value = false
+                    _listloading.value = false
+                }
+            }
+        }
     }
 
     fun requestNextPage(id:String, listLoading: Boolean = true) {

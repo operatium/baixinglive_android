@@ -38,7 +38,6 @@ class Baixing_LiveListAdapter : ListAdapter<Baixing_LiveDataEntity, Baixing_Live
 
     override fun onViewRecycled(holder: Baixing_LiveViewHolder) {
         super.onViewRecycled(holder)
-        // 清除图片加载请求，避免错位问题
         holder.baixing_clearImage()
     }
 }
