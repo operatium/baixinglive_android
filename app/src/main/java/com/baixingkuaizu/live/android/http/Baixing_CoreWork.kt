@@ -10,6 +10,7 @@ import kotlinx.coroutines.delay
  * @description: 核心任务类，负责处理核心业务逻辑
  */
 object Baixing_CoreWork {
+    var mBaixing_HttpTimeout = 5000L
 
     //发送验证码
     suspend fun baixing_sendVerificationCode():String {

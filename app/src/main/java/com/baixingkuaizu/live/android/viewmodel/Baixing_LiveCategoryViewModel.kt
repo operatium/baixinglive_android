@@ -8,6 +8,7 @@ import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_LiveDataCache
 import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_LiveDataEntity
 import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_LivePageEntity
 import com.baixingkuaizu.live.android.http.Baixing_CoreWork
+import com.baixingkuaizu.live.android.http.Baixing_CoreWork.mBaixing_HttpTimeout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -54,7 +55,7 @@ class Baixing_LiveCategoryViewModel: ViewModel() {
 
     private fun requestList(id:String, page:Int = 0) {
         viewModelScope.launch(Dispatchers.Default) {
-            withTimeoutOrNull(5000) {
+            withTimeoutOrNull(mBaixing_HttpTimeout) {
                 Baixing_CoreWork.baixing_liveList(id, page)
             }?.let {
                 if (it.isEmpty()) {

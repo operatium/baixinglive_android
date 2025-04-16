@@ -13,6 +13,7 @@ import com.baixingkuaizu.live.android.busiess.task.login.Baixing_LoginTaskManage
 import com.baixingkuaizu.live.android.busiess.task.login.Baixing_SendVerficationCodeTask
 import com.baixingkuaizu.live.android.busiess.task.login.Baixing_SendVerficationCodeTaskListener
 import com.baixingkuaizu.live.android.busiess.task.login.Baixing_SendVerficationCodeTaskManager
+import com.baixingkuaizu.live.android.http.Baixing_CoreWork
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
@@ -21,8 +22,6 @@ import java.util.concurrent.TimeUnit
 class Baixing_LoginViewModel:ViewModel() {
     val TAG = "yyx类Baixing_LoginViewModel"
 
-    val mBaixing_TimeOut = 6000L
-    
     private val mBaixing_defaultTokenValidDays = 7L
 
     private val _mBaixing_codeTime = MutableLiveData<Int>()
@@ -51,7 +50,7 @@ class Baixing_LoginViewModel:ViewModel() {
             }
             mBaixing_netCode = null
             viewModelScope.launch(Dispatchers.Default) {
-                withTimeoutOrNull(mBaixing_TimeOut) {
+                withTimeoutOrNull(Baixing_CoreWork.mBaixing_HttpTimeout) {
                     Baixing_SendVerficationCodeTaskManager.sendVerificationCode(
                         taskName = "发送验证码${Baixing_SendVerficationCodeTaskManager.baixing_obtainID()}",
                         phone = phoneNumber,
@@ -141,7 +140,7 @@ class Baixing_LoginViewModel:ViewModel() {
             }
         }
         viewModelScope.launch(Dispatchers.Default) {
-            withTimeoutOrNull(mBaixing_TimeOut) {
+            withTimeoutOrNull(Baixing_CoreWork.mBaixing_HttpTimeout) {
                 Baixing_LoginTaskManager.baixing_loginAccount(
                     appContext,
                     phoneNumber,

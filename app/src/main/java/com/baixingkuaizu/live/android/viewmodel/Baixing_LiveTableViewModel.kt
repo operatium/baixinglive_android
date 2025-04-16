@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_CategoryDataEntity
 import com.baixingkuaizu.live.android.http.Baixing_CoreWork
+import com.baixingkuaizu.live.android.http.Baixing_CoreWork.mBaixing_HttpTimeout
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -21,7 +22,7 @@ class Baixing_LiveTableViewModel: ViewModel() {
 
     fun requestTable() {
         viewModelScope.launch(Dispatchers.Default) {
-            withTimeoutOrNull(5000) {
+            withTimeoutOrNull(mBaixing_HttpTimeout) {
                 Baixing_CoreWork.baixing_liveTabs()
             }?.let {
                 withContext(Dispatchers.Main) {

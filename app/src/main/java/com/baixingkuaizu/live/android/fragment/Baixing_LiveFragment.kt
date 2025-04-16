@@ -27,7 +27,6 @@ class Baixing_LiveFragment : Baixing_BaseFragment() {
     private lateinit var mBaixing_binding: BaixingLiveFragmentBinding
     private val mBaixing_categoryList = ArrayList<Baixing_CategoryDataEntity>()
     private lateinit var mBaixing_viewModel: Baixing_LiveTableViewModel
-    private var mBaixing_loading: Baixing_FullScreenLoadingDialog? = null
     private val mBaixing_Proxy = Baixing_FragmentProxy(this)
     private var mBaixing_adapter: Baixing_LiveViewPagerAdapter? = null
 
@@ -45,8 +44,7 @@ class Baixing_LiveFragment : Baixing_BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mBaixing_Proxy.bind(this)
         baixing_initViewModel()
-        mBaixing_loading = Baixing_FullScreenLoadingDialog(context?:return)
-        mBaixing_loading?.show()
+        mBaixing_binding.baixingLoading.visibility = View.VISIBLE
     }
     
     private fun baixing_initViewModel() {
@@ -54,10 +52,10 @@ class Baixing_LiveFragment : Baixing_BaseFragment() {
             netError.observe(viewLifecycleOwner) {
                 if (it.isNullOrEmpty()) return@observe
                 baixing_retry()
-                mBaixing_loading?.hide()
+                mBaixing_binding.baixingLoading.visibility = View.GONE
             }
             netTable.observe(viewLifecycleOwner) {
-                mBaixing_loading?.hide()
+                mBaixing_binding.baixingLoading.visibility = View.GONE
                 if (it.isEmpty()) {
                     baixing_empty()
                 } else {
@@ -98,7 +96,7 @@ class Baixing_LiveFragment : Baixing_BaseFragment() {
             
             baixingLiveErrorRetryBtn.setOnClickListener {
                 CenterToast.show(activity, "正在重新加载...")
-                mBaixing_loading?.show()
+                mBaixing_binding.baixingLoading.visibility = View.VISIBLE
                 mBaixing_viewModel.requestTable()
             }
         }
@@ -116,7 +114,6 @@ class Baixing_LiveFragment : Baixing_BaseFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         Log.d(TAG, "onDestroyView: ")
-        mBaixing_loading?.dismiss()
         mBaixing_Proxy.unbind()
     }
 }
