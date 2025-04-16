@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <!-- 顶部搜索栏 -->
+    <LinearLayout
+        android:id="@+id/baixing_search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp.10"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/baixing_btn_back"
+            android:layout_width="@dimen/dp.24"
+            android:layout_height="@dimen/dp.24"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_back"
+            android:contentDescription="返回" />
+
+        <EditText
+            android:id="@+id/baixing_edit_search"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp.40"
+            android:layout_marginStart="@dimen/dp.10"
+            android:layout_marginEnd="@dimen/dp.10"
+            android:layout_weight="1"
+            android:background="@drawable/baixing_tag_normal_bg"
+            android:hint="我"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:paddingStart="@dimen/dp.10"
+            android:paddingEnd="@dimen/dp.10"
+            android:textColor="@android:color/black"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="@dimen/sp.14" />
+
+        <ImageView
+            android:id="@+id/baixing_btn_clear"
+            android:layout_width="@dimen/dp.24"
+            android:layout_height="@dimen/dp.24"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="@dimen/dp.5"
+            android:src="@drawable/ic_dot"
+            android:visibility="gone"
+            android:contentDescription="清除" />
+
+        <TextView
+            android:id="@+id/baixing_btn_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="搜索"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/sp.16" />
+    </LinearLayout>
+
+    <!-- 搜索历史 -->
+    <LinearLayout
+        android:id="@+id/baixing_history_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/dp.10"
+        app:layout_constraintTop_toBottomOf="@id/baixing_search_bar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="搜索历史"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/sp.16" />
+
+            <TextView
+                android:id="@+id/baixing_btn_clear_history"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="清除"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="@dimen/sp.14" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/baixing_recycler_history"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp.10"
+            android:orientation="horizontal"
+            tools:itemCount="5"
+            tools:listitem="@layout/baixing_search_history_item" />
+    </LinearLayout>
+
+    <!-- 搜索结果 -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/baixing_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/baixing_history_layout"
+        tools:listitem="@layout/baixing_search_result_item"
+        tools:visibility="visible" />
+
+    <!-- 空视图 -->
+    <TextView
+        android:id="@+id/baixing_empty_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="暂无搜索结果"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/sp.16"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/baixing_history_layout" />
+
+    <!-- 加载进度条 -->
+    <ProgressBar
+        android:id="@+id/baixing_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/baixing_history_layout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

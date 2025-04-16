@@ -6,6 +6,8 @@ import com.baixingkuaizu.live.android.busiess.messagefragment.Baixing_MessageDat
 import com.baixingkuaizu.live.android.busiess.messagefragment.Baixing_MessageItemEntity
 import com.baixingkuaizu.live.android.busiess.followfragment.Baixing_FollowDataGenerator
 import com.baixingkuaizu.live.android.busiess.followfragment.Baixing_FollowGirlEntity
+import com.baixingkuaizu.live.android.busiess.searchfragment.Baixing_SearchAnchorEntity
+import com.baixingkuaizu.live.android.busiess.searchfragment.Baixing_SearchDataGenerator
 import kotlinx.coroutines.delay
 
 /**
@@ -84,6 +86,17 @@ object Baixing_CoreWork {
         }
         
         return list
+    }
+    
+    /**
+     * 搜索主播
+     * @param keyword 搜索关键词
+     * @return 包含搜索结果的主播列表
+     */
+    suspend fun baixing_searchAnchor(keyword: String): ArrayList<Baixing_SearchAnchorEntity> {
+        delayNet()
+        val generator = Baixing_SearchDataGenerator()
+        return ArrayList(generator.baixing_generateSearchResults(keyword))
     }
 
     private suspend fun delayNet(time:Long = 5000) {

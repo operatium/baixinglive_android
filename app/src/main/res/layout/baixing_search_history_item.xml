@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/baixing_tv_keyword"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/dp.10"
+    android:background="@drawable/baixing_tag_normal_bg"
+    android:paddingStart="@dimen/dp.10"
+    android:paddingTop="@dimen/dp.5"
+    android:paddingEnd="@dimen/dp.10"
+    android:paddingBottom="@dimen/dp.5"
+    android:textColor="@android:color/black"
+    android:textSize="@dimen/sp.14"
+    tools:text="搜索关键词" />

@@ -105,6 +105,14 @@ class Baixing_LocalDataManager(private val context: Context) {
     fun baixing_getLastVerifiedTime(): Long {
         return mBaixing_sharedPreferences.getLong(BAIXING_KEY_LAST_VERIFIED_TIME, 0)
     }
+    
+    fun baixing_getSearchHistory(): String {
+        return mBaixing_sharedPreferences.getString(BAIXING_KEY_SEARCH_HISTORY, "") ?: ""
+    }
+    
+    fun baixing_setSearchHistory(historyJson: String) {
+        mBaixing_sharedPreferences.edit { putString(BAIXING_KEY_SEARCH_HISTORY, historyJson) }
+    }
 
     companion object {
         private const val BAIXING_PRIVACY_PREFERENCES = "baixing_privacy_preferences"
@@ -118,6 +126,7 @@ class Baixing_LocalDataManager(private val context: Context) {
         private const val BAIXING_KEY_LAST_USED_TIME = "baixing_key_last_used_time"
         private const val BAIXING_KEY_TODAY_USED_DURATION = "baixing_key_today_used_duration"
         private const val BAIXING_KEY_LAST_VERIFIED_TIME = "baixing_key_last_verified_time"
+        private const val BAIXING_KEY_SEARCH_HISTORY = "baixing_key_search_history"
 
         @SuppressLint("StaticFieldLeak")
         @Volatile

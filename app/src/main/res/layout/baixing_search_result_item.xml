@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp.10">
+
+    <!-- 主播封面图 -->
+    <ImageView
+        android:id="@+id/baixing_iv_cover"
+        android:layout_width="@dimen/dp.120"
+        android:layout_height="@dimen/dp.80"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/baixing_default_cover"
+        android:contentDescription="主播封面" />
+
+    <!-- 直播状态标签 -->
+    <TextView
+        android:id="@+id/baixing_tv_live_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/baixing_tag_tiny_bg"
+        android:paddingStart="@dimen/dp.5"
+        android:paddingTop="@dimen/dp.2"
+        android:paddingEnd="@dimen/dp.5"
+        android:paddingBottom="@dimen/dp.2"
+        android:text="派对中"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp.10"
+        app:layout_constraintEnd_toEndOf="@id/baixing_iv_cover"
+        app:layout_constraintTop_toTopOf="@id/baixing_iv_cover" />
+
+    <!-- 主播名称 -->
+    <TextView
+        android:id="@+id/baixing_tv_anchor_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp.10"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/sp.16"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/baixing_iv_cover"
+        app:layout_constraintTop_toTopOf="@id/baixing_iv_cover"
+        tools:text="艾薇儿123" />
+
+    <!-- 分类 -->
+    <TextView
+        android:id="@+id/baixing_tv_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp.10"
+        android:layout_marginTop="@dimen/dp.5"
+        android:background="@drawable/baixing_tag_normal_bg"
+        android:paddingStart="@dimen/dp.5"
+        android:paddingTop="@dimen/dp.2"
+        android:paddingEnd="@dimen/dp.5"
+        android:paddingBottom="@dimen/dp.2"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/sp.12"
+        app:layout_constraintStart_toEndOf="@id/baixing_iv_cover"
+        app:layout_constraintTop_toBottomOf="@id/baixing_tv_anchor_name"
+        tools:text="么么星球" />
+
+    <!-- 观看人数 -->
+    <TextView
+        android:id="@+id/baixing_tv_viewer_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp.10"
+        android:layout_marginTop="@dimen/dp.5"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/sp.12"
+        app:layout_constraintStart_toEndOf="@id/baixing_iv_cover"
+        app:layout_constraintTop_toBottomOf="@id/baixing_tv_category"
+        tools:text="157人看过" />
+
+    <!-- 关注按钮 -->
+    <TextView
+        android:id="@+id/baixing_btn_follow"
+        android:layout_width="@dimen/dp.60"
+        android:layout_height="@dimen/dp.30"
+        android:background="@drawable/baixing_button_background"
+        android:gravity="center"
+        android:text="关注"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp.14"
+        app:layout_constraintBottom_toBottomOf="@id/baixing_iv_cover"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

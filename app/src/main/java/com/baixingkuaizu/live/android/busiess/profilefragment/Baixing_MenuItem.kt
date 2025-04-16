@@ -8,5 +8,3 @@ data class Baixing_MenuItem(
     var baixing_title: String = "",
     var baixing_action: String = ""
 ) : Baixing_Entity()
-
-
