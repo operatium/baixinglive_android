@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/dp.16">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="账户管理"
+            android:textSize="@dimen/sp.18"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginBottom="@dimen/dp.16" />
+
+        <!-- 设置菜单项 -->
+        <LinearLayout
+            android:id="@+id/baixing_menu_item_setting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="@dimen/dp.12">
+
+            <ImageView
+                android:layout_width="@dimen/dp.24"
+                android:layout_height="@dimen/dp.24"
+                android:src="@drawable/baixing_tab_profile_normal" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="设置"
+                android:textSize="@dimen/sp.16"
+                android:textColor="#333333"
+                android:layout_marginStart="@dimen/dp.12" />
+
+            <ImageView
+                android:layout_width="@dimen/dp.16"
+                android:layout_height="@dimen/dp.16"
+                android:src="@drawable/ic_back"
+                android:rotation="180" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp.1"
+            android:background="#EEEEEE" />
+
+        <!-- 钱包菜单项 -->
+        <LinearLayout
+            android:id="@+id/baixing_menu_item_wallet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="@dimen/dp.12">
+
+            <ImageView
+                android:layout_width="@dimen/dp.24"
+                android:layout_height="@dimen/dp.24"
+                android:src="@drawable/baixing_tab_profile_normal" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="钱包"
+                android:textSize="@dimen/sp.16"
+                android:textColor="#333333"
+                android:layout_marginStart="@dimen/dp.12" />
+
+            <ImageView
+                android:layout_width="@dimen/dp.16"
+                android:layout_height="@dimen/dp.16"
+                android:src="@drawable/ic_back"
+                android:rotation="180" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp.1"
+            android:background="#EEEEEE" />
+
+        <!-- 观看历史菜单项 -->
+        <LinearLayout
+            android:id="@+id/baixing_menu_item_history"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="@dimen/dp.12">
+
+            <ImageView
+                android:layout_width="@dimen/dp.24"
+                android:layout_height="@dimen/dp.24"
+                android:src="@drawable/baixing_tab_profile_normal" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="观看历史"
+                android:textSize="@dimen/sp.16"
+                android:textColor="#333333"
+                android:layout_marginStart="@dimen/dp.12" />
+
+            <ImageView
+                android:layout_width="@dimen/dp.16"
+                android:layout_height="@dimen/dp.16"
+                android:src="@drawable/ic_back"
+                android:rotation="180" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp.1"
+            android:background="#EEEEEE" />
+
+        <!-- 我的收藏菜单项 -->
+        <LinearLayout
+            android:id="@+id/baixing_menu_item_favorite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="@dimen/dp.12">
+
+            <ImageView
+                android:layout_width="@dimen/dp.24"
+                android:layout_height="@dimen/dp.24"
+                android:src="@drawable/baixing_tab_profile_normal" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="我的收藏"
+                android:textSize="@dimen/sp.16"
+                android:textColor="#333333"
+                android:layout_marginStart="@dimen/dp.12" />
+
+            <ImageView
+                android:layout_width="@dimen/dp.16"
+                android:layout_height="@dimen/dp.16"
+                android:src="@drawable/ic_back"
+                android:rotation="180" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp.1"
+            android:background="#EEEEEE" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="客户服务"
+            android:textSize="@dimen/sp.18"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:layout_marginTop="@dimen/dp.16"
+            android:layout_marginBottom="@dimen/dp.16" />
+
+        <!-- 帮助中心菜单项 -->
+        <LinearLayout
+            android:id="@+id/baixing_menu_item_help"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="@dimen/dp.12">
+
+            <ImageView
+                android:layout_width="@dimen/dp.24"
+                android:layout_height="@dimen/dp.24"
+                android:src="@drawable/baixing_tab_profile_normal" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="帮助中心"
+                android:textSize="@dimen/sp.16"
+                android:textColor="#333333"
+                android:layout_marginStart="@dimen/dp.12" />
+
+            <ImageView
+                android:layout_width="@dimen/dp.16"
+                android:layout_height="@dimen/dp.16"
+                android:src="@drawable/ic_back"
+                android:rotation="180" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp.1"
+            android:background="#EEEEEE" />
+
+        <!-- 意见反馈菜单项 -->
+        <LinearLayout
+            android:id="@+id/baixing_menu_item_feedback"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="@dimen/dp.12">
+
+            <ImageView
+                android:layout_width="@dimen/dp.24"
+                android:layout_height="@dimen/dp.24"
+                android:src="@drawable/baixing_tab_profile_normal" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="意见反馈"
+                android:textSize="@dimen/sp.16"
+                android:textColor="#333333"
+                android:layout_marginStart="@dimen/dp.12" />
+
+            <ImageView
+                android:layout_width="@dimen/dp.16"
+                android:layout_height="@dimen/dp.16"
+                android:src="@drawable/ic_back"
+                android:rotation="180" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp.1"
+            android:background="#EEEEEE" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
