@@ -4,6 +4,8 @@ import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_CategoryDataE
 import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_LiveDataEntity
 import com.baixingkuaizu.live.android.busiess.messagefragment.Baixing_MessageDataGenerator
 import com.baixingkuaizu.live.android.busiess.messagefragment.Baixing_MessageItemEntity
+import com.baixingkuaizu.live.android.busiess.followfragment.Baixing_FollowDataGenerator
+import com.baixingkuaizu.live.android.busiess.followfragment.Baixing_FollowGirlEntity
 import kotlinx.coroutines.delay
 
 /**
@@ -66,8 +68,25 @@ object Baixing_CoreWork {
         val generator = Baixing_MessageDataGenerator()
         return ArrayList(generator.baixing_generateAllMessages())
     }
+    
+    /**
+     * 获取关注列表
+     * @return 包含10个随机生成的Baixing_FollowGirlEntity对象的列表
+     */
+    suspend fun baixing_followList(): ArrayList<Baixing_FollowGirlEntity> {
+        delayNet()
+        val generator = Baixing_FollowDataGenerator()
+        val list = ArrayList<Baixing_FollowGirlEntity>()
+        
+        // 生成10个随机的关注对象
+        repeat(10) {
+            list.add(generator.baixing_generateRandomFollowGirl())
+        }
+        
+        return list
+    }
 
     private suspend fun delayNet(time:Long = 5000) {
-        delay((0..6000).random().toLong())
+        delay((0..1000).random().toLong())
     }
 }

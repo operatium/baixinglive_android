@@ -6,13 +6,20 @@
     android:layout_height="wrap_content"
     android:padding="@dimen/dp.12">
 
-    <com.baixingkuaizu.live.android.widget.circularimage.CircularImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/baixing_iv_avatar"
-        android:layout_width="@dimen/dp.48"
-        android:layout_height="@dimen/dp.48"
-        android:src="@drawable/baixing_def_cover"
+        android:layout_width="@dimen/dp.60"
+        android:layout_height="@dimen/dp.60"
+        android:layout_marginStart="@dimen/dp.20"
+        android:layout_marginVertical="@dimen/dp.5"
+        android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/CircleImageView"
+        app:strokeColor="#000000"
+        app:strokeWidth="@dimen/dp.1"
+        android:padding="@dimen/dp.3"
+        tools:src="@tools:sample/avatars" />
 
     <TextView
         android:id="@+id/baixing_tv_badge"

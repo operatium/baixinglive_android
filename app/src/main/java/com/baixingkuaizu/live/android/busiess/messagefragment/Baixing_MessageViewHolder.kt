@@ -28,7 +28,6 @@ class Baixing_MessageViewHolder(private val binding: BaixingMessageItemBinding) 
             binding.baixingTvUnread.visibility = View.GONE
         }
 
-        // 使用badge来显示官方和会员服务标识
         binding.baixingTvBadge.visibility = when {
             item.baixing_isOfficial -> {
                 binding.baixingTvBadge.text = "官方"

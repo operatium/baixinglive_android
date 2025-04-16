@@ -42,8 +42,6 @@ class Baixing_MessageFragment : Baixing_BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
-        context?.let { Baixing_MessageDataCache.baixing_init(it) }
-        
         mBaixing_viewModel = ViewModelProvider(this).get(Baixing_MessageViewModel::class.java)
         
         mBaixing_adapter = Baixing_MessageAdapter()

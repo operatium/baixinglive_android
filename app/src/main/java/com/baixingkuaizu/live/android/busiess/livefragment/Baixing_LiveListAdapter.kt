@@ -11,17 +11,7 @@ import com.baixingkuaizu.live.android.databinding.BaixingLiveItemBinding
  * @date: 2025/4/18
  * @description: 直播列表适配器
  */
-class Baixing_LiveListAdapter : ListAdapter<Baixing_LiveDataEntity, Baixing_LiveViewHolder>(
-    object : DiffUtil.ItemCallback<Baixing_LiveDataEntity>() {
-        override fun areItemsTheSame(oldItem: Baixing_LiveDataEntity, newItem: Baixing_LiveDataEntity): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: Baixing_LiveDataEntity, newItem: Baixing_LiveDataEntity): Boolean {
-            return oldItem == newItem
-        }
-    }
-) {
+class Baixing_LiveListAdapter : ListAdapter<Baixing_LiveDataEntity, Baixing_LiveViewHolder>(Baixing_LiveDiffCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Baixing_LiveViewHolder {
         val binding = BaixingLiveItemBinding.inflate(
             LayoutInflater.from(parent.context),

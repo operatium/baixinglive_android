@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp.8">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/baixingIvAvatar"
+        android:layout_width="@dimen/dp.60"
+        android:layout_height="@dimen/dp.60"
+        android:layout_marginStart="@dimen/dp.20"
+        android:layout_marginVertical="@dimen/dp.5"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/CircleImageView"
+        app:strokeColor="#000000"
+        app:strokeWidth="@dimen/dp.1"
+        android:padding="@dimen/dp.3"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/baixingTvName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp.12"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/sp.16"
+        app:layout_constraintEnd_toStartOf="@id/baixingTvAttention"
+        app:layout_constraintStart_toEndOf="@id/baixingIvAvatar"
+        app:layout_constraintTop_toTopOf="@id/baixingIvAvatar"
+        tools:text="莹莹不负遇见" />
+
+    <TextView
+        android:id="@+id/baixingTvDesc"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp.4"
+        android:text="呆会儿嘛~"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/sp.14"
+        app:layout_constraintEnd_toStartOf="@id/baixingTvAttention"
+        app:layout_constraintStart_toStartOf="@id/baixingTvName"
+        app:layout_constraintTop_toBottomOf="@id/baixingTvName" />
+
+    <TextView
+        android:id="@+id/baixingTvAttention"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/dp.4"
+        android:gravity="center_vertical"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/sp.12"
+        app:drawableStartCompat="@drawable/baixing_red_circle"
+        app:layout_constraintBottom_toBottomOf="@id/baixingTvName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/baixingTvName"
+        tools:text="37" />
+
+</androidx.constraintlayout.widget.ConstraintLayout> 
