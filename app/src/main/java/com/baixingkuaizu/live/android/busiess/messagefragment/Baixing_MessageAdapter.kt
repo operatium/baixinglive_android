@@ -27,4 +27,9 @@ class Baixing_MessageAdapter : ListAdapter<Baixing_MessageItemEntity, Baixing_Me
             baixing_onItemClick?.invoke(item)
         }
     }
+    
+    override fun onViewRecycled(holder: Baixing_MessageViewHolder) {
+        super.onViewRecycled(holder)
+        holder.unbind()
+    }
 }

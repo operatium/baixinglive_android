@@ -5,17 +5,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.baixingkuaizu.live.android.R
 import com.baixingkuaizu.live.android.databinding.BaixingMessageItemBinding
 import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 class Baixing_MessageViewHolder(private val binding: BaixingMessageItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    private var glideRequestManager: RequestManager? = null
 
     fun bind(item: Baixing_MessageItemEntity) {
-        Glide.with(binding.root.context)
-            .load(item.baixing_avatarUrl)
+        glideRequestManager = Glide.with(binding.root.context).also {
+            it.load(item.baixing_avatarUrl)
             .placeholder(R.drawable.baixing_def_cover)
             .into(binding.baixingIvAvatar)
+        }
 
         binding.baixingTvTitle.text = item.baixing_title
         binding.baixingTvContent.text = item.baixing_content
@@ -54,5 +57,14 @@ class Baixing_MessageViewHolder(private val binding: BaixingMessageItemBinding) 
                 format.format(Date(timestamp))
             }
         }
+    }
+    
+    fun unbind() {
+        try {
+            glideRequestManager?.clear(binding.baixingIvAvatar)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        glideRequestManager = null
     }
 }

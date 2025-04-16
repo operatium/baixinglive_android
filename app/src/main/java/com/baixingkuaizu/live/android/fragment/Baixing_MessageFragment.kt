@@ -4,16 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.baixingkuaizu.live.android.R
 import com.baixingkuaizu.live.android.base.Baixing_BaseFragment
 import com.baixingkuaizu.live.android.busiess.messagefragment.Baixing_MessageAdapter
-import com.baixingkuaizu.live.android.busiess.messagefragment.Baixing_MessageDataCache
 import com.baixingkuaizu.live.android.databinding.BaixingMessageFragmentBinding
 import com.baixingkuaizu.live.android.viewmodel.Baixing_MessageViewModel
 import kotlinx.coroutines.flow.collectLatest

@@ -1,7 +1,5 @@
 package com.baixingkuaizu.live.android.busiess.messagefragment
 
-import android.content.Context
-import com.google.gson.Gson
 import java.util.LinkedList
 import java.util.concurrent.ConcurrentHashMap
 
@@ -11,7 +9,6 @@ import java.util.concurrent.ConcurrentHashMap
  * @description: 聊天数据缓存类
  */
 object Baixing_MessageDataCache {
-    private val mBaixing_gson = Gson()
     private val mBaixing_messages = ConcurrentHashMap<String, LinkedList<Baixing_MessageItemEntity>>()
 
     fun addMessages(messages: List<Baixing_MessageItemEntity>) {

@@ -3,7 +3,7 @@ package com.baixingkuaizu.live.android.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.baixingkuaizu.live.android.busiess.messagefragment.Baixing_MessageDataCache
-import com.baixingkuaizu.live.android.busiess.messagefragment.Baixing_MessagePagingState
+import com.baixingkuaizu.live.android.busiess.messagefragment.Baixing_MessagePagingStateEntity
 import com.baixingkuaizu.live.android.http.Baixing_CoreWork
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,8 +19,8 @@ import kotlinx.coroutines.withContext
  */
 class Baixing_MessageViewModel : ViewModel() {
 
-    private val _mBaixing_messageState = MutableStateFlow(Baixing_MessagePagingState())
-    val mBaixing_messageState: StateFlow<Baixing_MessagePagingState> = _mBaixing_messageState
+    private val _mBaixing_messageState = MutableStateFlow(Baixing_MessagePagingStateEntity())
+    val mBaixing_messageState: StateFlow<Baixing_MessagePagingStateEntity> = _mBaixing_messageState
 
     fun baixing_requestMessageUserList(isRefresh: Boolean = false) {
         viewModelScope.launch(Dispatchers.Default) {
