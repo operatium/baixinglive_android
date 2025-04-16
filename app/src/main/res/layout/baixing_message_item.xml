@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/dp.12">
+
+    <com.baixingkuaizu.live.android.widget.circularimage.CircularImageView
+        android:id="@+id/baixing_iv_avatar"
+        android:layout_width="@dimen/dp.48"
+        android:layout_height="@dimen/dp.48"
+        android:src="@drawable/baixing_def_cover"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/baixing_tv_badge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp.8"
+        android:paddingHorizontal="@dimen/dp.6"
+        android:paddingVertical="@dimen/dp.2"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp.12"
+        app:layout_constraintStart_toEndOf="@id/baixing_iv_avatar"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="官方" />
+
+    <TextView
+        android:id="@+id/baixing_tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp.8"
+        android:layout_marginTop="@dimen/dp.4"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/sp.16"
+        app:layout_constraintEnd_toStartOf="@id/baixing_tv_time"
+        app:layout_constraintStart_toEndOf="@id/baixing_iv_avatar"
+        app:layout_constraintTop_toBottomOf="@id/baixing_tv_badge"
+        tools:text="会员服务" />
+
+    <TextView
+        android:id="@+id/baixing_tv_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp.8"
+        android:layout_marginTop="@dimen/dp.4"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/sp.14"
+        app:layout_constraintEnd_toStartOf="@id/baixing_tv_unread"
+        app:layout_constraintStart_toEndOf="@id/baixing_iv_avatar"
+        app:layout_constraintTop_toBottomOf="@id/baixing_tv_title"
+        tools:text="恭喜您成功升级到青铜等级，已..." />
+
+    <TextView
+        android:id="@+id/baixing_tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="@dimen/sp.12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="上午9:06" />
+
+    <TextView
+        android:id="@+id/baixing_tv_unread"
+        android:layout_width="@dimen/dp.20"
+        android:layout_height="@dimen/dp.20"
+        android:background="@drawable/baixing_red_circle"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/sp.12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/baixing_tv_time"
+        tools:text="1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout> 

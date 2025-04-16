@@ -2,6 +2,8 @@ package com.baixingkuaizu.live.android.http
 
 import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_CategoryDataEntity
 import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_LiveDataEntity
+import com.baixingkuaizu.live.android.busiess.messagefragment.Baixing_MessageDataGenerator
+import com.baixingkuaizu.live.android.busiess.messagefragment.Baixing_MessageItemEntity
 import kotlinx.coroutines.delay
 
 /**
@@ -57,6 +59,12 @@ object Baixing_CoreWork {
             ))
         }
         return list
+    }
+
+    suspend fun baixing_messageUserList(): ArrayList<Baixing_MessageItemEntity> {
+        delayNet()
+        val generator = Baixing_MessageDataGenerator()
+        return ArrayList(generator.baixing_generateAllMessages())
     }
 
     private suspend fun delayNet(time:Long = 5000) {

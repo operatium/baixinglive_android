@@ -54,4 +54,5 @@ dependencies {
 
     implementation (libs.gsyvideoplayer)
     implementation(libs.glide)
+    implementation(libs.gson)
 }

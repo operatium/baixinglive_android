@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
+    android:padding="16dp">
+
+    <com.baixingkuaizu.live.android.widget.circularimage.CircularImageView
+        android:id="@+id/baixing_iv_avatar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/baixing_tv_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/baixing_tv_time"
+        app:layout_constraintStart_toEndOf="@+id/baixing_iv_avatar"
+        app:layout_constraintTop_toTopOf="@+id/baixing_iv_avatar"
+        tools:text="消息标题" />
+
+    <ImageView
+        android:id="@+id/baixing_iv_official"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="4dp"
+        android:src="@drawable/baixing_def_cover"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/baixing_tv_title"
+        app:layout_constraintStart_toEndOf="@+id/baixing_tv_title"
+        app:layout_constraintTop_toTopOf="@+id/baixing_tv_title"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/baixing_iv_service"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="4dp"
+        android:src="@drawable/baixing_def_cover"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/baixing_tv_title"
+        app:layout_constraintStart_toEndOf="@+id/baixing_iv_official"
+        app:layout_constraintTop_toTopOf="@+id/baixing_tv_title"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/baixing_tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/baixing_tv_title"
+        tools:text="12:34" />
+
+    <TextView
+        android:id="@+id/baixing_tv_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/baixing_tv_unread_count"
+        app:layout_constraintStart_toStartOf="@+id/baixing_tv_title"
+        app:layout_constraintTop_toBottomOf="@+id/baixing_tv_title"
+        tools:text="这是消息内容的预览文本，可能会很长很长很长很长很长很长很长很长很长很长" />
+
+    <TextView
+        android:id="@+id/baixing_tv_unread_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/baixing_bg_unread_count"
+        android:gravity="center"
+        android:minWidth="20dp"
+        android:minHeight="20dp"
+        android:paddingHorizontal="6dp"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/baixing_tv_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="99+"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout> 
