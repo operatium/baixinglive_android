@@ -55,4 +55,8 @@ dependencies {
     implementation (libs.gsyvideoplayer)
     implementation(libs.glide)
     implementation(libs.gson)
+
+    implementation("io.github.scwang90:refresh-layout-kernel:3.0.0-alpha")
+    implementation("io.github.scwang90:refresh-footer-classics:3.0.0-alpha")
+    implementation("io.github.scwang90:refresh-header-material:3.0.0-alpha")
 }

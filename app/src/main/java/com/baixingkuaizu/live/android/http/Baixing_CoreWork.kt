@@ -16,7 +16,7 @@ import kotlinx.coroutines.delay
  * @description: 核心任务类，负责处理核心业务逻辑
  */
 object Baixing_CoreWork {
-    var mBaixing_HttpTimeout = 1000L
+    var mBaixing_HttpTimeout = 5000L
 
     private suspend fun delayNet(time:Long = 5000) {
         delay((0..2000).random().toLong())

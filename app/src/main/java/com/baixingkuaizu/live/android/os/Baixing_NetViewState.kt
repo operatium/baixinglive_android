@@ -16,6 +16,9 @@ class Baixing_NetViewState(
      * 统一管理视图状态和加载指示器的显示
      */
     fun addListener(fragment: Fragment):Baixing_NetViewState {
+        contentLayout.visibility = View.GONE
+        emptyLayout.visibility = View.GONE
+        errorLayout.visibility = View.GONE
         // 内容视图可见性变化监听
         Baixing_ViewVisibilityListener(fragment, contentLayout) { isVisible ->
             baixing_updateLoadingVisibility(contentVisible = isVisible)

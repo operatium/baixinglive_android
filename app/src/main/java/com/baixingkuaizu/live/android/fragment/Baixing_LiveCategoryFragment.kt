@@ -8,15 +8,14 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.baixingkuaizu.live.android.base.Baixing_BaseFragment
 import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_GirlListAdapter
-import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_LiveDataCache
-import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_LiveDataEntity
 import com.baixingkuaizu.live.android.databinding.BaixingLiveCategoryFragmentBinding
 import com.baixingkuaizu.live.android.os.Baixing_NetViewState
 import com.baixingkuaizu.live.android.viewmodel.Baixing_LiveCategoryViewModel
 import com.baixingkuaizu.live.android.widget.toast.CenterToast
+import com.scwang.smart.refresh.footer.*
+import com.scwang.smart.refresh.header.*
 
 /**
  * @author yuyuexing
@@ -31,21 +30,6 @@ class Baixing_LiveCategoryFragment : Baixing_BaseFragment() {
     private var mBaixing_isFoot = false
     private lateinit var mBaixing_viewModel: Baixing_LiveCategoryViewModel
     private var mBaixing_NetViewState: Baixing_NetViewState? = null
-
-    private val mBaixing_OnScroll = object : RecyclerView.OnScrollListener() {
-        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-            super.onScrolled(recyclerView, dx, dy)
-            val layoutManager = recyclerView.layoutManager as GridLayoutManager
-            val lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
-            val totalItemCount = layoutManager.itemCount
-
-            if (lastVisibleItemPosition == totalItemCount - 1) {
-                if (mBaixing_isFoot) return
-                mBaixing_isFoot = true
-                mBaixing_viewModel.requestNextPage(mBaixing_categoryId)
-            }
-        }
-    }
     
     companion object {
         val TAG = "yyx类Baixing_LiveCategoryFragment"
@@ -96,35 +80,11 @@ class Baixing_LiveCategoryFragment : Baixing_BaseFragment() {
                 }
 
                 // 观察列表底部状态
-                hasNextData.observe(viewLifecycleOwner) {
-                    mBaixing_binding.run {
-                        val listview = baixingLiveRecyclerView
-                        if (it) {
-                            listview.addOnScrollListener(mBaixing_OnScroll)
-                            listview.layoutManager = GridLayoutManager(requireContext(), 2)
-                        } else {
-                            listview.removeOnScrollListener(mBaixing_OnScroll)
-                            baixingLiveFooterEnd.visibility = View.VISIBLE
-                            mBaixing_liveAdapter?.let { adapter ->
-                                Baixing_LiveDataCache.getListById(mBaixing_categoryId).let{ datas ->
-                                    datas.add(Baixing_LiveDataEntity("已经到底了", "", "", 0))
-                                    adapter.submitList(datas)
-                                }
-                            }
-                            listview.layoutManager = GridLayoutManager(requireContext(), 2).apply {
-                                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                                    override fun getSpanSize(position: Int): Int {
-                                        return if (mBaixing_liveAdapter != null
-                                            && mBaixing_liveAdapter!!.currentList.isNotEmpty()
-                                            && position == mBaixing_liveAdapter!!.currentList.size - 1) {
-                                            2
-                                        } else {
-                                            1
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                hasNextData.observe(viewLifecycleOwner) { hasMore ->
+                    mBaixing_binding.baixingLiveSwipeRefresh.setEnableLoadMore(hasMore)
+                    if (!hasMore) {
+                        // 没有更多数据时，显示底部提示
+                        mBaixing_binding.baixingLiveSwipeRefresh.finishLoadMoreWithNoMoreData()
                     }
                 }
 
@@ -145,15 +105,15 @@ class Baixing_LiveCategoryFragment : Baixing_BaseFragment() {
                 }
 
                 // 观察刷新状态
-                listrefersh.observe(viewLifecycleOwner) {
-                    mBaixing_binding.baixingLiveSwipeRefresh.isRefreshing = it
+                listrefersh.observe(viewLifecycleOwner) { isRefreshing ->
+                    if (!isRefreshing) {
+                        mBaixing_binding.baixingLiveSwipeRefresh.finishRefresh()
+                    }
                 }
 
-                listfoot.observe(viewLifecycleOwner) {
-                    mBaixing_binding.baixingLiveFooterLoading.visibility =
-                        if (it) View.VISIBLE else View.GONE
-                    if (!it) {
-                        mBaixing_isFoot = false
+                listfoot.observe(viewLifecycleOwner) { isLoadingMore ->
+                    if (!isLoadingMore) {
+                        mBaixing_binding.baixingLiveSwipeRefresh.finishLoadMore()
                     }
                 }
 
@@ -203,18 +163,32 @@ class Baixing_LiveCategoryFragment : Baixing_BaseFragment() {
                 baixingLiveRecyclerView.layoutManager = GridLayoutManager(context, 2)
                 baixingLiveRecyclerView.adapter = mBaixing_liveAdapter
 
-                // 设置下拉刷新监听
-                baixing_setupSwipeRefresh()
+                // 设置刷新和加载监听
+                baixing_setupRefreshLayout()
             }
         }
     }
     
     /**
-     * 设置下拉刷新
+     * 设置刷新布局，包括下拉刷新和上拉加载更多
      */
-    private fun baixing_setupSwipeRefresh() {
-        mBaixing_binding.baixingLiveSwipeRefresh.setOnRefreshListener {
-            mBaixing_viewModel.requestRefersh(mBaixing_categoryId)
+    private fun baixing_setupRefreshLayout() {
+        mBaixing_binding.baixingLiveSwipeRefresh.apply {
+            // 设置下拉刷新监听
+            setOnRefreshListener { refreshLayout ->
+                mBaixing_viewModel.requestRefersh(mBaixing_categoryId)
+                // 不在这里调用finishRefresh，由ViewModel的listrefersh观察者处理
+            }
+            
+            // 设置上拉加载更多监听
+            setOnLoadMoreListener { refreshLayout ->
+                mBaixing_viewModel.requestNextPage(mBaixing_categoryId)
+                // 不在这里调用finishLoadMore，由ViewModel的listfoot观察者处理
+            }
+            setRefreshHeader(MaterialHeader(context))
+            setRefreshFooter(ClassicsFooter(context))
+            setEnableOverScrollDrag(true)
+            setEnableLoadMore(true)
         }
     }
 

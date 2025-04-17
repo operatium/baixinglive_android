@@ -5,60 +5,20 @@
     android:layout_height="match_parent">
 
     <!-- 内容布局 -->
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/baixing_live_swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/baixing_live_content_layout"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/baixing_live_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/baixing_live_recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:clipToPadding="false"
-                android:padding="@dimen/dp.8"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:layout_constraintBottom_toTopOf="@id/baixing_live_footer_container"
-                app:layout_constraintTop_toTopOf="parent"
-                app:spanCount="2" />
-
-            <!-- 底部加载状态容器 -->
-            <LinearLayout
-                android:id="@+id/baixing_live_footer_container"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent">
-
-                <!-- 加载中提示 -->
-                <ProgressBar
-                    android:id="@+id/baixing_live_footer_loading"
-                    android:layout_width="@dimen/dp.24"
-                    android:layout_height="@dimen/dp.24"
-                    android:layout_margin="@dimen/dp.8"
-                    android:visibility="gone" />
-
-                <!-- 加载完毕提示 -->
-                <TextView
-                    android:id="@+id/baixing_live_footer_end"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/dp.8"
-                    android:text="已经到底啦~"
-                    android:textColor="#999999"
-                    android:textSize="@dimen/sp.14"
-                    android:visibility="gone" />
-            </LinearLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:padding="@dimen/dp.8"
+            app:spanCount="2" />
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
     <!-- 错误布局 -->
     <LinearLayout
