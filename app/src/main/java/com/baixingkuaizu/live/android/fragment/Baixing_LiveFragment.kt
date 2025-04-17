@@ -11,8 +11,8 @@ import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_CategoryDataE
 import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_LiveViewPagerAdapter
 import com.baixingkuaizu.live.android.busiess.proxy.Baixing_FragmentProxy
 import com.baixingkuaizu.live.android.databinding.BaixingLiveFragmentBinding
+import com.baixingkuaizu.live.android.os.Baixing_ViewVisibilityListener
 import com.baixingkuaizu.live.android.viewmodel.Baixing_LiveTableViewModel
-import com.baixingkuaizu.live.android.widget.loading.Baixing_FullScreenLoadingDialog
 import com.baixingkuaizu.live.android.widget.toast.CenterToast
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -44,70 +44,93 @@ class Baixing_LiveFragment : Baixing_BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         mBaixing_Proxy.bind(this)
         baixing_initViewModel()
-        mBaixing_binding.baixingLoading.visibility = View.VISIBLE
     }
     
     private fun baixing_initViewModel() {
-        mBaixing_viewModel = ViewModelProvider(this)[Baixing_LiveTableViewModel::class.java].apply {
-            netError.observe(viewLifecycleOwner) {
-                if (it.isNullOrEmpty()) return@observe
-                baixing_retry()
-                mBaixing_binding.baixingLoading.visibility = View.GONE
-            }
-            netTable.observe(viewLifecycleOwner) {
-                mBaixing_binding.baixingLoading.visibility = View.GONE
-                if (it.isEmpty()) {
-                    baixing_empty()
-                } else {
-                    mBaixing_categoryList.clear()
-                    mBaixing_categoryList.addAll(it)
-                    baixing_showContent()
-                }
-            }
-            requestTable()
+
+        Baixing_ViewVisibilityListener(this, mBaixing_binding.baixingLiveContentLayout) { isVisible ->
+            mBaixing_binding.baixingLoading.visibility = if (isVisible) View.GONE else View.VISIBLE
         }
+        mBaixing_viewModel = ViewModelProvider(this)[Baixing_LiveTableViewModel::class.java]
+        
+        // 观察网络错误
+        mBaixing_viewModel.netError.observe(viewLifecycleOwner) { errorMsg ->
+            if (errorMsg.isNullOrEmpty()) return@observe
+            baixing_showErrorView()
+        }
+        
+        // 观察栏目数据
+        mBaixing_viewModel.netTable.observe(viewLifecycleOwner) { categoryList ->
+            if (categoryList.isEmpty()) {
+                baixing_showEmptyView()
+            } else {
+                mBaixing_categoryList.clear()
+                mBaixing_categoryList.addAll(categoryList)
+                baixing_showContentView()
+            }
+        }
+        
+        // 请求栏目数据
+        mBaixing_viewModel.requestTable()
     }
     
-    private fun baixing_showContent() {
+    /**
+     * 显示内容视图
+     */
+    private fun baixing_showContentView() {
+        baixing_updateViewVisibility(showContent = true)
+        baixing_setupViewPager()
+    }
+    
+    /**
+     * 设置ViewPager和TabLayout
+     */
+    private fun baixing_setupViewPager() {
         mBaixing_binding.apply {
-            baixingLiveErrorLayout.visibility = View.GONE
-            baixingLiveEmptyLayout.visibility = View.GONE
-            
-            baixingLiveContentLayout.visibility = View.VISIBLE
-
             if (mBaixing_adapter == null) {
                 baixingLiveViewPager.adapter =
                     Baixing_LiveViewPagerAdapter(mBaixing_categoryList, this@Baixing_LiveFragment).apply {
                         mBaixing_adapter = this
                     }
-            }
-            TabLayoutMediator(baixingLiveTabLayout, baixingLiveViewPager) { tab, position ->
-                tab.text = mBaixing_categoryList[position].name
-            }.attach()
-        }
-    }
-    
-    private fun baixing_retry() {
-        mBaixing_binding.apply {
-            baixingLiveContentLayout.visibility = View.GONE
-            baixingLiveEmptyLayout.visibility = View.GONE
-            
-            baixingLiveErrorLayout.visibility = View.VISIBLE
-            
-            baixingLiveErrorRetryBtn.setOnClickListener {
-                CenterToast.show(activity, "正在重新加载...")
-                mBaixing_binding.baixingLoading.visibility = View.VISIBLE
-                mBaixing_viewModel.requestTable()
+                
+                // 设置TabLayout与ViewPager的联动
+                TabLayoutMediator(baixingLiveTabLayout, baixingLiveViewPager) { tab, position ->
+                    tab.text = mBaixing_categoryList[position].name
+                }.attach()
             }
         }
     }
     
-    private fun baixing_empty() {
+    /**
+     * 显示错误视图
+     */
+    private fun baixing_showErrorView() {
+        baixing_updateViewVisibility(showError = true)
+        mBaixing_binding.baixingLiveErrorRetryBtn.setOnClickListener {
+            CenterToast.show(activity, "正在重新加载...")
+            mBaixing_viewModel.requestTable()
+        }
+    }
+    
+    /**
+     * 显示空数据视图
+     */
+    private fun baixing_showEmptyView() {
+        baixing_updateViewVisibility(showEmpty = true)
+    }
+    
+    /**
+     * 更新各视图的可见性
+     */
+    private fun baixing_updateViewVisibility(
+        showContent: Boolean = false,
+        showError: Boolean = false,
+        showEmpty: Boolean = false
+    ) {
         mBaixing_binding.apply {
-            baixingLiveContentLayout.visibility = View.GONE
-            baixingLiveErrorLayout.visibility = View.GONE
-            
-            baixingLiveEmptyLayout.visibility = View.VISIBLE
+            baixingLiveContentLayout.visibility = if (showContent) View.VISIBLE else View.GONE
+            baixingLiveErrorLayout.visibility = if (showError) View.VISIBLE else View.GONE
+            baixingLiveEmptyLayout.visibility = if (showEmpty) View.VISIBLE else View.GONE
         }
     }
     
@@ -115,5 +138,6 @@ class Baixing_LiveFragment : Baixing_BaseFragment() {
         super.onDestroyView()
         Log.d(TAG, "onDestroyView: ")
         mBaixing_Proxy.unbind()
+        mBaixing_adapter = null
     }
 }

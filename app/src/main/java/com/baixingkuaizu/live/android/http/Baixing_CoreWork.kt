@@ -100,6 +100,6 @@ object Baixing_CoreWork {
     }
 
     private suspend fun delayNet(time:Long = 5000) {
-        delay((0..1000).random().toLong())
+        delay((0..2000).random().toLong())
     }
 }
