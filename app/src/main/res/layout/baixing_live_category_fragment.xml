@@ -1,66 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    
+
     <!-- 内容布局 -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/baixing_live_swipe_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/baixing_live_content_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/baixing_live_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:padding="@dimen/dp.8"
-            android:clipToPadding="false"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/baixing_live_footer_container" />
-
-        <!-- 底部加载状态容器 -->
-        <LinearLayout
-            android:id="@+id/baixing_live_footer_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <!-- 加载中提示 -->
-            <ProgressBar
-                android:id="@+id/baixing_live_footer_loading"
-                android:layout_width="@dimen/dp.24"
-                android:layout_height="@dimen/dp.24"
-                android:layout_margin="@dimen/dp.8"
-                android:visibility="gone" />
-
-            <!-- 加载完毕提示 -->
-            <TextView
-                android:id="@+id/baixing_live_footer_end"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/baixing_live_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:clipToPadding="false"
                 android:padding="@dimen/dp.8"
-                android:text="已经到底啦~"
-                android:textSize="@dimen/sp.14"
-                android:textColor="#999999"
-                android:visibility="gone" />
-        </LinearLayout>
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintBottom_toTopOf="@id/baixing_live_footer_container"
+                app:layout_constraintTop_toTopOf="parent"
+                app:spanCount="2" />
+
+            <!-- 底部加载状态容器 -->
+            <LinearLayout
+                android:id="@+id/baixing_live_footer_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <!-- 加载中提示 -->
+                <ProgressBar
+                    android:id="@+id/baixing_live_footer_loading"
+                    android:layout_width="@dimen/dp.24"
+                    android:layout_height="@dimen/dp.24"
+                    android:layout_margin="@dimen/dp.8"
+                    android:visibility="gone" />
+
+                <!-- 加载完毕提示 -->
+                <TextView
+                    android:id="@+id/baixing_live_footer_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dp.8"
+                    android:text="已经到底啦~"
+                    android:textColor="#999999"
+                    android:textSize="@dimen/sp.14"
+                    android:visibility="gone" />
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-    
+
     <!-- 错误布局 -->
     <LinearLayout
         android:id="@+id/baixing_live_error_layout"
@@ -80,16 +79,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp.16"
             android:text="网络连接失败"
-            android:textSize="@dimen/sp.16"
-            android:textColor="#666666" />
+            android:textColor="#666666"
+            android:textSize="@dimen/sp.16" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp.8"
             android:text="请检查您的网络设置后重试"
-            android:textSize="@dimen/sp.14"
-            android:textColor="#999999" />
+            android:textColor="#999999"
+            android:textSize="@dimen/sp.14" />
 
         <Button
             android:id="@+id/baixing_live_error_retry_btn"
@@ -121,21 +120,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp.16"
             android:text="暂无直播内容"
-            android:textSize="@dimen/sp.16"
-            android:textColor="#666666" />
+            android:textColor="#666666"
+            android:textSize="@dimen/sp.16" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp.8"
             android:text="稍后再来看看吧"
-            android:textSize="@dimen/sp.14"
-            android:textColor="#999999" />
+            android:textColor="#999999"
+            android:textSize="@dimen/sp.14" />
     </LinearLayout>
 
     <com.baixingkuaizu.live.android.widget.loading.Baixing_LoadingView
         android:id="@+id/loading"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="wrap_content" />
 </FrameLayout>

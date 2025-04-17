@@ -5,12 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.baixingkuaizu.live.android.base.Baixing_BaseFragment
 import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_CategoryDataEntity
 import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_LiveViewPagerAdapter
 import com.baixingkuaizu.live.android.busiess.proxy.Baixing_FragmentProxy
 import com.baixingkuaizu.live.android.databinding.BaixingLiveFragmentBinding
+import com.baixingkuaizu.live.android.os.Baixing_NetViewState
 import com.baixingkuaizu.live.android.os.Baixing_ViewVisibilityListener
 import com.baixingkuaizu.live.android.viewmodel.Baixing_LiveTableViewModel
 import com.baixingkuaizu.live.android.widget.toast.CenterToast
@@ -29,6 +31,7 @@ class Baixing_LiveFragment : Baixing_BaseFragment() {
     private lateinit var mBaixing_viewModel: Baixing_LiveTableViewModel
     private val mBaixing_Proxy = Baixing_FragmentProxy(this)
     private var mBaixing_adapter: Baixing_LiveViewPagerAdapter? = null
+    private var mBaixing_NetViewState: Baixing_NetViewState? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,9 +51,23 @@ class Baixing_LiveFragment : Baixing_BaseFragment() {
     
     private fun baixing_initViewModel() {
 
-        Baixing_ViewVisibilityListener(this, mBaixing_binding.baixingLiveContentLayout) { isVisible ->
-            mBaixing_binding.baixingLoading.visibility = if (isVisible) View.GONE else View.VISIBLE
+        // 替换三个重复的ViewVisibilityListener为统一的方法
+        mBaixing_binding.apply {
+            mBaixing_NetViewState = Baixing_NetViewState(
+                baixingLiveContentLayout,
+                baixingLiveEmptyLayout,
+                baixingLiveErrorLayout,
+                {
+                    baixingLoading.visibility =
+                        if (!baixingLiveContentLayout.isVisible && !baixingLiveEmptyLayout.isVisible && !baixingLiveErrorLayout.isVisible) {
+                            View.VISIBLE
+                        } else {
+                            View.GONE
+                        }
+                }
+            ).addListener(this@Baixing_LiveFragment)
         }
+
         mBaixing_viewModel = ViewModelProvider(this)[Baixing_LiveTableViewModel::class.java]
         
         // 观察网络错误
@@ -72,6 +89,31 @@ class Baixing_LiveFragment : Baixing_BaseFragment() {
         
         // 请求栏目数据
         mBaixing_viewModel.requestTable()
+    }
+
+    /**
+     * 根据各视图的可见状态更新加载指示器的显示
+     */
+    private fun baixing_updateLoadingVisibility(
+        contentVisible: Boolean = mBaixing_binding.baixingLiveContentLayout.isVisible,
+        emptyVisible: Boolean = mBaixing_binding.baixingLiveEmptyLayout.isVisible,
+        errorVisible: Boolean = mBaixing_binding.baixingLiveErrorLayout.isVisible
+    ) {
+        mBaixing_binding.apply {
+            // 当任何一个内容视图显示时，隐藏其他视图
+            if (contentVisible) {
+                baixingLiveErrorLayout.visibility = View.GONE
+                baixingLiveEmptyLayout.visibility = View.GONE
+            } else if (emptyVisible) {
+                baixingLiveErrorLayout.visibility = View.GONE
+                baixingLiveContentLayout.visibility = View.GONE
+            } else if (errorVisible) {
+                baixingLiveContentLayout.visibility = View.GONE
+                baixingLiveEmptyLayout.visibility = View.GONE
+            }
+
+
+        }
     }
     
     /**
@@ -139,5 +181,6 @@ class Baixing_LiveFragment : Baixing_BaseFragment() {
         Log.d(TAG, "onDestroyView: ")
         mBaixing_Proxy.unbind()
         mBaixing_adapter = null
+        mBaixing_NetViewState = null
     }
 }

@@ -16,7 +16,11 @@ import kotlinx.coroutines.delay
  * @description: 核心任务类，负责处理核心业务逻辑
  */
 object Baixing_CoreWork {
-    var mBaixing_HttpTimeout = 5000L
+    var mBaixing_HttpTimeout = 1000L
+
+    private suspend fun delayNet(time:Long = 5000) {
+        delay((0..2000).random().toLong())
+    }
 
     //发送验证码
     suspend fun baixing_sendVerificationCode():String {
@@ -97,9 +101,5 @@ object Baixing_CoreWork {
         delayNet()
         val generator = Baixing_SearchDataGenerator()
         return ArrayList(generator.baixing_generateSearchResults(keyword))
-    }
-
-    private suspend fun delayNet(time:Long = 5000) {
-        delay((0..2000).random().toLong())
     }
 }

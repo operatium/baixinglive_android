@@ -17,7 +17,7 @@ import android.text.style.ForegroundColorSpan
  * @date: 2025/4/18
  * @description: 直播列表项ViewHolder
  */
-class Baixing_LiveViewHolder(private val mBaixing_binding: BaixingLiveItemBinding) : 
+open class Baixing_LiveViewHolder(private val mBaixing_binding: BaixingLiveItemBinding) :
     RecyclerView.ViewHolder(mBaixing_binding.root) {
     
     fun baixing_clearImage() {
@@ -25,7 +25,7 @@ class Baixing_LiveViewHolder(private val mBaixing_binding: BaixingLiveItemBindin
             .clear(mBaixing_binding.baixingLiveCover)
     }
     
-    fun baixing_bind(liveData: Baixing_LiveDataEntity) {
+    open fun baixing_bind(liveData: Baixing_LiveDataEntity) {
         mBaixing_binding.apply {
             val context = baixingLiveCover.context
             baixingLiveAnchorName.text = liveData.anchorName

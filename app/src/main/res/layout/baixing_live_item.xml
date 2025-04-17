@@ -8,7 +8,18 @@
     app:cardCornerRadius="@dimen/dp.8"
     app:cardElevation="@dimen/dp.2">
 
+    <TextView
+        android:id="@+id/baixing_foot"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp.30"
+        android:text="已经到底了"
+        android:gravity="center"
+        android:textSize="@dimen/sp.12"
+        android:visibility="gone"
+        />
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/baixing_live_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

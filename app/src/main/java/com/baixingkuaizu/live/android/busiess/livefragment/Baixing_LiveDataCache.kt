@@ -37,4 +37,9 @@ object Baixing_LiveDataCache {
         mBaixing_page[id] = page + 1
         return page + 1
     }
+
+    fun clear(id:String) {
+        mBaixing_page.remove(id)
+        mBaixing_data.remove(id)
+    }
 }
