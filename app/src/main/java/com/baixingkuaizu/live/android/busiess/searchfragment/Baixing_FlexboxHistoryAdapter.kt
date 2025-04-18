@@ -25,10 +25,8 @@ class Baixing_FlexboxHistoryAdapter(private val parent: FlexboxLayout, private v
         val oldList = mBaixing_data ?: emptyList()
 
         
-        // 保存新列表
         mBaixing_data = list.toList()
 
-        // 应用差异更新
         applyDiffResult(oldList, list)
     }
     
@@ -36,13 +34,10 @@ class Baixing_FlexboxHistoryAdapter(private val parent: FlexboxLayout, private v
      * 应用DiffUtil计算的差异结果
      */
     private fun applyDiffResult(oldList: List<String>, newList: List<String>) {
-        // 创建一个新的视图列表，初始包含所有旧视图
         val viewsToKeep = mutableSetOf<String>()
         
-        // 移除不再需要的视图
         oldList.forEach { oldItem ->
             if (!newList.contains(oldItem)) {
-                // 查找并移除此项的视图
                 val viewToRemove = mBaixing_viewCache[oldItem]
                 if (viewToRemove != null && viewToRemove.parent == parent) {
                     parent.removeView(viewToRemove)
@@ -53,16 +48,13 @@ class Baixing_FlexboxHistoryAdapter(private val parent: FlexboxLayout, private v
             }
         }
         
-        // 添加新视图
         parent.removeAllViews() // 先清空所有视图，然后按新列表顺序重新添加
         
         newList.forEach { newItem ->
             val existingView = mBaixing_viewCache[newItem]
             if (existingView != null) {
-                // 重用现有视图
                 parent.addView(existingView)
             } else {
-                // 创建新视图
                 addTextView(newItem)
             }
         }
@@ -100,7 +92,6 @@ class Baixing_FlexboxHistoryAdapter(private val parent: FlexboxLayout, private v
             }
         }
         
-        // 设置布局参数，添加外边距
         val layoutParams = FlexboxLayout.LayoutParams(
             FlexboxLayout.LayoutParams.WRAP_CONTENT,
             FlexboxLayout.LayoutParams.WRAP_CONTENT
@@ -114,10 +105,8 @@ class Baixing_FlexboxHistoryAdapter(private val parent: FlexboxLayout, private v
         }
         tv.layoutParams = layoutParams
         
-        // 缓存视图以便重用
         mBaixing_viewCache[text] = tv
         
-        // 添加到布局
         parent.addView(tv)
     }
 }

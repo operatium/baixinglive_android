@@ -9,25 +9,21 @@ import com.baixingkuaizu.live.android.base.Baixing_Entity
  * @description: 个人资料页面数据模型
  */
 class Baixing_ProfileData : Baixing_Entity() {
-    // 用户基本信息
     var baixing_userId: String = ""
     var baixing_nickname: String = ""
     var baixing_avatar: String = ""
     var baixing_level: String = ""
     
-    // 会员信息
     var baixing_memberLevel: String = ""
     var baixing_memberDesc: String = ""
     var baixing_memberExpire: String = ""
     
-    // 钱包信息
     var baixing_balance: String = ""
     var baixing_diamonds: String = ""
     var baixing_coins: String = ""
     
 
     
-    // 获取默认菜单项列表
     companion object {
         fun getDefaultMenuItems(): List<Baixing_MenuItem> {
             return listOf(

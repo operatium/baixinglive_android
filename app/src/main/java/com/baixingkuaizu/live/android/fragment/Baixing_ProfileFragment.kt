@@ -35,7 +35,6 @@ class Baixing_ProfileFragment : Baixing_BaseFragment() {
     }
     
     private fun baixing_initView() {
-        // 初始化个人资料页面
         baixing_initUserInfo()
         baixing_initMemberInfo()
         baixing_initWalletInfo()
@@ -43,30 +42,22 @@ class Baixing_ProfileFragment : Baixing_BaseFragment() {
     }
     
     private fun baixing_initUserInfo() {
-        // 模拟用户数据
         mBaixing_binding?.apply {
             baixingProfileNickname.text = "超级颜十三"
             baixingProfileUserId.text = "ID:128297340"
             baixingProfileLevelTag.text = "一星"
-            // 头像加载可以使用Glide或Picasso等图片加载库
-            // 这里使用默认图片
             
-            // 设置切换账号按钮点击事件
             baixingProfileSwitchAccount.setOnClickListener {
                 Toast.makeText(context, "点击了切换账号按钮", Toast.LENGTH_SHORT).show()
-                // 这里可以跳转到登录页面或显示账号切换对话框
             }
             
-            // 设置设置按钮点击事件
             baixingProfileSettings.setOnClickListener {
                 Toast.makeText(context, "点击了设置按钮", Toast.LENGTH_SHORT).show()
-                // 这里可以跳转到设置页面
             }
         }
     }
     
     private fun baixing_initMemberInfo() {
-        // 模拟会员数据
         mBaixing_binding?.apply {
             baixingProfileMemberLevel.text = "青铜"
             baixingProfileMemberDesc.text = "保级成功！距离白银还需充值80.0元"
@@ -75,10 +66,8 @@ class Baixing_ProfileFragment : Baixing_BaseFragment() {
     }
     
     private fun baixing_initWalletInfo() {
-        // 模拟钱包数据
         mBaixing_binding?.apply {
             baixingProfileWalletBalance.text = "¥0.00"
-            // 设置充值按钮点击事件
             baixingProfileRecharge.setOnClickListener {
                 Toast.makeText(context, "点击了充值按钮", Toast.LENGTH_SHORT).show()
             }
@@ -86,10 +75,8 @@ class Baixing_ProfileFragment : Baixing_BaseFragment() {
     }
     
     private fun baixing_initMenuGrid() {
-        // 初始化菜单网格
         val menuItems = Baixing_ProfileData.getDefaultMenuItems()
         val menuAdapter = Baixing_ProfileMenuAdapter(menuItems) { menuItem ->
-            // 处理菜单项点击事件
             Toast.makeText(context, "点击了${menuItem.baixing_title}", Toast.LENGTH_SHORT).show()
             when (menuItem.baixing_action) {
                 "follow" -> { /* 处理关注 */ }
@@ -103,13 +90,11 @@ class Baixing_ProfileFragment : Baixing_BaseFragment() {
             }
         }
         
-        // 初始化特色功能菜单
         mBaixing_binding?.baixingProfileFeatureMenu?.apply {
             layoutManager = GridLayoutManager(context, 4) // 4列网格
             adapter = menuAdapter
         }
         
-        // 初始化常用功能菜单
         mBaixing_binding?.baixingProfileCommonMenu?.apply {
             layoutManager = GridLayoutManager(context, 4) // 4列网格
             adapter = menuAdapter

@@ -22,7 +22,6 @@ class Baixing_SearchDataGenerator {
         
         for (i in 0 until resultCount) {
             val anchorName = if (keyword.isNotEmpty() && Random.nextBoolean()) {
-                // 有一定概率在主播名中包含关键词
                 "${keyword}${mBaixing_anchorNames.random()}"
             } else {
                 mBaixing_anchorNames.random()

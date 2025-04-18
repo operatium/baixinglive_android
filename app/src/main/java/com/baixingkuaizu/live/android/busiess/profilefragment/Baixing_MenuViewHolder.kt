@@ -19,7 +19,6 @@ class Baixing_MenuViewHolder(private val mBaixing_binding: BaixingProfileMenuIte
             baixingMenuIcon.setImageResource(item.mBaixing_iconResId)
             baixingMenuTitle.text = item.mBaixing_title
             
-            // 设置点击事件
             root.setClick {
                 onItemClick(item)
             }

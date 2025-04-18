@@ -17,7 +17,6 @@ object CenterToast {
         val textView = layout.findViewById<TextView>(R.id.custom_toast_text)
         textView.text = message
 
-        // 创建 Toast 并设置布局
         val toast = Toast(activity)
         toast.view = layout
         toast.duration = Toast.LENGTH_SHORT

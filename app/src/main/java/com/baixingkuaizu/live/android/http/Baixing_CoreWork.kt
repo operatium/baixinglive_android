@@ -22,19 +22,16 @@ object Baixing_CoreWork {
         delay((1000..5000).random().toLong())
     }
 
-    //发送验证码
     suspend fun baixing_sendVerificationCode():String {
         delayNet()
         return "000000"
     }
 
-    //登陆
     suspend fun baixing_login(phone:String, code:String):String {
         delayNet()
         return "userToken"
     }
 
-    //登出
     suspend fun baixing_logout():Boolean {
         delayNet()
         return true
@@ -50,7 +47,6 @@ object Baixing_CoreWork {
         }
     }
 
-    //请求列表
     suspend fun baixing_liveList(id:String, page:Int): ArrayList<Baixing_GirlDataEntity> {
         delayNet()
         val list = ArrayList<Baixing_GirlDataEntity>()
@@ -84,7 +80,6 @@ object Baixing_CoreWork {
         val generator = Baixing_FollowDataGenerator()
         val list = ArrayList<Baixing_FollowGirlEntity>()
         
-        // 生成10个随机的关注对象
         repeat(10) {
             list.add(generator.baixing_generateRandomFollowGirl())
         }

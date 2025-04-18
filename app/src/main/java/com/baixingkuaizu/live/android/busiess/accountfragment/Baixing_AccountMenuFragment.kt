@@ -31,19 +31,15 @@ class Baixing_AccountMenuFragment : Baixing_BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         
-        // 初始化ViewModel
         mBaixing_viewModel = ViewModelProvider(this)[Baixing_AccountMenuViewModel::class.java]
         
-        // 设置菜单项点击事件
         baixing_setupMenuItems()
         
-        // 观察菜单数据变化
         baixing_observeMenuItems()
     }
     
     private fun baixing_setupMenuItems() {
         mBaixing_binding?.apply {
-            // 设置各菜单项点击事件
             baixingMenuItemSetting.setClick {
                 baixing_onMenuItemClick("设置")
             }
@@ -71,16 +67,12 @@ class Baixing_AccountMenuFragment : Baixing_BaseFragment() {
     }
     
     private fun baixing_observeMenuItems() {
-        // 观察菜单数据变化，如果有动态菜单项，可以在这里处理
         mBaixing_viewModel.mBaixing_menuItems.observe(viewLifecycleOwner) { menuItems ->
-            // 如果有需要动态更新的菜单项，可以在这里处理
         }
     }
     
     private fun baixing_onMenuItemClick(menuName: String) {
-        // 处理菜单项点击事件
         CenterToast.show(activity, "点击了$menuName")
-        // 根据不同菜单项执行不同操作
         when (menuName) {
             "设置" -> mBaixing_viewModel.baixing_onSettingClick()
             "钱包" -> mBaixing_viewModel.baixing_onWalletClick()

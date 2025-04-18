@@ -60,7 +60,6 @@ class Baixing_MainActivity : Baixing_BaseActivity() {
     }
     
     private fun baixing_initFragments() {
-        // 初始化所有Fragment
         mBaixing_fragments[0] = Baixing_LiveFragment()
         mBaixing_fragments[1] = Baixing_MessageFragment()
         mBaixing_fragments[2] = Baixing_FollowFragment()
@@ -82,7 +81,6 @@ class Baixing_MainActivity : Baixing_BaseActivity() {
 
     private fun baixing_updateTabState(selectedIndex: Int) {
         mBaixing_binding.apply {
-            // 重置所有Tab为未选中状态
             baixingTabLiveIcon.setImageResource(R.drawable.baixing_tab_live_normal)
             baixingTabLiveText.setTextColor(resources.getColor(R.color.baixing_tab_normal_color, null))
 
@@ -95,7 +93,6 @@ class Baixing_MainActivity : Baixing_BaseActivity() {
             baixingTabProfileIcon.setImageResource(R.drawable.baixing_tab_profile_normal)
             baixingTabProfileText.setTextColor(resources.getColor(R.color.baixing_tab_normal_color, null))
 
-            // 设置选中的Tab
             when (selectedIndex) {
                 0 -> {
                     baixingTabLiveIcon.setImageResource(R.drawable.baixing_tab_live_selected)
@@ -127,7 +124,6 @@ class Baixing_MainActivity : Baixing_BaseActivity() {
 
     private fun baixing_initBottomNavigation() {
         mBaixing_binding.apply {
-            // 设置底部导航按钮点击事件
             baixingTabLive.setOnClickListener { baixing_switchTab(0) }
             baixingTabMessage.setOnClickListener { baixing_switchTab(1) }
             baixingTabFollow.setOnClickListener { baixing_switchTab(2) }
@@ -140,22 +136,18 @@ class Baixing_MainActivity : Baixing_BaseActivity() {
             return
         }
         
-        // 更新UI状态
         baixing_updateTabState(index)
         
         val transaction = supportFragmentManager.beginTransaction()
         
-        // 如果当前有显示的Fragment，先隐藏它
         if (mBaixing_currentTabIndex != -1 && mBaixing_fragments[mBaixing_currentTabIndex] != null) {
             transaction.hide(mBaixing_fragments[mBaixing_currentTabIndex]!!)
         }
         
-        // 如果目标Fragment未添加，则添加
         if (mBaixing_fragments[index]?.isAdded != true) {
             transaction.add(R.id.baixing_fragment_container, mBaixing_fragments[index]!!)
         }
         
-        // 显示目标Fragment
         transaction.show(mBaixing_fragments[index]!!)
         transaction.commitAllowingStateLoss()
         

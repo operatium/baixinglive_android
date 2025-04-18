@@ -87,7 +87,6 @@ class Baixing_SearchFragment : Baixing_BaseFragment() {
                         val isEmpty = s.isNullOrEmpty()
                         mBaixing_binding.baixingBtnClear.isVisible = !isEmpty
 
-                        // 显示或隐藏搜索提示
                         if (!isEmpty) {
                             val keyword = s.toString().trim()
                             mBaixing_binding.baixingSearchSuggestion.text = "搜索\"${keyword}\""
@@ -99,13 +98,11 @@ class Baixing_SearchFragment : Baixing_BaseFragment() {
                 })
             }
 
-            // 设置搜索提示点击事件
             baixingSearchSuggestion.setOnClickListener {
                 val keyword = baixingEditSearch.text.toString().trim()
                 baixing_performSearch(keyword)
             }
 
-            // 设置搜索提示点击事件
             baixingSearchSuggestion.setOnClickListener {
                 val keyword = baixingEditSearch.text.toString().trim()
                 baixing_performSearch(keyword)
@@ -143,7 +140,6 @@ class Baixing_SearchFragment : Baixing_BaseFragment() {
 
             mBaixing_searchHistory.observe(viewLifecycleOwner) { history ->
                 mBaixing_historyAdapter.submitList(history)
-                // 当没有搜索历史数据时隐藏历史记录区域和清除按钮
                 val hasHistory = history.isNotEmpty()
                 mBaixing_binding.baixingHistoryLayout.isVisible = hasHistory
                 mBaixing_binding.baixingBtnClearHistory.isVisible = hasHistory

@@ -20,17 +20,14 @@ class Baixing_NetViewState(
 
     fun addListener(fragment: Fragment):Baixing_NetViewState {
         init()
-        // 内容视图可见性变化监听
         Baixing_ViewVisibilityListener(fragment, contentLayout) { isVisible ->
             baixing_updateLoadingVisibility(contentVisible = isVisible)
         }
 
-        // 空视图可见性变化监听
         Baixing_ViewVisibilityListener(fragment, emptyLayout) { isVisible ->
             baixing_updateLoadingVisibility(emptyVisible = isVisible)
         }
 
-        // 错误视图可见性变化监听
         Baixing_ViewVisibilityListener(fragment, errorLayout) { isVisible ->
             baixing_updateLoadingVisibility(errorVisible = isVisible)
         }
@@ -45,7 +42,6 @@ class Baixing_NetViewState(
         emptyVisible: Boolean = emptyLayout.isVisible,
         errorVisible: Boolean = errorLayout.isVisible
     ) {
-        // 当任何一个内容视图显示时，隐藏其他视图
         if (contentVisible) {
             emptyLayout.isVisible = false
             errorLayout.isVisible = false
