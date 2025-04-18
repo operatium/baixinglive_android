@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_LiveDataCache
-import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_LiveDataEntity
+import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_GirlDataCache
+import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_GirlDataEntity
 import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_LivePageEntity
 import com.baixingkuaizu.live.android.http.Baixing_CoreWork
 import com.baixingkuaizu.live.android.http.Baixing_CoreWork.mBaixing_HttpTimeout
@@ -18,8 +18,8 @@ import kotlinx.coroutines.withTimeoutOrNull
 
 class Baixing_LiveCategoryViewModel: ViewModel() {
 
-    private val _liveList = MutableLiveData<List<Baixing_LiveDataEntity>>()
-    val liveList: LiveData<List<Baixing_LiveDataEntity>> = _liveList
+    private val _liveList = MutableLiveData<List<Baixing_GirlDataEntity>>()
+    val liveList: LiveData<List<Baixing_GirlDataEntity>> = _liveList
 
     private val _hasNextData = MutableLiveData<Boolean>()
     val hasNextData: LiveData<Boolean> = _hasNextData
@@ -43,36 +43,49 @@ class Baixing_LiveCategoryViewModel: ViewModel() {
     val retry: LiveData<Boolean> = _retry
 
     var mBaixing_Page = 0
+    var mBaixing_id = ""
+    val TAG = "yyx-Baixing_LiveCategoryViewModel"
+
+    override fun onCleared() {
+        super.onCleared()
+        Log.d(TAG, "onCleared: $mBaixing_id")
+    }
 
     fun requestFirstPage(id: String) {
+        mBaixing_id = id
         _retry.value = false
         _hasNextData.value = true
         mBaixing_Page = 0
         _listloading.value = true
-        requestList(
-            id,
-            mBaixing_Page,
-            {
-                _listloading.value = false
-            },
-            {
-                _listEmpty.value = true
-            },
-            {
-                _netError.value = it
-                _retry.value = true
-            },
-            { page, data ->
-                Baixing_LiveDataCache.clear(id)
-                Baixing_LiveDataCache.addList(id, Baixing_LivePageEntity(id, page, data))
-                _liveList.value = Baixing_LiveDataCache.getListById(id)
-            }
-        )
         viewModelScope.launch {
             delay(100)
-            Baixing_LiveDataCache.getListById(id).let {
+            Baixing_GirlDataCache.getListById(id).let {
                 if (it.isNotEmpty()) {
                     _liveList.value = it
+                    _listloading.value = false
+                } else {
+                    requestList(
+                        id,
+                        mBaixing_Page,
+                        {
+                            _listloading.value = false
+                        },
+                        {
+                            _listEmpty.value = true
+                        },
+                        {
+                            _netError.value = it
+                            _retry.value = true
+                        },
+                        { page, data ->
+                            Baixing_GirlDataCache.clear(id)
+                            Baixing_GirlDataCache.addList(
+                                id,
+                                Baixing_LivePageEntity(id, page, data)
+                            )
+                            _liveList.value = Baixing_GirlDataCache.getListById(id)
+                        }
+                    )
                 }
             }
         }
@@ -89,23 +102,23 @@ class Baixing_LiveCategoryViewModel: ViewModel() {
                 _listrefersh.value = false
             },
             {
-                Baixing_LiveDataCache.clear(id)
+                Baixing_GirlDataCache.clear(id)
                 _listEmpty.value = true
             },
             {
                 _netError.value = it
             },
             { page, data ->
-                Baixing_LiveDataCache.clear(id)
-                Baixing_LiveDataCache.addList(id, Baixing_LivePageEntity(id, page, data))
-                _liveList.value = Baixing_LiveDataCache.getListById(id)
+                Baixing_GirlDataCache.clear(id)
+                Baixing_GirlDataCache.addList(id, Baixing_LivePageEntity(id, page, data))
+                _liveList.value = Baixing_GirlDataCache.getListById(id)
                 _hasNextData.value = true
             }
         )
     }
 
     fun requestNextPage(id: String) {
-        mBaixing_Page = Baixing_LiveDataCache.incrementPage(id)
+        mBaixing_Page = Baixing_GirlDataCache.incrementPage(id)
         Log.d("yyx", "requestNextPage: $id $mBaixing_Page")
         _listfoot.value = true
         requestList(
@@ -121,8 +134,8 @@ class Baixing_LiveCategoryViewModel: ViewModel() {
             {
             },
             { page, data ->
-                Baixing_LiveDataCache.addList(id, Baixing_LivePageEntity(id, page, data))
-                _liveList.value = Baixing_LiveDataCache.getListById(id)
+                Baixing_GirlDataCache.addList(id, Baixing_LivePageEntity(id, page, data))
+                _liveList.value = Baixing_GirlDataCache.getListById(id)
             }
         )
     }
@@ -132,7 +145,7 @@ class Baixing_LiveCategoryViewModel: ViewModel() {
                             end: () -> Unit,
                             empty: () -> Unit,
                             error: (String) -> Unit,
-                            success: (Int, ArrayList<Baixing_LiveDataEntity>) -> Unit) {
+                            success: (Int, ArrayList<Baixing_GirlDataEntity>) -> Unit) {
         viewModelScope.launch(Dispatchers.Default) {
             withTimeoutOrNull(mBaixing_HttpTimeout) {
                 Baixing_CoreWork.baixing_liveList(id, page)

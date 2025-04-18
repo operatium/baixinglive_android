@@ -6,7 +6,7 @@ import com.baixingkuaizu.live.android.databinding.BaixingLiveItemBinding
 class Baixing_GirlFootViewHolder(private val mBaixing_binding: BaixingLiveItemBinding)
     : Baixing_LiveViewHolder(mBaixing_binding) {
 
-    override fun baixing_bind(liveData: Baixing_LiveDataEntity) {
+    override fun baixing_bind(liveData: Baixing_GirlDataEntity) {
         mBaixing_binding.baixingFoot.visibility = View.VISIBLE
         mBaixing_binding.baixingLiveLayout.visibility = View.GONE
     }

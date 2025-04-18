@@ -25,7 +25,7 @@ open class Baixing_LiveViewHolder(private val mBaixing_binding: BaixingLiveItemB
             .clear(mBaixing_binding.baixingLiveCover)
     }
     
-    open fun baixing_bind(liveData: Baixing_LiveDataEntity) {
+    open fun baixing_bind(liveData: Baixing_GirlDataEntity) {
         mBaixing_binding.apply {
             val context = baixingLiveCover.context
             baixingLiveAnchorName.text = liveData.anchorName

@@ -7,12 +7,12 @@ import java.util.concurrent.ConcurrentHashMap
  * @date: 2025/4/18
  * @description: 直播数据缓存类，提供模拟数据
  */
-object Baixing_LiveDataCache {
+object Baixing_GirlDataCache {
     private val mBaixing_data = ConcurrentHashMap<String, HashMap<Int, Baixing_LivePageEntity>>()
     private val mBaixing_page = ConcurrentHashMap<String, Int>()
 
-    fun getListById(id:String): ArrayList<Baixing_LiveDataEntity> {
-        val resultList = ArrayList<Baixing_LiveDataEntity>()
+    fun getListById(id:String): ArrayList<Baixing_GirlDataEntity> {
+        val resultList = ArrayList<Baixing_GirlDataEntity>()
         val map = mBaixing_data[id] ?: return resultList
         val sortedList = map.entries.sortedWith(compareBy { it.key })
         for (item in sortedList) {

@@ -46,15 +46,12 @@ class Baixing_NetViewState(
     ) {
         // 当任何一个内容视图显示时，隐藏其他视图
         if (contentVisible) {
-            Log.d(TAG, "baixing_updateLoadingVisibility: contentVisible")
             emptyLayout.visibility = View.GONE
             errorLayout.visibility = View.GONE
         } else if (emptyVisible) {
-            Log.d(TAG, "baixing_updateLoadingVisibility: emptyVisible")
             contentLayout.visibility = View.GONE
             errorLayout.visibility = View.GONE
         } else if (errorVisible) {
-            Log.d(TAG, "baixing_updateLoadingVisibility: errorVisible")
             contentLayout.visibility = View.GONE
             emptyLayout.visibility = View.GONE
         }

@@ -1,7 +1,7 @@
 package com.baixingkuaizu.live.android.http
 
 import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_CategoryDataEntity
-import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_LiveDataEntity
+import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_GirlDataEntity
 import com.baixingkuaizu.live.android.busiess.messagefragment.Baixing_MessageDataGenerator
 import com.baixingkuaizu.live.android.busiess.messagefragment.Baixing_MessageItemEntity
 import com.baixingkuaizu.live.android.busiess.followfragment.Baixing_FollowDataGenerator
@@ -51,17 +51,17 @@ object Baixing_CoreWork {
     }
 
     //请求列表
-    suspend fun baixing_liveList(id:String, page:Int): ArrayList<Baixing_LiveDataEntity> {
+    suspend fun baixing_liveList(id:String, page:Int): ArrayList<Baixing_GirlDataEntity> {
         delayNet()
-        val list = ArrayList<Baixing_LiveDataEntity>()
+        val list = ArrayList<Baixing_GirlDataEntity>()
         if (page > 3) {
             return list
         }
         for (index in 0 .. 9) {
             val i = index + page * 10
-            list.add(Baixing_LiveDataEntity(
+            list.add(Baixing_GirlDataEntity(
                 id = i.toString(),
-                anchorName = "主播 $i",
+                anchorName = "$id 主播 $i",
                 coverUrl = "https://picsum.photos/300/200?random=$i",
                 viewerCount = (1000..50000).random(),
             ))

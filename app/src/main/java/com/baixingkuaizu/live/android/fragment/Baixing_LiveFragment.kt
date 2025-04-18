@@ -50,8 +50,6 @@ class Baixing_LiveFragment : Baixing_BaseFragment() {
     }
     
     private fun baixing_initViewModel() {
-
-        // 替换三个重复的ViewVisibilityListener为统一的方法
         mBaixing_binding.apply {
             mBaixing_NetViewState = Baixing_NetViewState(
                 baixingLiveContentLayout,
@@ -70,13 +68,11 @@ class Baixing_LiveFragment : Baixing_BaseFragment() {
 
         mBaixing_viewModel = ViewModelProvider(this)[Baixing_LiveTableViewModel::class.java]
         
-        // 观察网络错误
         mBaixing_viewModel.netError.observe(viewLifecycleOwner) { errorMsg ->
             if (errorMsg.isNullOrEmpty()) return@observe
             baixing_showErrorView()
         }
         
-        // 观察栏目数据
         mBaixing_viewModel.netTable.observe(viewLifecycleOwner) { categoryList ->
             if (categoryList.isEmpty()) {
                 baixing_showEmptyView()
@@ -87,46 +83,14 @@ class Baixing_LiveFragment : Baixing_BaseFragment() {
             }
         }
         
-        // 请求栏目数据
         mBaixing_viewModel.requestTable()
     }
-
-    /**
-     * 根据各视图的可见状态更新加载指示器的显示
-     */
-    private fun baixing_updateLoadingVisibility(
-        contentVisible: Boolean = mBaixing_binding.baixingLiveContentLayout.isVisible,
-        emptyVisible: Boolean = mBaixing_binding.baixingLiveEmptyLayout.isVisible,
-        errorVisible: Boolean = mBaixing_binding.baixingLiveErrorLayout.isVisible
-    ) {
-        mBaixing_binding.apply {
-            // 当任何一个内容视图显示时，隐藏其他视图
-            if (contentVisible) {
-                baixingLiveErrorLayout.visibility = View.GONE
-                baixingLiveEmptyLayout.visibility = View.GONE
-            } else if (emptyVisible) {
-                baixingLiveErrorLayout.visibility = View.GONE
-                baixingLiveContentLayout.visibility = View.GONE
-            } else if (errorVisible) {
-                baixingLiveContentLayout.visibility = View.GONE
-                baixingLiveEmptyLayout.visibility = View.GONE
-            }
-
-
-        }
-    }
     
-    /**
-     * 显示内容视图
-     */
     private fun baixing_showContentView() {
         baixing_updateViewVisibility(showContent = true)
         baixing_setupViewPager()
     }
     
-    /**
-     * 设置ViewPager和TabLayout
-     */
     private fun baixing_setupViewPager() {
         mBaixing_binding.apply {
             if (mBaixing_adapter == null) {
@@ -134,8 +98,6 @@ class Baixing_LiveFragment : Baixing_BaseFragment() {
                     Baixing_LiveViewPagerAdapter(mBaixing_categoryList, this@Baixing_LiveFragment).apply {
                         mBaixing_adapter = this
                     }
-                
-                // 设置TabLayout与ViewPager的联动
                 TabLayoutMediator(baixingLiveTabLayout, baixingLiveViewPager) { tab, position ->
                     tab.text = mBaixing_categoryList[position].name
                 }.attach()
@@ -143,9 +105,6 @@ class Baixing_LiveFragment : Baixing_BaseFragment() {
         }
     }
     
-    /**
-     * 显示错误视图
-     */
     private fun baixing_showErrorView() {
         baixing_updateViewVisibility(showError = true)
         mBaixing_binding.baixingLiveErrorRetryBtn.setOnClickListener {
@@ -154,16 +113,10 @@ class Baixing_LiveFragment : Baixing_BaseFragment() {
         }
     }
     
-    /**
-     * 显示空数据视图
-     */
     private fun baixing_showEmptyView() {
         baixing_updateViewVisibility(showEmpty = true)
     }
     
-    /**
-     * 更新各视图的可见性
-     */
     private fun baixing_updateViewVisibility(
         showContent: Boolean = false,
         showError: Boolean = false,
