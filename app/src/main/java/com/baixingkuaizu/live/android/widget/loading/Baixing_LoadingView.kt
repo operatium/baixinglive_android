@@ -51,7 +51,7 @@ class Baixing_LoadingView @JvmOverloads constructor(
         )
     }
     private val moonLightColor = "#E0E0E0".toColorInt() // 浅灰色
-    private val moonDarkColor = "#808080".toColorInt() // 深灰色
+    private val moonGoldColor = "#FFD700".toColorInt() // 金黄色
 
     init {
         setupAnimation()
@@ -94,32 +94,25 @@ class Baixing_LoadingView @JvmOverloads constructor(
         val centerY = height / 2f + mBaixing_verticalOffset
 
         canvas.drawCircle(centerX, centerY, mBaixing_ellipseMajorAxis + mBaixing_moonRadius, mBaixing_backgroundPaint)
-
         canvas.drawCircle(centerX, centerY + mBaixing_earthRadius * 0.2f, mBaixing_earthRadius, mBaixing_shadowPaint)
-
         canvas.withTranslation(centerX, centerY) {
             mBaixing_earthPaint.shader = earthGradient
-
             val angle = Math.toRadians(mBaixing_rotationAngle.toDouble())
             val moonX = mBaixing_ellipseMajorAxis * Math.cos(angle).toFloat()
             val moonY = mBaixing_ellipseMinorAxis * Math.sin(angle).toFloat()
-
             val distance = sqrt(moonX * moonX + moonY * moonY)
-
+            // 使用径向渐变实现浅灰到金黄色
             val moonGradient = RadialGradient(
                 moonX, moonY, mBaixing_moonRadius,
-                moonLightColor, moonDarkColor,
+                moonLightColor, moonGoldColor,
                 Shader.TileMode.CLAMP
             )
             mBaixing_moonPaint.shader = moonGradient
-
             if (isMovingRight) {
                 drawCircle(0f, 0f, mBaixing_earthRadius, mBaixing_earthPaint)
-
                 moonPath.reset()
                 smallMoonPath.reset()
                 finalMoonPath.reset()
-
                 moonPath.addCircle(moonX, moonY, mBaixing_moonRadius, Path.Direction.CW)
                 smallMoonPath.addCircle(
                     moonX + mBaixing_moonRadius * 0.8f,
@@ -127,7 +120,6 @@ class Baixing_LoadingView @JvmOverloads constructor(
                     mBaixing_moonRadius * 0.9f,
                     Path.Direction.CW
                 )
-
                 if (distance <= mBaixing_earthRadius + mBaixing_moonRadius) {
                     val saveCount =
                         saveLayer(-width / 2f, -height / 2f, width / 2f, height / 2f, null)
@@ -145,7 +137,6 @@ class Baixing_LoadingView @JvmOverloads constructor(
                 moonPath.reset()
                 smallMoonPath.reset()
                 finalMoonPath.reset()
-
                 moonPath.addCircle(moonX, moonY, mBaixing_moonRadius, Path.Direction.CW)
                 smallMoonPath.addCircle(
                     moonX + mBaixing_moonRadius * 0.8f,
@@ -155,7 +146,6 @@ class Baixing_LoadingView @JvmOverloads constructor(
                 )
                 finalMoonPath.op(moonPath, smallMoonPath, Path.Op.DIFFERENCE)
                 drawPath(finalMoonPath, mBaixing_moonPaint)
-
                 if (distance <= mBaixing_earthRadius + mBaixing_moonRadius) {
                     val saveCount =
                         saveLayer(-width / 2f, -height / 2f, width / 2f, height / 2f, null)
@@ -164,10 +154,8 @@ class Baixing_LoadingView @JvmOverloads constructor(
                     mBaixing_earthPaint.xfermode = null
                     restoreToCount(saveCount)
                 }
-
                 drawCircle(0f, 0f, mBaixing_earthRadius, mBaixing_earthPaint)
             }
-
         }
     }
 
