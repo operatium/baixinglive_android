@@ -6,59 +6,58 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-    <!-- 顶部搜索栏 -->
-    <LinearLayout
-        android:id="@+id/baixing_search_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/dp.10"
-        app:layout_constraintTop_toTopOf="parent">
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/baixing_button_background3"
+        app:layout_constraintStart_toStartOf="@+id/baixing_edit_search"
+        app:layout_constraintEnd_toEndOf="@+id/baixing_edit_search"
+        app:layout_constraintTop_toTopOf="@+id/baixing_edit_search"
+        app:layout_constraintBottom_toBottomOf="@+id/baixing_edit_search"
+        />
+    <EditText
+        android:id="@+id/baixing_edit_search"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dp.30"
+        android:layout_marginTop="@dimen/dp.16"
+        android:layout_marginStart="@dimen/dp.15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/baixing_btn_back"
+        android:hint="搜索99直播间，视觉盛宴"
+        android:autofillHints="主播"
+        android:textColor="#000000"
+        android:drawableStart="@drawable/baixing_search"
+        android:paddingHorizontal="@dimen/dp.10"
+        android:drawablePadding="@dimen/dp.10"
+        android:textSize="@dimen/sp.14"
+        android:gravity="center_vertical"
+        android:background="@null"
+        />
 
-        <ImageView
-            android:id="@+id/baixing_btn_back"
-            android:layout_width="@dimen/dp.24"
-            android:layout_height="@dimen/dp.24"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_back"
-            android:contentDescription="返回" />
+    <ImageView
+        android:id="@+id/baixing_btn_clear"
+        android:layout_width="@dimen/dp.35"
+        android:layout_height="@dimen/dp.50"
+        app:layout_constraintEnd_toEndOf="@id/baixing_edit_search"
+        app:layout_constraintTop_toTopOf="@id/baixing_edit_search"
+        app:layout_constraintBottom_toBottomOf="@id/baixing_edit_search"
+        android:src="@drawable/baixing_add_circle"
+        android:padding="@dimen/dp.8"
+        android:rotation="45"
+        />
 
-        <EditText
-            android:id="@+id/baixing_edit_search"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dp.40"
-            android:layout_marginStart="@dimen/dp.10"
-            android:layout_marginEnd="@dimen/dp.10"
-            android:layout_weight="1"
-            android:background="@drawable/baixing_tag_normal_bg"
-            android:hint="我"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:paddingStart="@dimen/dp.10"
-            android:paddingEnd="@dimen/dp.10"
-            android:textColor="@android:color/black"
-            android:textColorHint="@android:color/darker_gray"
-            android:textSize="@dimen/sp.14" />
-
-        <ImageView
-            android:id="@+id/baixing_btn_clear"
-            android:layout_width="@dimen/dp.24"
-            android:layout_height="@dimen/dp.24"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="@dimen/dp.5"
-            android:src="@drawable/ic_dot"
-            android:visibility="gone"
-            android:contentDescription="清除" />
-
-        <TextView
-            android:id="@+id/baixing_btn_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="搜索"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/sp.16" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/baixing_btn_back"
+        android:layout_width="@dimen/dp.60"
+        android:layout_height="@dimen/dp.60"
+        android:gravity="center"
+        android:text="取消"
+        android:textColor="#000000"
+        app:layout_constraintTop_toTopOf="@+id/baixing_edit_search"
+        app:layout_constraintBottom_toBottomOf="@+id/baixing_edit_search"
+        app:layout_constraintStart_toEndOf="@id/baixing_edit_search"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <!-- 搜索历史 -->
     <LinearLayout
@@ -66,8 +65,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="@dimen/dp.10"
         android:padding="@dimen/dp.10"
-        app:layout_constraintTop_toBottomOf="@id/baixing_search_bar">
+        app:layout_constraintTop_toBottomOf="@id/baixing_edit_search">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -91,14 +91,14 @@
                 android:textSize="@dimen/sp.14" />
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
+        <com.google.android.flexbox.FlexboxLayout
             android:id="@+id/baixing_recycler_history"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp.10"
-            android:orientation="horizontal"
-            tools:itemCount="5"
-            tools:listitem="@layout/baixing_search_history_item" />
+            app:flexDirection="row"
+            app:flexWrap="wrap"
+            />
     </LinearLayout>
 
     <!-- 搜索结果 -->
@@ -106,11 +106,9 @@
         android:id="@+id/baixing_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/baixing_history_layout"
-        tools:listitem="@layout/baixing_search_result_item"
-        tools:visibility="visible" />
+        />
 
     <!-- 空视图 -->
     <TextView
@@ -120,18 +118,16 @@
         android:text="暂无搜索结果"
         android:textColor="@android:color/darker_gray"
         android:textSize="@dimen/sp.16"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/baixing_history_layout" />
 
     <!-- 加载进度条 -->
-    <ProgressBar
+    <com.baixingkuaizu.live.android.widget.loading.Baixing_LoadingView
         android:id="@+id/baixing_progress_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

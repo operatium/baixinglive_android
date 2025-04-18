@@ -17,10 +17,10 @@ class Baixing_LoadingView @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr) {
 
     private val mBaixing_earthPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        maskFilter = BlurMaskFilter(3f, BlurMaskFilter.Blur.NORMAL) // 模糊地球边缘
+//        maskFilter = BlurMaskFilter(3f, BlurMaskFilter.Blur.NORMAL) // 模糊地球边缘
     }
     private val mBaixing_moonPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        style = Paint.Style.FILL
+//        style = Paint.Style.FILL
     }
     private val mBaixing_earthRadius = 30f // 地球大小增大一倍
     private val mBaixing_moonRadius = 12f

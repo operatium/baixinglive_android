@@ -12,13 +12,15 @@ class Baixing_NetViewState(
     val listener: (()-> Unit)? = null
 ) {
     private val TAG= "yyx类NetViewState${this}"
-    /**
-     * 统一管理视图状态和加载指示器的显示
-     */
+
+    fun init() {
+        contentLayout.isVisible = false
+        emptyLayout.isVisible = false
+        errorLayout.isVisible = false
+    }
+
     fun addListener(fragment: Fragment):Baixing_NetViewState {
-        contentLayout.visibility = View.GONE
-        emptyLayout.visibility = View.GONE
-        errorLayout.visibility = View.GONE
+        init()
         // 内容视图可见性变化监听
         Baixing_ViewVisibilityListener(fragment, contentLayout) { isVisible ->
             baixing_updateLoadingVisibility(contentVisible = isVisible)
@@ -46,14 +48,14 @@ class Baixing_NetViewState(
     ) {
         // 当任何一个内容视图显示时，隐藏其他视图
         if (contentVisible) {
-            emptyLayout.visibility = View.GONE
-            errorLayout.visibility = View.GONE
+            emptyLayout.isVisible = false
+            errorLayout.isVisible = false
         } else if (emptyVisible) {
-            contentLayout.visibility = View.GONE
-            errorLayout.visibility = View.GONE
+            contentLayout.isVisible = false
+            errorLayout.isVisible = false
         } else if (errorVisible) {
-            contentLayout.visibility = View.GONE
-            emptyLayout.visibility = View.GONE
+            contentLayout.isVisible = false
+            emptyLayout.isVisible = false
         }
         listener?.invoke()
     }

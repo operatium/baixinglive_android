@@ -1,6 +1,7 @@
 package com.baixingkuaizu.live.android.activity
 
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import com.baixingkuaizu.live.android.R
 import com.baixingkuaizu.live.android.base.Baixing_BaseActivity
 import com.baixingkuaizu.live.android.base.Baixing_BaseFragment
@@ -12,6 +13,7 @@ import com.baixingkuaizu.live.android.fragment.Baixing_FollowFragment
 import com.baixingkuaizu.live.android.fragment.Baixing_LiveFragment
 import com.baixingkuaizu.live.android.fragment.Baixing_MessageFragment
 import com.baixingkuaizu.live.android.fragment.Baixing_ProfileFragment
+import com.baixingkuaizu.live.android.fragment.Baixing_SearchFragment
 
 /**
  * @author yuyuexing
@@ -43,6 +45,18 @@ class Baixing_MainActivity : Baixing_BaseActivity() {
         baixing_updateTabState(0)
         baixing_initBottomNavigation()
         baixing_switchTab(0)
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                supportFragmentManager.run {
+                    if (backStackEntryCount > 0) {
+                        popBackStack()
+                    } else {
+                        moveTaskToBack(true)
+                    }
+                }
+            }
+        })
     }
     
     private fun baixing_initFragments() {
@@ -100,6 +114,14 @@ class Baixing_MainActivity : Baixing_BaseActivity() {
                     baixingTabProfileText.setTextColor(resources.getColor(R.color.baixing_tab_selected_color, null))
                 }
             }
+        }
+    }
+
+    fun baixing_toSearchFragment() {
+        supportFragmentManager.beginTransaction().run {
+            add(R.id.baixing_fragment_container, Baixing_SearchFragment())
+            addToBackStack(null)
+            commit()
         }
     }
 

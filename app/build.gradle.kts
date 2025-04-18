@@ -59,4 +59,6 @@ dependencies {
     implementation("io.github.scwang90:refresh-layout-kernel:3.0.0-alpha")
     implementation("io.github.scwang90:refresh-footer-classics:3.0.0-alpha")
     implementation("io.github.scwang90:refresh-header-material:3.0.0-alpha")
+
+    implementation ("com.google.android.flexbox:flexbox:3.0.0")
 }

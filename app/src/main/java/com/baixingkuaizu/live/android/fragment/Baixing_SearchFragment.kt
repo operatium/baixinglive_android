@@ -15,6 +15,7 @@ import com.baixingkuaizu.live.android.busiess.searchfragment.Baixing_SearchHisto
 import com.baixingkuaizu.live.android.busiess.searchfragment.Baixing_SearchResultAdapter
 import com.baixingkuaizu.live.android.busiess.searchfragment.Baixing_SearchViewModel
 import com.baixingkuaizu.live.android.databinding.BaixingSearchFragmentBinding
+import com.baixingkuaizu.live.android.os.Baixing_NetViewState
 import com.baixingkuaizu.live.android.widget.toast.CenterToast
 
 class Baixing_SearchFragment : Baixing_BaseFragment() {
@@ -35,17 +36,24 @@ class Baixing_SearchFragment : Baixing_BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        mBaixing_viewModel = ViewModelProvider(this)[Baixing_SearchViewModel::class.java]
-        baixing_initViews()
         baixing_observeViewModel()
+        baixing_initViews()
     }
 
     private fun baixing_initViews() {
-        mBaixing_adapter = Baixing_SearchResultAdapter()
+        mBaixing_binding.run {
+            Baixing_NetViewState(
+                baixingRecyclerView,
+                baixingEmptyView,
+                baixingProgressBar,
+            ).addListener(this@Baixing_SearchFragment)
+        }
+
         mBaixing_binding.baixingRecyclerView.apply {
+            mBaixing_adapter = Baixing_SearchResultAdapter().also {
+                adapter = it
+            }
             layoutManager = LinearLayoutManager(context)
-            adapter = mBaixing_adapter
         }
 
         mBaixing_historyAdapter = Baixing_SearchHistoryAdapter { keyword ->
@@ -53,8 +61,8 @@ class Baixing_SearchFragment : Baixing_BaseFragment() {
             baixing_performSearch(keyword)
         }
         mBaixing_binding.baixingRecyclerHistory.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = mBaixing_historyAdapter
+//            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+//            adapter = mBaixing_historyAdapter
         }
 
         mBaixing_binding.baixingEditSearch.apply {
@@ -78,10 +86,8 @@ class Baixing_SearchFragment : Baixing_BaseFragment() {
             })
         }
 
-        mBaixing_binding.baixingBtnSearch.setClick {
-            val keyword = mBaixing_binding.baixingEditSearch.text.toString().trim()
-            baixing_performSearch(keyword)
-        }
+//            val keyword = mBaixing_binding.baixingEditSearch.text.toString().trim()
+//            baixing_performSearch(keyword)
 
         mBaixing_binding.baixingBtnClear.setClick {
             mBaixing_binding.baixingEditSearch.text.clear()
@@ -92,33 +98,35 @@ class Baixing_SearchFragment : Baixing_BaseFragment() {
         }
 
         mBaixing_binding.baixingBtnBack.setClick {
+            activity?.supportFragmentManager?.popBackStack()
         }
     }
 
     private fun baixing_observeViewModel() {
-        mBaixing_viewModel.mBaixing_searchResults.observe(viewLifecycleOwner) { results ->
-            mBaixing_adapter.submitList(results)
-            mBaixing_binding.baixingEmptyView.isVisible = results.isEmpty() && !mBaixing_viewModel.mBaixing_isLoading.value!!
-            mBaixing_binding.baixingRecyclerView.isVisible = results.isNotEmpty()
-        }
-
-        mBaixing_viewModel.mBaixing_searchHistory.observe(viewLifecycleOwner) { history ->
-            mBaixing_historyAdapter.submitList(history)
-            mBaixing_binding.baixingHistoryLayout.isVisible = history.isNotEmpty()
-        }
-
-        mBaixing_viewModel.mBaixing_isLoading.observe(viewLifecycleOwner) { isLoading ->
-            mBaixing_binding.baixingProgressBar.isVisible = isLoading
-            if (isLoading) {
-                mBaixing_binding.baixingEmptyView.isVisible = false
-            } else {
-                mBaixing_binding.baixingEmptyView.isVisible = mBaixing_viewModel.mBaixing_searchResults.value?.isEmpty() == true
+        mBaixing_viewModel = ViewModelProvider(this)[Baixing_SearchViewModel::class.java].apply {
+            mBaixing_searchResults.observe(viewLifecycleOwner) { results ->
+                mBaixing_adapter.submitList(results)
+                mBaixing_binding.baixingEmptyView.isVisible = true
             }
-        }
 
-        mBaixing_viewModel.mBaixing_error.observe(viewLifecycleOwner) { error ->
-            if (!error.isNullOrEmpty()) {
-                CenterToast.show(activity, error)
+            mBaixing_searchHistory.observe(viewLifecycleOwner) { history ->
+                mBaixing_historyAdapter.submitList(history)
+                mBaixing_binding.baixingHistoryLayout.isVisible = history.isNotEmpty()
+            }
+
+            mBaixing_isLoading.observe(viewLifecycleOwner) { isLoading ->
+                mBaixing_binding.baixingProgressBar.isVisible = isLoading
+                if (isLoading) {
+                    mBaixing_binding.baixingEmptyView.isVisible = false
+                } else {
+                    mBaixing_binding.baixingEmptyView.isVisible = mBaixing_viewModel.mBaixing_searchResults.value?.isEmpty() == true
+                }
+            }
+
+            mBaixing_error.observe(viewLifecycleOwner) { error ->
+                if (!error.isNullOrEmpty()) {
+                    CenterToast.show(activity, error)
+                }
             }
         }
     }

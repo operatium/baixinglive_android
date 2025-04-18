@@ -27,7 +27,7 @@
             android:id="@+id/baixing_search"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:padding="@dimen/dp.5"
+            android:paddingHorizontal="@dimen/dp.10"
             android:src="@drawable/baixing_search"
             app:layout_constraintStart_toStartOf="@+id/baixing_top_background"
             app:layout_constraintTop_toTopOf="@+id/baixing_top_background"
@@ -42,9 +42,8 @@
             app:layout_constraintTop_toTopOf="@+id/baixing_top_background"
             app:layout_constraintBottom_toBottomOf="@+id/baixing_top_background"
             app:layout_constraintEnd_toEndOf="@+id/baixing_top_background"
-            android:layout_marginEnd="@dimen/dp.15"
             android:singleLine="true"
-            android:text="搜索秋香直播间，视觉盛宴"
+            android:text="搜索99直播间，视觉盛宴"
             android:gravity="center_vertical"
             android:textSize="@dimen/sp.14"
             android:textColor="#888888"
@@ -52,10 +51,9 @@
 
         <ImageView
             android:id="@+id/baixing_history"
-            android:layout_width="@dimen/dp.40"
-            android:layout_height="0dp"
-            android:padding="@dimen/dp.4"
-            android:layout_marginHorizontal="@dimen/dp.5"
+            android:layout_width="@dimen/dp.46"
+            android:layout_height="@dimen/dp.60"
+            android:paddingVertical="@dimen/dp.20"
             android:src="@drawable/baixing_history"
             app:layout_constraintTop_toTopOf="@+id/baixing_top_background"
             app:layout_constraintBottom_toBottomOf="@+id/baixing_top_background"
@@ -65,13 +63,16 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/baixing_live_tab_layout"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dp.40"
+            android:layout_height="@dimen/dp.30"
             android:layout_marginTop="@dimen/dp.10"
+            android:background="#ffffff"
             app:tabTextAppearance="@style/TabTextStyle"
             app:tabIndicatorColor="#FF0000"
             app:tabTextColor="#888888"
             app:tabSelectedTextColor="#000000"
             app:tabMode="auto"
+            app:tabIndicatorHeight="@dimen/dp.3"
+            app:tabIndicator="@drawable/baixing_button_background2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/baixing_top_background"
@@ -93,7 +94,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone">
+        >
 
         <ImageView
             android:layout_width="@dimen/dp.100"
@@ -134,7 +135,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone">
+        >
 
         <ImageView
             android:layout_width="@dimen/dp.100"

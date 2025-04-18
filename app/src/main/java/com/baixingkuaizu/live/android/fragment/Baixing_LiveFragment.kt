@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import com.baixingkuaizu.live.android.activity.Baixing_MainActivity
 import com.baixingkuaizu.live.android.base.Baixing_BaseFragment
 import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_CategoryDataEntity
 import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_LiveViewPagerAdapter
@@ -45,9 +46,35 @@ class Baixing_LiveFragment : Baixing_BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBaixing_Proxy.bind(this)
+        mBaixing_viewModel = ViewModelProvider(this)[Baixing_LiveTableViewModel::class.java]
         baixing_initViewModel()
+        baixing_observe()
+        mBaixing_viewModel.requestTable()
     }
-    
+
+    private fun baixing_observe() {
+        mBaixing_viewModel.apply {
+            netError.observe(viewLifecycleOwner) { errorMsg ->
+                if (errorMsg.isNullOrEmpty()) return@observe
+                mBaixing_binding.baixingLiveErrorLayout.isVisible = true
+                CenterToast.show(activity, errorMsg)
+            }
+            netTable.observe(viewLifecycleOwner) { categoryList ->
+                mBaixing_categoryList.clear()
+                mBaixing_categoryList.addAll(categoryList)
+                mBaixing_binding.baixingLiveContentLayout.isVisible = true
+                baixing_setupViewPager()
+            }
+            netEmpty.observe(viewLifecycleOwner) {
+                mBaixing_binding.baixingLiveEmptyLayout.isVisible = it
+            }
+            viewLoading.observe(viewLifecycleOwner) {
+                mBaixing_binding.baixingLoading.isVisible = it
+                mBaixing_NetViewState?.init()
+            }
+        }
+    }
+
     private fun baixing_initViewModel() {
         mBaixing_binding.apply {
             mBaixing_NetViewState = Baixing_NetViewState(
@@ -63,66 +90,29 @@ class Baixing_LiveFragment : Baixing_BaseFragment() {
                         }
                 }
             ).addListener(this@Baixing_LiveFragment)
-        }
-
-        mBaixing_viewModel = ViewModelProvider(this)[Baixing_LiveTableViewModel::class.java].apply {
-            netError.observe(viewLifecycleOwner) { errorMsg ->
-                if (errorMsg.isNullOrEmpty()) return@observe
-                baixing_showErrorView()
-            }
-            netTable.observe(viewLifecycleOwner) { categoryList ->
-                if (categoryList.isEmpty()) {
-                    baixing_showEmptyView()
-                } else {
-                    mBaixing_categoryList.clear()
-                    mBaixing_categoryList.addAll(categoryList)
-                    baixing_showContentView()
+            baixingTopBackground.setOnClickListener {
+                if (activity is Baixing_MainActivity) {
+                    (activity as Baixing_MainActivity).baixing_toSearchFragment()
                 }
             }
-            requestTable()
+            baixingLiveErrorRetryBtn.setOnClickListener {
+                CenterToast.show(activity, "正在重新加载...")
+                mBaixing_viewModel.requestTable()
+            }
         }
-    }
-    
-    private fun baixing_showContentView() {
-        baixing_updateViewVisibility(showContent = true)
-        baixing_setupViewPager()
     }
     
     private fun baixing_setupViewPager() {
         mBaixing_binding.apply {
             if (mBaixing_adapter == null) {
-                baixingLiveViewPager.adapter =
-                    Baixing_LiveViewPagerAdapter(mBaixing_categoryList, this@Baixing_LiveFragment).apply {
-                        mBaixing_adapter = this
-                    }
+                Baixing_LiveViewPagerAdapter(mBaixing_categoryList, this@Baixing_LiveFragment).let {
+                    mBaixing_adapter = it
+                    baixingLiveViewPager.adapter = it
+                }
                 TabLayoutMediator(baixingLiveTabLayout, baixingLiveViewPager) { tab, position ->
                     tab.text = mBaixing_categoryList[position].name
                 }.attach()
             }
-        }
-    }
-    
-    private fun baixing_showErrorView() {
-        baixing_updateViewVisibility(showError = true)
-        mBaixing_binding.baixingLiveErrorRetryBtn.setOnClickListener {
-            CenterToast.show(activity, "正在重新加载...")
-            mBaixing_viewModel.requestTable()
-        }
-    }
-    
-    private fun baixing_showEmptyView() {
-        baixing_updateViewVisibility(showEmpty = true)
-    }
-    
-    private fun baixing_updateViewVisibility(
-        showContent: Boolean = false,
-        showError: Boolean = false,
-        showEmpty: Boolean = false
-    ) {
-        mBaixing_binding.apply {
-            baixingLiveContentLayout.visibility = if (showContent) View.VISIBLE else View.GONE
-            baixingLiveErrorLayout.visibility = if (showError) View.VISIBLE else View.GONE
-            baixingLiveEmptyLayout.visibility = if (showEmpty) View.VISIBLE else View.GONE
         }
     }
     
