@@ -2,29 +2,89 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!-- 内容布局 -->
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/baixing_live_content_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/baixing_top_background"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp.30"
+            android:layout_marginStart="@dimen/dp.15"
+            android:layout_marginTop="@dimen/dp.16"
+            android:src="@drawable/baixing_button_background3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/baixing_history"
+            />
+
+        <ImageView
+            android:id="@+id/baixing_search"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:padding="@dimen/dp.5"
+            android:src="@drawable/baixing_search"
+            app:layout_constraintStart_toStartOf="@+id/baixing_top_background"
+            app:layout_constraintTop_toTopOf="@+id/baixing_top_background"
+            app:layout_constraintBottom_toBottomOf="@+id/baixing_top_background"
+            />
+
+        <TextView
+            android:id="@+id/baixing_search_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/baixing_search"
+            app:layout_constraintTop_toTopOf="@+id/baixing_top_background"
+            app:layout_constraintBottom_toBottomOf="@+id/baixing_top_background"
+            app:layout_constraintEnd_toEndOf="@+id/baixing_top_background"
+            android:layout_marginEnd="@dimen/dp.15"
+            android:singleLine="true"
+            android:text="搜索秋香直播间，视觉盛宴"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/sp.14"
+            android:textColor="#888888"
+            />
+
+        <ImageView
+            android:id="@+id/baixing_history"
+            android:layout_width="@dimen/dp.40"
+            android:layout_height="0dp"
+            android:padding="@dimen/dp.4"
+            android:layout_marginHorizontal="@dimen/dp.5"
+            android:src="@drawable/baixing_history"
+            app:layout_constraintTop_toTopOf="@+id/baixing_top_background"
+            app:layout_constraintBottom_toBottomOf="@+id/baixing_top_background"
+            app:layout_constraintStart_toEndOf="@id/baixing_top_background"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/baixing_live_tab_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabMode="scrollable"
-            app:tabGravity="fill" />
+            android:layout_height="@dimen/dp.40"
+            android:layout_marginTop="@dimen/dp.10"
+            app:tabTextAppearance="@style/TabTextStyle"
+            app:tabIndicatorColor="#FF0000"
+            app:tabTextColor="#888888"
+            app:tabSelectedTextColor="#000000"
+            app:tabMode="auto"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/baixing_top_background"
+            />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/baixing_live_view_pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
-    </LinearLayout>
+            app:layout_constraintTop_toBottomOf="@id/baixing_live_tab_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- 错误布局 -->
     <LinearLayout

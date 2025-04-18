@@ -13,7 +13,6 @@ import com.baixingkuaizu.live.android.busiess.livefragment.Baixing_LiveViewPager
 import com.baixingkuaizu.live.android.busiess.proxy.Baixing_FragmentProxy
 import com.baixingkuaizu.live.android.databinding.BaixingLiveFragmentBinding
 import com.baixingkuaizu.live.android.os.Baixing_NetViewState
-import com.baixingkuaizu.live.android.os.Baixing_ViewVisibilityListener
 import com.baixingkuaizu.live.android.viewmodel.Baixing_LiveTableViewModel
 import com.baixingkuaizu.live.android.widget.toast.CenterToast
 import com.google.android.material.tabs.TabLayoutMediator
@@ -66,24 +65,22 @@ class Baixing_LiveFragment : Baixing_BaseFragment() {
             ).addListener(this@Baixing_LiveFragment)
         }
 
-        mBaixing_viewModel = ViewModelProvider(this)[Baixing_LiveTableViewModel::class.java]
-        
-        mBaixing_viewModel.netError.observe(viewLifecycleOwner) { errorMsg ->
-            if (errorMsg.isNullOrEmpty()) return@observe
-            baixing_showErrorView()
-        }
-        
-        mBaixing_viewModel.netTable.observe(viewLifecycleOwner) { categoryList ->
-            if (categoryList.isEmpty()) {
-                baixing_showEmptyView()
-            } else {
-                mBaixing_categoryList.clear()
-                mBaixing_categoryList.addAll(categoryList)
-                baixing_showContentView()
+        mBaixing_viewModel = ViewModelProvider(this)[Baixing_LiveTableViewModel::class.java].apply {
+            netError.observe(viewLifecycleOwner) { errorMsg ->
+                if (errorMsg.isNullOrEmpty()) return@observe
+                baixing_showErrorView()
             }
+            netTable.observe(viewLifecycleOwner) { categoryList ->
+                if (categoryList.isEmpty()) {
+                    baixing_showEmptyView()
+                } else {
+                    mBaixing_categoryList.clear()
+                    mBaixing_categoryList.addAll(categoryList)
+                    baixing_showContentView()
+                }
+            }
+            requestTable()
         }
-        
-        mBaixing_viewModel.requestTable()
     }
     
     private fun baixing_showContentView() {

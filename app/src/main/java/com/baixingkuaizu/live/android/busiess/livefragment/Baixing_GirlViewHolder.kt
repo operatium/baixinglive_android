@@ -17,8 +17,8 @@ import android.text.style.ForegroundColorSpan
  * @date: 2025/4/18
  * @description: 直播列表项ViewHolder
  */
-open class Baixing_LiveViewHolder(private val mBaixing_binding: BaixingLiveItemBinding) :
-    RecyclerView.ViewHolder(mBaixing_binding.root) {
+open class Baixing_GirlViewHolder(private val mBaixing_binding: BaixingLiveItemBinding)
+    : RecyclerView.ViewHolder(mBaixing_binding.root) {
     
     fun baixing_clearImage() {
         Glide.with(mBaixing_binding.baixingLiveCover.context)
@@ -29,9 +29,12 @@ open class Baixing_LiveViewHolder(private val mBaixing_binding: BaixingLiveItemB
         mBaixing_binding.apply {
             val context = baixingLiveCover.context
             baixingLiveAnchorName.text = liveData.anchorName
+            val count = liveData.viewerCount.let {
+                if (it > 9999) "9999+" else it.toString()
+            }
             
-            val viewerText = SpannableString("${liveData.viewerCount}人观看")
-            val numberEndIndex = liveData.viewerCount.toString().length
+            val viewerText = SpannableString("${count}人观看")
+            val numberEndIndex = count.length
             
             viewerText.setSpan(
                 TextAppearanceSpan(baixingLiveViewerCount.context, android.R.style.TextAppearance).apply {
@@ -43,14 +46,14 @@ open class Baixing_LiveViewHolder(private val mBaixing_binding: BaixingLiveItemB
             )
 
             viewerText.setSpan(
-                AbsoluteSizeSpan(context.resources.getDimension(R.dimen.sp_16).toInt(), false),
+                AbsoluteSizeSpan(context.resources.getDimensionPixelSize(R.dimen.sp_12), false),
                 0,
                 numberEndIndex,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
             
             viewerText.setSpan(
-                AbsoluteSizeSpan(context.resources.getDimension(R.dimen.sp_12).toInt(), false),
+                AbsoluteSizeSpan(context.resources.getDimensionPixelSize(R.dimen.sp_10), false),
                 numberEndIndex,
                 viewerText.length,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!-- 填充颜色，可按需修改颜色值 -->
+    <gradient
+        android:angle="0"
+        android:startColor="#7F64F0"
+        android:endColor="#D984E9"
+        />
+    <!-- 圆角半径，这里设置为10dp，可根据需求调整 -->
+    <corners android:radius="@dimen/dp.15" />
+</shape>

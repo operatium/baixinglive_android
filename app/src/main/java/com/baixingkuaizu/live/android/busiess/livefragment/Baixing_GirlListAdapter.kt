@@ -11,10 +11,10 @@ import com.baixingkuaizu.live.android.databinding.BaixingLiveItemBinding
  * @description: 直播列表适配器
  */
 class Baixing_GirlListAdapter
-    : ListAdapter<Baixing_GirlDataEntity, Baixing_LiveViewHolder>(Baixing_GirlDiffCallback) {
+    : ListAdapter<Baixing_GirlDataEntity, Baixing_GirlViewHolder>(Baixing_GirlDiffCallback) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Baixing_LiveViewHolder {
-        return Baixing_LiveViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Baixing_GirlViewHolder {
+        return Baixing_GirlViewHolder(
             BaixingLiveItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -23,11 +23,11 @@ class Baixing_GirlListAdapter
         )
     }
 
-    override fun onBindViewHolder(holder: Baixing_LiveViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: Baixing_GirlViewHolder, position: Int) {
         holder.baixing_bind(getItem(position))
     }
 
-    override fun onViewRecycled(holder: Baixing_LiveViewHolder) {
+    override fun onViewRecycled(holder: Baixing_GirlViewHolder) {
         super.onViewRecycled(holder)
         holder.baixing_clearImage()
     }
