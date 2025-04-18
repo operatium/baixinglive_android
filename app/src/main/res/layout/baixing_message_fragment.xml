@@ -1,88 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/baixing_title"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp.60"
-        android:textSize="@dimen/sp.18"
+        android:gravity="center"
         android:text="消息"
         android:textColor="#000000"
+        android:textSize="@dimen/sp.14"
         android:textStyle="bold"
-        android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/baixingRefreshLayout"
-        app:layout_constraintTop_toBottomOf="@+id/baixing_title"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <!-- 内容布局 -->
+        <com.scwang.smart.refresh.layout.SmartRefreshLayout
+            android:id="@+id/baixing_refresh_layout"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/baixingRecyclerView"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/baixing_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:padding="@dimen/dp.8" />
+        </com.scwang.smart.refresh.layout.SmartRefreshLayout>
+
+        <!-- 空数据布局 -->
+        <LinearLayout
+            android:id="@+id/baixing_live_empty_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp" />
+            android:gravity="center"
+            android:orientation="vertical">
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            <ImageView
+                android:layout_width="@dimen/dp.100"
+                android:layout_height="@dimen/dp.100"
+                android:src="@drawable/baixing_ic_99" />
 
-    <ProgressBar
-        android:id="@+id/baixingProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp.16"
+                android:text="暂无内容"
+                android:textColor="#666666"
+                android:textSize="@dimen/sp.16" />
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/baixingErrorGroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:constraint_referenced_ids="baixingTvError,baixingBtnRetry" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp.8"
+                android:text="稍后再来看看吧"
+                android:textColor="#999999"
+                android:textSize="@dimen/sp.14" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/baixingTvError"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:textColor="@android:color/holo_red_dark"
-        app:layout_constraintBottom_toTopOf="@id/baixingBtnRetry"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:text="Error message" />
+    </FrameLayout>
 
-    <Button
-        android:id="@+id/baixingBtnRetry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="重试"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/baixingTvError" />
-
-    <TextView
-        android:id="@+id/baixingTvEmpty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="无数据"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>
