@@ -10,42 +10,43 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:src="@drawable/baixing_button_background3"
-        app:layout_constraintStart_toStartOf="@+id/baixing_edit_search"
-        app:layout_constraintEnd_toEndOf="@+id/baixing_edit_search"
-        app:layout_constraintTop_toTopOf="@+id/baixing_edit_search"
         app:layout_constraintBottom_toBottomOf="@+id/baixing_edit_search"
-        />
+        app:layout_constraintEnd_toEndOf="@+id/baixing_edit_search"
+        app:layout_constraintStart_toStartOf="@+id/baixing_edit_search"
+        app:layout_constraintTop_toTopOf="@+id/baixing_edit_search" />
+
     <EditText
         android:id="@+id/baixing_edit_search"
         android:layout_width="0dp"
         android:layout_height="@dimen/dp.30"
-        android:layout_marginTop="@dimen/dp.16"
         android:layout_marginStart="@dimen/dp.15"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/baixing_btn_back"
-        android:hint="搜索99直播间，视觉盛宴"
+        android:layout_marginTop="@dimen/dp.16"
         android:autofillHints="主播"
-        android:textColor="#000000"
-        android:drawableStart="@drawable/baixing_search"
-        android:paddingHorizontal="@dimen/dp.10"
-        android:drawablePadding="@dimen/dp.10"
-        android:textSize="@dimen/sp.14"
-        android:gravity="center_vertical"
         android:background="@null"
-        />
+        android:drawableStart="@drawable/baixing_search"
+        android:drawablePadding="@dimen/dp.10"
+        android:gravity="center_vertical"
+        android:hint="搜索99直播间，视觉盛宴"
+        android:inputType="text"
+        android:maxLines="1"
+        android:imeOptions="actionSearch"
+        android:paddingHorizontal="@dimen/dp.10"
+        android:textColor="#000000"
+        android:textSize="@dimen/sp.14"
+        app:layout_constraintEnd_toStartOf="@+id/baixing_btn_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/baixing_btn_clear"
         android:layout_width="@dimen/dp.35"
         android:layout_height="@dimen/dp.50"
-        app:layout_constraintEnd_toEndOf="@id/baixing_edit_search"
-        app:layout_constraintTop_toTopOf="@id/baixing_edit_search"
-        app:layout_constraintBottom_toBottomOf="@id/baixing_edit_search"
-        android:src="@drawable/baixing_add_circle"
         android:padding="@dimen/dp.8"
         android:rotation="45"
-        />
+        android:src="@drawable/baixing_add_circle"
+        app:layout_constraintBottom_toBottomOf="@id/baixing_edit_search"
+        app:layout_constraintEnd_toEndOf="@id/baixing_edit_search"
+        app:layout_constraintTop_toTopOf="@id/baixing_edit_search" />
 
     <TextView
         android:id="@+id/baixing_btn_back"
@@ -54,20 +55,40 @@
         android:gravity="center"
         android:text="取消"
         android:textColor="#000000"
-        app:layout_constraintTop_toTopOf="@+id/baixing_edit_search"
         app:layout_constraintBottom_toBottomOf="@+id/baixing_edit_search"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/baixing_edit_search"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="@+id/baixing_edit_search" />
+
+    <!-- 搜索提示 -->
+    <TextView
+        android:id="@+id/baixing_search_suggestion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dp.15"
+        android:layout_marginTop="@dimen/dp.8"
+        android:background="@drawable/baixing_button_background2"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/dp.15"
+        android:paddingVertical="@dimen/dp.8"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/sp.14"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/baixing_edit_search"
+        app:layout_constraintStart_toStartOf="@+id/baixing_edit_search"
+        app:layout_constraintTop_toBottomOf="@id/baixing_edit_search"
+        tools:text="搜索关键词" />
 
     <!-- 搜索历史 -->
     <LinearLayout
         android:id="@+id/baixing_history_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginTop="@dimen/dp.10"
+        android:orientation="vertical"
         android:padding="@dimen/dp.10"
-        app:layout_constraintTop_toBottomOf="@id/baixing_edit_search">
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/baixing_search_suggestion">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -97,8 +118,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp.10"
             app:flexDirection="row"
-            app:flexWrap="wrap"
-            />
+            app:flexWrap="wrap" />
     </LinearLayout>
 
     <!-- 搜索结果 -->
@@ -107,8 +127,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/baixing_history_layout"
-        />
+        app:layout_constraintTop_toBottomOf="@id/baixing_history_layout" />
 
     <!-- 空视图 -->
     <TextView

@@ -19,7 +19,7 @@ object Baixing_CoreWork {
     var mBaixing_HttpTimeout = 5000L
 
     private suspend fun delayNet(time:Long = 5000) {
-        delay((0..2000).random().toLong())
+        delay((1000..5000).random().toLong())
     }
 
     //发送验证码

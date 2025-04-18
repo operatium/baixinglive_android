@@ -1,5 +1,6 @@
 package com.baixingkuaizu.live.android.os
 
+import android.content.Context
 import android.content.res.Resources
 import android.util.Log
 import android.util.TypedValue
@@ -25,5 +26,9 @@ object Baixing_AdapterHelper {
         ).toInt().also {
             Log.d(TAG, "${resources.getDimension(this)}.dp2px: $it")
         }
+    }
+
+    fun Context.getDimensionPixelSize(dimensRes: Int): Int {
+        return resources.getDimensionPixelSize(dimensRes)
     }
 }

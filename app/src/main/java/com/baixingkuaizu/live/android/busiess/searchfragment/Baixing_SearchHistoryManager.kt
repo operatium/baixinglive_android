@@ -16,8 +16,8 @@ object Baixing_SearchHistoryManager {
     private val mBaixing_gson = Gson()
     private val mBaixing_maxHistorySize = 10
 
-    fun baixing_addSearchKeyword(keyword: String) {
-        if (keyword.isBlank()) return
+    fun baixing_addSearchKeyword(keyword: String?) {
+        if (keyword.isNullOrBlank()) return
         val historyList = baixing_getSearchHistory().toMutableList()
         historyList.remove(keyword)
         historyList.add(0, keyword)

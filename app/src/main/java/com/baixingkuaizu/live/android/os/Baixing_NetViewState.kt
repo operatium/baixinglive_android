@@ -1,6 +1,5 @@
 package com.baixingkuaizu.live.android.os
 
-import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
