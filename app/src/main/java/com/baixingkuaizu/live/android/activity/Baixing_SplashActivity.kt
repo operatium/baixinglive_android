@@ -40,7 +40,6 @@ class Baixing_SplashActivity : Baixing_BaseActivity() {
         mBaixing_ActivityProxy.baixing_bind(this)
         mBaixing_binding = BaixingSplashActivityBinding.inflate(layoutInflater)
         setContentView(mBaixing_binding.root)
-        mBaixing_binding.root.setWindowListener()
         lifecycleScope.launch {
             delay(100)
             if (mBaixing_localDataManager.baixing_isPrivacyAgreed()) {
