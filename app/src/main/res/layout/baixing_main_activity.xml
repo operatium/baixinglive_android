@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#ffffff"
     android:orientation="vertical">
 
@@ -9,18 +10,22 @@
         android:id="@+id/baixing_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/baixing_tab_layout"
         >
     </FrameLayout>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+        app:layout_constraintTop_toTopOf="@id/baixing_tab_layout"
         android:background="#E0E0E0" />
 
     <LinearLayout
+        android:id="@+id/baixing_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp.56"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:orientation="horizontal">
 
         <!-- 直播 Tab -->
@@ -119,4 +124,12 @@
                 android:textSize="@dimen/sp.12" />
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/baixing_popup_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

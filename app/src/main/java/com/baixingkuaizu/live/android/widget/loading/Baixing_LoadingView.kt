@@ -60,7 +60,7 @@ class Baixing_LoadingView @JvmOverloads constructor(
 
     private fun setupBackgroundGradient() {
         val lightColor = Color.argb(178, 0, 0, 0) // 70% 透明黑色
-        val darkColor = Color.argb(178, 0, 0, 0)
+        val darkColor = Color.argb(78, 40, 0, 10)
         val centerX = width / 2f
         val centerY = height / 2f + mBaixing_verticalOffset
         val gradient = RadialGradient(

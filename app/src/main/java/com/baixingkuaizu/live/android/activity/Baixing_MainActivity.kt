@@ -116,7 +116,7 @@ class Baixing_MainActivity : Baixing_BaseActivity() {
 
     fun baixing_toSearchFragment() {
         supportFragmentManager.beginTransaction().run {
-            add(R.id.baixing_fragment_container, Baixing_SearchFragment())
+            add(R.id.baixing_popup_container, Baixing_SearchFragment())
             addToBackStack(null)
             commit()
         }
