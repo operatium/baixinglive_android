@@ -70,7 +70,6 @@ class Baixing_LiveFragment : Baixing_BaseFragment() {
             }
             viewLoading.observe(viewLifecycleOwner) {
                 mBaixing_binding.baixingLoading.isVisible = it
-                mBaixing_NetViewState?.init()
             }
         }
     }
@@ -81,14 +80,6 @@ class Baixing_LiveFragment : Baixing_BaseFragment() {
                 baixingLiveContentLayout,
                 baixingLiveEmptyLayout,
                 baixingLiveErrorLayout,
-                {
-                    baixingLoading.visibility =
-                        if (!baixingLiveContentLayout.isVisible && !baixingLiveEmptyLayout.isVisible && !baixingLiveErrorLayout.isVisible) {
-                            View.VISIBLE
-                        } else {
-                            View.GONE
-                        }
-                }
             ).addListener(this@Baixing_LiveFragment)
             baixingTopBackground.setOnClickListener {
                 if (activity is Baixing_MainActivity) {
